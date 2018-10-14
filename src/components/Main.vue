@@ -5,8 +5,10 @@
                 <li class="list-group-item active" v-on:click="expand(figure.name)">
                     {{figure.name}}
                    <div class="buttons">
-                       <button v-if="!basket.includes(figure.name)" class="btn btn-info" role="button" v-on:click.stop.prevent="buy(figure)">Купить</button>
-                       <button v-else class="btn btn-danger" role="button" v-on:click.stop.prevent="buy(figure)">Удалить</button>
+                       <Button v-if="!basket.includes(figure.name)" v-bind:text="'Купить'" class="btn btn-info" :figure="figure" v-on:buy="buy">
+                       </Button>
+                       <Button v-else v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="buy">
+                       </Button>
                    </div>
                 </li>
             <li class="list-group-item " v-if="activeNames.includes(figure.name)" v-for="(detail, key) in figure">
@@ -19,6 +21,7 @@
 
 <script>
 
+ import Products from "./Products";
     var url = "https://swapi.co/api/starships";
     var promise = new Promise((resolve, reject)=>{
         var xhr = new XMLHttpRequest();
@@ -55,10 +58,11 @@
                 basket : []
             }
         },
+        components : { Products },
         created : function() {
             this.getData();
             setInterval(() => {
-                this.getData();
+              //  this.getData();
             }, 60000);
         },
         methods : {
