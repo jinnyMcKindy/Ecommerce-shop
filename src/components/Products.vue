@@ -4,9 +4,9 @@
            <li class="list-group-item active" v-on:click="expand(figure.name)">
                {{figure.name}}
                <div class="buttons">
-                   <Button v-if="showButton" v-bind:text="'Купить'" class="btn btn-info" :figure="figure" v-on:buy="buy">
+                   <Button v-if="!showBuy(figure.name)" v-bind:text="'Купить'" class="btn btn-info" :figure="figure" v-on:buy="$emit('buy', figure)">
                    </Button>
-                   <Button v-else v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="buy">
+                   <Button v-if="showBuy(figure.name)" v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="$emit('buy', figure)">
                    </Button>
                </div>
            </li>
@@ -21,16 +21,43 @@
     import Button from "./Button";
     export default {
         name: "Products",
-        props : ["figures", "showButton", "activeNames", "basket"],
+        props : ["figures", "basket"],
         components : { Button },
         data : function() {
             return {
-
+                activeNames : [],
+            }
+        },
+        methods : {
+                showBuy : function(name){
+                    var basket = this.$store.state.basket;
+                    var included = false;
+                    basket.forEach((item)=>{
+                        if(item.name == name){
+                           included = true;
+                        }
+                    })
+                    return included;
+                },
+            expand : function(name){
+                if( this.activeNames.includes(name) ) {
+                    var index = this.activeNames.indexOf(name);
+                    this.activeNames.splice(index, 1); } else {
+                    this.activeNames.push(name);
+                }
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .buttons {
+        float: right;
+    }
+    li {
+        margin: 5px;
+    }
+    .active  {
+        cursor: pointer;
+    }
 </style>

@@ -1,21 +1,11 @@
 <template>
     <div>
-        <div v-model="activeNames">
-        <ul v-for="(figure, index) in figures" class="wrapper list-group">
-                <li class="list-group-item active" v-on:click="expand(figure.name)">
-                    {{figure.name}}
-                   <div class="buttons">
-                       <Button v-if="!basket.includes(figure.name)" v-bind:text="'Купить'" class="btn btn-info" :figure="figure" v-on:buy="buy">
-                       </Button>
-                       <Button v-else v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="buy">
-                       </Button>
-                   </div>
-                </li>
-            <li class="list-group-item " v-if="activeNames.includes(figure.name)" v-for="(detail, key) in figure">
-               {{key}} : {{detail}}
-            </li>
-        </ul>
-        </div>
+            <Products :figures="figures"
+                      v-on:buy="buy"
+
+                      :basket="basket"
+                      >
+            </Products>
     </div>
 </template>
 
@@ -54,7 +44,6 @@
         data : function() {
             return  {
                 figures : [],
-                activeNames : [],
                 basket : []
             }
         },
@@ -62,7 +51,7 @@
         created : function() {
             this.getData();
             setInterval(() => {
-              //  this.getData();
+                this.getData();
             }, 60000);
         },
         methods : {
@@ -83,40 +72,35 @@
             deleteProduct: function(figure){
                 var name = figure.name;
                 var index = this.basket.indexOf(name);
-                this.basket.splice(index, 1);
+               this.basket.splice(index, 1);
                 this.$store.commit("deleteProduct", figure);
             },
             buy : function(figure){
+                console.log(this.$store.state );
                 var name = figure.name;
-                if( this.basket.includes(name) ){
+                if(!this.$store.state.basket.length){
+                    this.addProduct(figure);
+                    return;
+                }
+                var basket = this.$store.state.basket;
+                var includes = false;
+                basket.forEach((item)=>{
+                    if(item.name == name){
+                        includes = true;
+                    }
+                })
+                if( includes ){
                     this.deleteProduct(figure);
                 } else {
                     this.addProduct(figure);
                 }
             },
-            expand : function(name){
-                if( this.activeNames.includes(name) ) {
-                    var index = this.activeNames.indexOf(name);
-                    this.activeNames.splice(index, 1); } else {
-                    this.activeNames.push(name);
-                }
-            }
+
         }
     }
 
 </script>
 
 <style scoped>
-table {
-    font-size: 14px;
-}
-.buttons {
-    float: right;
-}
-li {
-    margin: 5px;
-}
-.active  {
-    cursor: pointer;
-}
+
 </style>
