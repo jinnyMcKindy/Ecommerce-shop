@@ -96,9 +96,6 @@
 
         }
     }
-
 </script>
-
 <style scoped>
-
 </style>

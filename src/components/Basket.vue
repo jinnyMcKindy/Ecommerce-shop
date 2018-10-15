@@ -17,7 +17,6 @@
 
 <script>
     import Products from "./Products";
-    import VueRouter from 'vue-router'
     import modal from "./modal";
     export default {
         name: "Basket",
