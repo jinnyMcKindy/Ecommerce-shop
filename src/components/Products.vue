@@ -6,7 +6,7 @@
                <div class="buttons">
                    <Button v-if="!showBuy(figure.name)" v-bind:text="'Купить'" class="btn btn-info" :figure="figure" v-on:buy="$emit('buy', figure)">
                    </Button>
-                   <Button v-if="showBuy(figure.name)" v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="$emit('buy', figure)">
+                   <Button v-else v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="$emit('buy', figure)">
                    </Button>
                </div>
            </li>

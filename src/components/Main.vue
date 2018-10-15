@@ -2,7 +2,6 @@
     <div>
             <Products :figures="figures"
                       v-on:buy="buy"
-
                       :basket="basket"
                       >
             </Products>
