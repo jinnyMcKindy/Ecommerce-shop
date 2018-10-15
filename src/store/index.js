@@ -26,6 +26,11 @@ export default new Vuex.Store({
                         }
                     });
               state.totalItems--;
+        },
+        deleteAll(state){
+            state.basket = [];
+            state.totalItems = 0;
+            state.totalPrice = "0.00";
         }
     }
 })

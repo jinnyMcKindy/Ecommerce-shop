@@ -60,7 +60,6 @@
                     var result = parseData(data);
                     if(result){
                         this.figures = result.results;
-                        console.log(this.figures);
                     }
                 });
             },
@@ -76,7 +75,6 @@
                 this.$store.commit("deleteProduct", figure);
             },
             buy : function(figure){
-                console.log(this.$store.state );
                 var name = figure.name;
                 if(!this.$store.state.basket.length){
                     this.addProduct(figure);
