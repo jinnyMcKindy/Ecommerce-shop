@@ -80,8 +80,8 @@
                     return;
                 }
                 let basket = this.$store.state.basket;
-                let includes = basket.filter(item => item.name == name);
-                if( includes.length ){
+                let exists = basket.filter(item => item.name == name);
+                if( exists.length ){
                     this.deleteProduct(figure);
                 } else {
                     this.addProduct(figure);
