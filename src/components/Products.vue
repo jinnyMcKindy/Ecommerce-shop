@@ -30,18 +30,13 @@
         },
         methods : {
                 showBuy : function(name){
-                    var basket = this.$store.state.basket;
-                    var included = false;
-                    basket.forEach((item)=>{
-                        if(item.name == name){
-                           included = true;
-                        }
-                    })
-                    return included;
+                    const basket = this.$store.state.basket;
+                    let included = basket.filter( item => item.name == name );
+                    return included.length;
                 },
             expand : function(name){
                 if( this.activeNames.includes(name) ) {
-                    var index = this.activeNames.indexOf(name);
+                    let index = this.activeNames.indexOf(name);
                     this.activeNames.splice(index, 1); } else {
                     this.activeNames.push(name);
                 }
