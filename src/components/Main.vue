@@ -74,11 +74,7 @@
                 this.$store.commit("deleteProduct", figure);
             },
             buy: function(figure){
-                let name = figure.name;
-                if(!this.$store.state.basket.length){
-                    this.addProduct(figure);
-                    return;
-                }
+                let { name } = figure;
                 let basket = this.$store.state.basket;
                 let exists = basket.filter(item => item.name == name);
                 if( exists.length ){
