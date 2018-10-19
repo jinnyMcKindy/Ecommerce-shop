@@ -40,21 +40,21 @@
     }
     export default {
         name: "Main",
-        data : function() {
+        data: function() {
             return  {
                 figures : [],
                 basket : []
             }
         },
-        components : { Products },
-        created : function() {
+        components: { Products },
+        created: function() {
             this.getData();
             setInterval(() => {
                 this.getData();
             }, 60000);
         },
-        methods : {
-            getData : function(){
+        methods: {
+            getData: function(){
                 promise.then((data)=>{
                     let result = parseData(data);
                     if(result){
@@ -73,7 +73,7 @@
                 this.basket.splice(index, 1);
                 this.$store.commit("deleteProduct", figure);
             },
-            buy : function(figure){
+            buy: function(figure){
                 let name = figure.name;
                 if(!this.$store.state.basket.length){
                     this.addProduct(figure);

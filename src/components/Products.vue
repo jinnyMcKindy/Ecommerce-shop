@@ -29,12 +29,12 @@
             }
         },
         methods : {
-                showBuy : function(name){
+                showBuy: function(name){
                     const basket = this.$store.state.basket;
                     let included = basket.filter( item => item.name == name );
                     return included.length;
                 },
-            expand : function(name){
+            expand: function(name){
                 if( this.activeNames.includes(name) ) {
                     let index = this.activeNames.indexOf(name);
                     this.activeNames.splice(index, 1); } else {

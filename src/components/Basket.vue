@@ -20,22 +20,22 @@
     import modal from "./modal";
     export default {
         name: "Basket",
-        data : function(){
+        data: function(){
          return {
              figures: [],
              showModal: false
           }
         },
-        created : function(){
+        created: function(){
                 this.figures = this.$store.state.basket;
         },
-        components : { Products, modal },
-        computed : {
+        components: { Products, modal },
+        computed: {
           totalPrice : function(){
               return this.$store.state.totalPrice;
           }
         },
-        methods : {
+        methods: {
             removeItem : function(figure){
                 this.$store.commit("deleteProduct", figure);
             },
