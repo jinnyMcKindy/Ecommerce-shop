@@ -1,23 +1,28 @@
 <template>
-    <div>
-        <Products :figures="figures"
-                  v-on:buy="removeItem" >
-        </Products>
-        <div v-if="figures.length">
-            Общая цена: {{totalPrice}}
-            <button class="btn btn-info pull-right"
+    <div class="container basket">
+        <div v-if="!showModal">
+            <Products :figures="figures"
+                v-on:buy="removeItem" >
+            </Products>
+            <div class="basket__price" v-if="figures.length">
+                Сумма заказа: {{totalPrice}}
+            <button  class="btn btn-info pull-right"
                     type="button"
                     id="show-modal" @click="showModal = true">Оформить заказ</button>
-            <modal v-if="showModal" @close="closeModal">
-                <h3 slot="header">Оформить заказ</h3>
-            </modal>
+            </div>
         </div>
+        <Details 
+            v-if="showModal" 
+            @close="closeModal">
+                <div slot="figures">{{figures}}</div>
+                <div slot="price">Сумма заказа: {{totalPrice}}</div>
+            </Details>
     </div>
 </template>
-
 <script>
     import Products from "./Products";
     import modal from "./modal";
+    import Details from "./Details";
     export default {
         name: "Basket",
         data: function(){
@@ -29,13 +34,16 @@
         created: function(){
                 this.figures = this.$store.state.basket;
         },
-        components: { Products, modal },
+        components: { Products, Details },
         computed: {
           totalPrice : function(){
               return this.$store.state.totalPrice;
           }
         },
         methods: {
+            clicked : function(){
+                console.log("clicked");
+            },
             removeItem : function(figure){
                 this.$store.commit("deleteProduct", figure);
             },
@@ -50,7 +58,17 @@
 </script>
 
 <style scoped>
+.dum {
+    color : black;
+}
 .pull-right {
     float: right;
+}
+.basket {
+    min-height: calc(100vh - 200px);
+}
+.basket__price {
+    margin-top: 10px;
+    padding:10px;
 }
 </style>

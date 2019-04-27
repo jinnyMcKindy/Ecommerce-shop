@@ -1,5 +1,5 @@
 <template>
-    <button  role="button" v-on:click.stop.prevent="$emit('buy', figure)">{{text}}</button>
+    <button role="button" v-on:click.stop.prevent="$emit('buy', figure)">{{text}}</button>
 </template>
 
 <script>
@@ -10,5 +10,8 @@
 </script>
 
 <style scoped>
+body {
+    background: red;
+}
 
 </style>

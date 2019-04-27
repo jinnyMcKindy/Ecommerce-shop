@@ -1,15 +1,12 @@
 <template>
-    <div>
-            <Products :figures="figures"
-                      v-on:buy="buy"
-                      :basket="basket"
-                      >
-            </Products>
+    <div class="container">
+        <Products :figures="figures"
+                  v-on:buy="buy"
+                  :basket="basket">
+        </Products>
     </div>
 </template>
-
 <script>
-
  import Products from "./Products";
     let url = "https://swapi.co/api/starships";
     let promise = new Promise((resolve, reject)=>{
@@ -88,4 +85,5 @@
     }
 </script>
 <style scoped>
+
 </style>
