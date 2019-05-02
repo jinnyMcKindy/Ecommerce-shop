@@ -2,7 +2,7 @@ const request = require('request')
 const fs = require('fs')
 const HTMLParser = require('node-html-parser')
 const fileName = './server/items.txt'
-const mongo = require('mongodb').MongoClient
+const db = require('./database')
 
 const url_phones = 'https://ru.aliexpress.com/category/202001195/mobile-phones.html?site=rus&isrefine=y'
 const url_laptop = 'https://ru.aliexpress.com/af/category/202000104.html?site=rus&d=n&catName=laptops&CatId=202000104&origin=n&isViewCP=y&jump=afs'
@@ -22,13 +22,6 @@ function writeFile(body){
 	const lazyLoad = root.querySelector("#list-items").innerHTML
 	const len = root.querySelectorAll("#list-items li").length
 	console.log(len)
-	/*
-	const strEnd = `id="lazy-render">`
-	let reg = new RegExp(strEnd)
-	let indexStart = body.match(reg).index + strEnd.length;
-	let indexEnd = body.substr(indexStart).match(/<\/script>/i).index
-	let res = body.substr(indexStart, indexEnd)
-	*/
     fs.writeFile(fileName, `${lazyLoad}`, (err) => {
 	    if(err) {
 	        return console.log(err)
@@ -47,41 +40,21 @@ function parseProduct(res){
 		const title = v.querySelector(".product").attributes.title
 		return { price, title, imageSrc, productLink }
 	})
-	console.log(tt)
+	//console.log(tt)
 	return tt;
 }
 
-async function parseFile(){
-	return new Promise((resolve, reject) => {
-		fs.readFile(fileName, 'utf8',(err, contents) => {
+const getContent = new Promise((resolve, reject) => {
+		db.getProducts.then((res) => resolve(res))
+})
+const saveContent = new Promise((resolve, reject) => {
+	fs.readFile(fileName, 'utf8',(err, contents) => {
 		    if(err) reject(err)
 		    if(contents) { 
 		    	const tt = parseProduct(contents)
-		    //resolve(contents) 
-
-		const url = 'mongodb://localhost:27017'
-		exports.connect = {mongo, url};
-		mongo.connect(url, (err, client) => {
-			  if (err) {
-			    console.error(err)
-			    return
-			  }
-			  const db = client.db('ishop')
-			  const collection = db.collection('products')
-			 /*  collection.insertOne({name: 'Roger'}, (err, result) => {
-			  	//console.log(err, result)
-			  }) */
-			  collection.find().toArray((err, items) => {
-				  console.log(items)
-			  })
-			  client.close()
-		});
+		    	db.saveProducts(tt)
 		    }
-    	    /* const lazy = root.querySelector('.lazy-load')
-			const el = lazy.querySelectorAll(".history-item.product")
-			const title = el.map(val=> val.innerHTML) */
+		    else { reject("No content") }
 		})
-	})
-}
-
-exports.parseFile = parseFile;
+})
+exports.getContent = getContent;

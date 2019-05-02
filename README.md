@@ -24,3 +24,7 @@ npm run test
 ```
 npm run lint
 ```
+
+### MongoDB start
+```sudo service mongod start```
+
