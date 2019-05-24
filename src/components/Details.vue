@@ -34,7 +34,7 @@
 	</transition>
 </template>
 <script>
-	
+
 </script>
 <style>
 .red {

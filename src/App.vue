@@ -14,21 +14,21 @@
 
 <script>
 
-import Vue from 'vue'
+import Vue from 'vue';
 import store from './store';
-import router from './routes'
-import Menu from './components/Menu'
-import Footer from './components/Footer'
+import router from './routes';
+import Menu from './components/Menu';
+import Footer from './components/Footer';
 
 export default {
   name: 'app',
   components: {
     Menu,
-    Footer
+    Footer,
   },
   router,
-  store
-}
+  store,
+};
 </script>
 
 <style>

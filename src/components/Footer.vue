@@ -7,13 +7,13 @@
 			<router-link class="nav-link nav-link--light" to="/politics">Контакты</router-link>
 		</div>
 		<small>
-			Персональные данные посетителей сайта обрабатываются в соответствии  <router-link to="/politics">с официальной политикой.</router-link> 
+			Персональные данные посетителей сайта обрабатываются в соответствии  <router-link to="/politics">с официальной политикой.</router-link>
 			Сайт *** носит информационный характер и не является публичной офертой, определяемой положениями Статьи 437 ГК РФ.
 		</small>
 	</footer>
 </template>
 <script>
-	
+
 </script>
 <style type="less">
 .footer {

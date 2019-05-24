@@ -7,82 +7,83 @@
     </div>
 </template>
 <script>
- import Products from "./Products";
-    let url = "https://swapi.co/api/starships";
-    let promise = new Promise((resolve, reject)=>{
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', url, false);
-        xhr.send();
-        if (xhr.status != 200) {
-            reject( xhr.status + ': ' + xhr.statusText );
-        } else {
-            resolve( xhr.responseText );
-        }
-    });
-    function parseData(data) {
-        let results = JSON.parse(data).results;
-        let keys = Object.keys(results[0]);
-        if(results.length){
-            results = results.map((result)=>{
-                result.price = (Math.random() * 1000).toFixed(2);
-                keys.map((key)=>{
-                    let property = result[key];
-                    if( Array.isArray(property) ) property = property.join(" ");
-                    result[key] = property;
-                });
-                return result;
-            });
-            return { results };
-        }
-    }
-    export default {
-        name: "Main",
-        data: function() {
-            return  {
-                figures : [],
-                basket : []
-            }
-        },
-        components: { Products },
-        created: function() {
-            this.getData();
-            setInterval(() => {
-                this.getData();
-            }, 60000);
-        },
-        methods: {
-            getData: function(){
-                promise.then((data)=>{
-                    let result = parseData(data);
-                    if(result){
-                        this.figures = result.results;
-                    }
-                });
-            },
-            addProduct: function(figure){
-                let name = figure.name;
-                this.basket.push(name);
-                this.$store.commit("addProduct", figure);
-            },
-            deleteProduct: function(figure){
-                let name = figure.name;
-                let index = this.basket.indexOf(name);
-                this.basket.splice(index, 1);
-                this.$store.commit("deleteProduct", figure);
-            },
-            buy: function(figure){
-                let { name } = figure;
-                let basket = this.$store.state.basket;
-                let exists = basket.filter(item => item.name == name);
-                if( exists.length ){
-                    this.deleteProduct(figure);
-                } else {
-                    this.addProduct(figure);
-                }
-            },
+import Products from './Products';
 
+const url = 'https://swapi.co/api/starships';
+const promise = new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, false);
+  xhr.send();
+  if (xhr.status != 200) {
+    reject(`${xhr.status}: ${xhr.statusText}`);
+  } else {
+    resolve(xhr.responseText);
+  }
+});
+function parseData(data) {
+  let { results } = JSON.parse(data);
+  const keys = Object.keys(results[0]);
+  if (results.length) {
+    results = results.map((result) => {
+      result.price = (Math.random() * 1000).toFixed(2);
+      keys.map((key) => {
+        let property = result[key];
+        if (Array.isArray(property)) property = property.join(' ');
+        result[key] = property;
+      });
+      return result;
+    });
+    return { results };
+  }
+}
+export default {
+  name: 'Main',
+  data() {
+    return {
+      figures: [],
+      basket: [],
+    };
+  },
+  components: { Products },
+  created() {
+    this.getData();
+    setInterval(() => {
+      this.getData();
+    }, 60000);
+  },
+  methods: {
+    getData() {
+      promise.then((data) => {
+        const result = parseData(data);
+        if (result) {
+          this.figures = result.results;
         }
-    }
+      });
+    },
+    addProduct(figure) {
+      const { name } = figure;
+      this.basket.push(name);
+      this.$store.commit('addProduct', figure);
+    },
+    deleteProduct(figure) {
+      const { name } = figure;
+      const index = this.basket.indexOf(name);
+      this.basket.splice(index, 1);
+      this.$store.commit('deleteProduct', figure);
+    },
+    buy(figure) {
+      const { name } = figure;
+      const { basket } = this.$store.state;
+      const exists = basket.filter(item => item.name == name);
+      if (exists.length) {
+        this.deleteProduct(figure);
+      } else {
+        this.addProduct(figure);
+      }
+    },
+
+  },
+};
 </script>
 <style scoped>
 

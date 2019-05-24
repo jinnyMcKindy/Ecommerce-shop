@@ -11,8 +11,8 @@
                     id="show-modal" @click="showModal = true">Оформить заказ</button>
             </div>
         </div>
-        <Details 
-            v-if="showModal" 
+        <Details
+            v-if="showModal"
             @close="closeModal">
                 <div slot="figures">{{figures}}</div>
                 <div slot="price">Сумма заказа: {{totalPrice}}</div>
@@ -20,41 +20,42 @@
     </div>
 </template>
 <script>
-    import Products from "./Products";
-    import modal from "./modal";
-    import Details from "./Details";
-    export default {
-        name: "Basket",
-        data: function(){
-         return {
-             figures: [],
-             showModal: false
-          }
-        },
-        created: function(){
-                this.figures = this.$store.state.basket;
-        },
-        components: { Products, Details },
-        computed: {
-          totalPrice : function(){
-              return this.$store.state.totalPrice;
-          }
-        },
-        methods: {
-            clicked : function(){
-                console.log("clicked");
-            },
-            removeItem : function(figure){
-                this.$store.commit("deleteProduct", figure);
-            },
-            closeModal: function() {
-                this.showModal = false;
-                this.figures = [];
-                this.$store.commit("deleteAll");
-                this.$router.push('/')
-            }
-        }
-    }
+import Products from './Products';
+import modal from './modal';
+import Details from './Details';
+
+export default {
+  name: 'Basket',
+  data() {
+    return {
+      figures: [],
+      showModal: false,
+    };
+  },
+  created() {
+    this.figures = this.$store.state.basket;
+  },
+  components: { Products, Details },
+  computed: {
+    totalPrice() {
+      return this.$store.state.totalPrice;
+    },
+  },
+  methods: {
+    clicked() {
+      console.log('clicked');
+    },
+    removeItem(figure) {
+      this.$store.commit('deleteProduct', figure);
+    },
+    closeModal() {
+      this.showModal = false;
+      this.figures = [];
+      this.$store.commit('deleteAll');
+      this.$router.push('/');
+    },
+  },
+};
 </script>
 
 <style scoped>

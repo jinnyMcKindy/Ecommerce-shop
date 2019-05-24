@@ -20,10 +20,15 @@ npm run build
 npm run test
 ```
 
-### Lints and fixes files
+### Lints and shows errors and warnings
 ```
 npm run lint
 ```
+
+### Fix js errors 
+
+``` node_modules/.bin/eslint ./server --fix```
+
 
 ### MongoDB start
 ```sudo service mongod start```

@@ -11,17 +11,17 @@
 	</nav>
 </template>
 <script>
-	export default {
-		name: "Menu",
-		computed : {
-	      totalItems: function(){
+export default {
+  name: 'Menu',
+  computed: {
+	      totalItems() {
 	          return this.$store.state.totalItems;
 	      },
-	      totalPrice : function() {
+	      totalPrice() {
 	          return this.$store.state.totalPrice;
-	      }
-		},
-	}
+	      },
+  },
+};
 </script>
 <style type="less">
 	.nav-link--light {
