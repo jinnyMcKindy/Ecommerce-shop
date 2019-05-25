@@ -17,10 +17,11 @@
 </script>
 <style type="less">
 .footer {
-    padding: 0;
+	padding-bottom: 20px;
     position: statick;
     bottom: 0;
     width: 100%;
+    text-align: center;
 }
 .footer-border {
 	border-top: 1px solid #e9e9e9;

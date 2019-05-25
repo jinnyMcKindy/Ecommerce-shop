@@ -53,12 +53,20 @@ export default {
   },
   methods: {
     getData() {
+      this.$store.dispatch("actionProducts").then(data => {
+        console.log("data",data)
+        this.figures = data;
+      }, 
+      error => console.log(error));
+      /*
       promise.then((data) => {
         const result = parseData(data);
         if (result) {
           this.figures = result.results;
+          console.log(this.figures)
         }
       });
+      */
     },
     addProduct(figure) {
       const { name } = figure;
@@ -81,7 +89,6 @@ export default {
         this.addProduct(figure);
       }
     },
-
   },
 };
 </script>

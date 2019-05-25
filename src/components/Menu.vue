@@ -6,7 +6,7 @@
 	      </li>
 	    </ul>
 	    <router-link class="nav-link nav-link--light"  to="/basket">
-	           В корзине: {{totalItems}}. Сумма: {{totalPrice}}
+	           В корзине: {{totalItems}}. Сумма: <span v-currency="totalPrice"></span>
 	    </router-link>
 	</nav>
 </template>

@@ -1,22 +1,20 @@
 <template>
     <div class="container basket">
-        <div v-if="!showModal">
+        <div>
+           <div class="empty" v-if="!figures.length">Пусто</div>
             <Products :figures="figures"
                 v-on:buy="removeItem" >
             </Products>
             <div class="basket__price" v-if="figures.length">
-                Сумма заказа: {{totalPrice}}
-            <button  class="btn btn-info pull-right"
-                    type="button"
-                    id="show-modal" @click="showModal = true">Оформить заказ</button>
+                Сумма заказа: <span v-currency="totalPrice"></span>
+              <router-link 
+                class="btn btn-info pull-right" 
+                to="/checkout">
+              Оформить заказ
+            </router-link>
             </div>
         </div>
-        <Details
-            v-if="showModal"
-            @close="closeModal">
-                <div slot="figures">{{figures}}</div>
-                <div slot="price">Сумма заказа: {{totalPrice}}</div>
-            </Details>
+
     </div>
 </template>
 <script>
@@ -71,5 +69,8 @@ export default {
 .basket__price {
     margin-top: 10px;
     padding:10px;
+}
+.empty {
+  text-align: center;
 }
 </style>

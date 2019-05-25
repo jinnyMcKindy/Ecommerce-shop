@@ -1,6 +1,6 @@
 const mongo = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://localhost:12345';
 
 const getProducts = new Promise((resolve, reject) => {
   mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
@@ -10,17 +10,33 @@ const getProducts = new Promise((resolve, reject) => {
 		  }
 		  const db = client.db('ishop');
 		  const collection = db.collection('products');
-		  /* collection.insertOne({name: 'Roger'}, (err, result) => {
-		  	//console.log(err, result)
-		  }) */
-		  const items = collection.find().toArray((err, items) => {
-			  resolve(items);
+		  collection.find().toArray((err, items) => {
+		  	  client.close();
+		  	  //console.log(items, err)
+		  	  resolve(items);
 		  });
-		  client.close();
+		  //if(!items) reject("error db, no items")
+		  
   });
 });
-const saveProducts = new Promise((resolve, reject) => {
-
-});
-
+const saveProducts = (contents) => {
+	return new Promise((resolve, reject) => {
+	  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+			  if (err) {
+			    console.error('error', err);
+			    return;
+			  }
+			  const db = client.db('ishop');
+			  const collection = db.collection('products');
+			  	collection.deleteMany({ })
+			    collection.insertMany(contents, (err, result) => {
+			   	client.close();
+			  	if(err) reject(err)
+			  	resolve(result)
+			  }) 
+			 
+	  });
+	});
+}
 exports.getProducts = getProducts;
+exports.saveProducts = saveProducts;

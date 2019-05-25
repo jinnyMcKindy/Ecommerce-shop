@@ -2,12 +2,24 @@
    <div class="product-wrapper">
        <div v-for="(figure, index) in figures" class="list-group product">
            <div v-on:click="expand(figure.name)" class="list-group-item">
-               {{figure.name}}
+               <div class="product__content">
+                  {{figure.name}}
+                </div>
                <div class="buttons">
-                   <Button v-if="!showBuy(figure.name)" v-bind:text="'Купить'"
-                   class="btn btn-info" :figure="figure" v-on:buy="$emit('buy', figure)">
+                  <div class="product__price" v-currency="figure.price"></div>
+                   <Button 
+                     v-if="!showBuy(figure.name)" 
+                     v-bind:text="'Купить'"
+                     class="btn btn-info pull-right" 
+                     :figure="figure" 
+                     v-on:buy="$emit('buy', figure)">
                    </Button>
-                   <Button v-else v-bind:text="'Удалить'" class="btn btn-danger" :figure="figure" v-on:buy="$emit('buy', figure)">
+                   <Button 
+                     v-else 
+                     v-bind:text="'Удалить'" 
+                     class="btn btn-danger pull-right" 
+                     :figure="figure" 
+                     v-on:buy="$emit('buy', figure)">
                    </Button>
                </div>
            </div>
@@ -38,20 +50,32 @@ export default {
     },
     expand(name) {
       /*
-                if( this.activeNames.includes(name) ) {
-                    let index = this.activeNames.indexOf(name);
-                    this.activeNames.splice(index, 1); } else {
-                    this.activeNames.push(name);
-                }
-                */
+        if( this.activeNames.includes(name) ) {
+            let index = this.activeNames.indexOf(name);
+            this.activeNames.splice(index, 1); } else {
+            this.activeNames.push(name);
+        }
+      */
     },
   },
 };
 </script>
 
 <style scoped>
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .product__price {
+    padding: 10px;
+    float: left;
+  }
   .buttons {
-      float: right;
+    min-width: 200px;
+  }
+  .product__content {
+    padding-right: 20px;
   }
   li {
       margin: 5px;

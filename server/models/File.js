@@ -10,22 +10,23 @@ const url_laptop = 'https://ru.aliexpress.com/af/category/202000104.html?site=ru
 const url_iphones = 'https://ru.aliexpress.com/af/category/202001195.html?isrefine=y&site=rus&brandValueIds=105790%2C3426%2C200702996&d=n&origin=n&spm=a2g0v.search0603.0.0.30f4411aQMaOBZ&jump=afs&CatId=202001195&catName=mobile-phones&isViewCP=y';
 const url_acces = 'https://ru.aliexpress.com/category/202040726/mobile-phone-accessories.html?site=rus&isrefine=y';
 
-const products = new Promise((resolve) => {
+const saveFile = new Promise((resolve) => {
   request(url_iphones, (error, response, body) => {
 	    if (error) reject('error:', error);
-	  	// writeFile(body)
-	  	resolve();
+	  	writeFile(body)
+	  	resolve(body);
   });
 });
 
 function writeFile(body) {
   const root = HTMLParser.parse(body);
-  const lazyLoad = root.querySelector('#list-items').innerHTML;
+  //const lazyLoad = root.querySelector('#list-items').innerHTML;
   const len = root.querySelectorAll('#list-items li').length;
   console.log(len);
-  fs.writeFile(fileName, `${lazyLoad}`, (err) => {
+  const tt = parseProduct(lazyLoad);
+  fs.writeFile(fileName, `${tt}`, (err) => {
 	    if (err) {
-	        return console.log(err);
+	        console.log(err)
 	    }
 	    console.log('The file was saved!');
   });
@@ -43,8 +44,7 @@ function parseProduct(res) {
       price, title, imageSrc, productLink,
     };
   });
-  // console.log(tt)
   return tt;
 }
 
-exports.getContent = getContent;
+exports.saveFile = saveFile;

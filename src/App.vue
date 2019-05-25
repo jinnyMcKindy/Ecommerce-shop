@@ -19,7 +19,8 @@ import store from './store';
 import router from './routes';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
-
+import * as directives from './components/helpers/directives.js'
+directives.init()
 export default {
   name: 'app',
   components: {
@@ -41,7 +42,8 @@ export default {
 .menu-light{
   border-bottom: 1px solid #e9e9e9;
   background-color: #f8f8f8;
-  padding: 0 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 .main {
   margin-top: 20px;

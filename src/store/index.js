@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from "axios"
 
 Vue.use(Vuex);
-
 const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
@@ -10,6 +10,18 @@ export default new Vuex.Store({
     basket: [],
     totalItems: 0,
     totalPrice: '0.00',
+    products: [],
+  },
+  getters: {
+    getProducts(state) {
+      return state.products;
+    },
+    getBasket(state) {
+      return state.basket;
+    },
+    getTotalPrice(state) {
+      return state.totalPrice;
+    }
   },
   mutations: {
     addProduct(state, figure) {
@@ -32,5 +44,21 @@ export default new Vuex.Store({
       state.totalItems = 0;
       state.totalPrice = '0.00';
     },
+    setProducts(state, products){
+      state.products = products;
+    }
   },
+  actions: {
+    actionProducts({commit, state}) {
+      return new Promise((resolve, reject) => {
+          if(state.products.length) resolve(state.products);
+          const url = 'http://localhost:3000/getProducts';
+          axios.get(url).then((response) => {
+            const products = response.data; 
+            commit('setProducts', products)
+            resolve(products)
+          });
+      })
+    },
+  }
 });

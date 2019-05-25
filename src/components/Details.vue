@@ -2,6 +2,7 @@
 	<transition name="modal">
 		<div class="details">
 			<slot name="figures"></slot>
+			<slot name="price"></slot>
 			<form>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Email address<span class="red">*</span></label>
@@ -25,7 +26,6 @@
 			    <label for="exampleInputPassword1">Адрес доставки<span class="red">*</span></label>
 			    <input type="password" class="form-control">
 			  </div>
-			  <slot name="price"></slot>
 			<button class="btn btn-info pull-right" @click="$emit('close')">
 	            Подтвердить заказ
 	        </button>
@@ -34,7 +34,9 @@
 	</transition>
 </template>
 <script>
-
+export default {
+	name: "Details"
+}
 </script>
 <style>
 .red {
