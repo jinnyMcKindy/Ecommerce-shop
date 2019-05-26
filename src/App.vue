@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu class="menu-light"/>
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col col-md-12 main">
           <router-view></router-view>

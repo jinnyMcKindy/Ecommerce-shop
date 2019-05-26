@@ -11,6 +11,7 @@ export default new Vuex.Store({
     totalItems: 0,
     totalPrice: '0.00',
     products: [],
+    apiHost: "http://localhost:3000"
   },
   getters: {
     getProducts(state) {
@@ -52,12 +53,20 @@ export default new Vuex.Store({
     actionProducts({commit, state}) {
       return new Promise((resolve, reject) => {
           if(state.products.length) resolve(state.products);
-          const url = 'http://localhost:3000/getProducts';
+          const url = `${state.apiHost}/getProducts`;
           axios.get(url).then((response) => {
             const products = response.data; 
             commit('setProducts', products)
             resolve(products)
-          });
+          }).catch(err => reject(err));
+      })
+    },
+    saveOrder({commit, state}, order){
+      return new Promise((resolve, reject) => {
+        const url = `${state.apiHost}/saveOrder`;
+        axios.post(url, { order }).then((response) => {
+          resolve(response)
+        }).catch(err => reject(err));
       })
     },
   }

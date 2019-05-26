@@ -41,7 +41,7 @@ export default {
 	methods: {
 		toHome: function(){
 			this.$store.commit("deleteAll")
-			this.$router.push({ name: "home" })
+			this.$router.push({ name: "sent" })
 		}
 	}
 }

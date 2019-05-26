@@ -8,7 +8,7 @@
 </template>
 <script>
 import Products from './Products';
-
+/*
 const url = 'https://swapi.co/api/starships';
 const promise = new Promise((resolve, reject) => {
   const xhr = new XMLHttpRequest();
@@ -20,6 +20,7 @@ const promise = new Promise((resolve, reject) => {
     resolve(xhr.responseText);
   }
 });
+*/
 function parseData(data) {
   let { results } = JSON.parse(data);
   const keys = Object.keys(results[0]);
@@ -54,7 +55,7 @@ export default {
   methods: {
     getData() {
       this.$store.dispatch("actionProducts").then(data => {
-        console.log("data",data)
+        //console.log("data",data)
         this.figures = data;
       }, 
       error => console.log(error));
