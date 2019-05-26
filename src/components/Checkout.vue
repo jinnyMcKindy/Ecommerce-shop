@@ -6,21 +6,26 @@
 	            <div 
 	            	class="details__figures" 
 	            	slot="figures">
+	 				<Products :figures="figures">
+		                <div slot-scope="buttons"></div>
+		            </Products>
 	            </div>
 	            <div 
 	            	class="details__price" 
 	            	slot="price">
-	            	Сумма заказа: <span v-currency="price"></span>
+	            	К оплате: <span v-currency="price"></span>
 	        	</div>
 	    </Details>
 </template>
 
 <script>
-import Details from './Details';
+import Details from './details/Details';
+import Products from './Products';
 export default {
 	name: "Checkout",
 	components: {
-		Details
+		Details,
+		Products
 	},
 	data: function(){
 		return {
@@ -42,8 +47,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 	.details__price {
 		margin-bottom: 20px;
+		.product__price {
+			float: right;
+		}
+	}
+	.details__figures {
+		margin-bottom: 10px;
 	}
 </style>

@@ -7,6 +7,7 @@
                 </div>
                <div class="buttons">
                   <div class="product__price" v-currency="figure.price"></div>
+                  <slot name="buttons">
                    <Button 
                      v-if="!showBuy(figure.name)" 
                      v-bind:text="'Купить'"
@@ -21,6 +22,7 @@
                      :figure="figure" 
                      v-on:buy="$emit('buy', figure)">
                    </Button>
+                 </slot>
                </div>
            </div>
            <!--<li class="list-group-item " v-if="activeNames.includes(figure.name)" v-for="(detail, key) in figure">

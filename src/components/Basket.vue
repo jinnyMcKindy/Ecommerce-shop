@@ -20,7 +20,6 @@
 <script>
 import Products from './Products';
 import modal from './modal';
-import Details from './Details';
 
 export default {
   name: 'Basket',
@@ -33,7 +32,7 @@ export default {
   created() {
     this.figures = this.$store.state.basket;
   },
-  components: { Products, Details },
+  components: { Products },
   computed: {
     totalPrice() {
       return this.$store.state.totalPrice;

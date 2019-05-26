@@ -6,7 +6,8 @@
 	      </li>
 	    </ul>
 	    <router-link class="nav-link nav-link--light"  to="/basket">
-	           В корзине: {{totalItems}}. Сумма: <span v-currency="totalPrice"></span>
+	           В корзине: {{totalItems}} Сумма: 
+	           <span v-currency="totalPrice"></span>
 	    </router-link>
 	</nav>
 </template>
@@ -14,12 +15,12 @@
 export default {
   name: 'Menu',
   computed: {
-	      totalItems() {
-	          return this.$store.state.totalItems;
-	      },
-	      totalPrice() {
-	          return this.$store.state.totalPrice;
-	      },
+      totalItems() {
+          return this.$store.state.totalItems;
+      },
+      totalPrice() {
+          return this.$store.state.totalPrice;
+      },
   },
 };
 </script>

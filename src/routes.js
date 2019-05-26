@@ -14,6 +14,7 @@ const routes = [
   { path: '/checkout', component: Checkout, name: "checkout"}
 ];
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 export default router;
