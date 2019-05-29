@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios"
+const md5 = require('md5');
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -47,7 +48,7 @@ export default new Vuex.Store({
     },
     setProducts(state, products){
       state.products = products;
-    }
+    },
   },
   actions: {
     actionProducts({commit, state}) {
@@ -69,5 +70,22 @@ export default new Vuex.Store({
         }).catch(err => reject(err));
       })
     },
+    authorise({commit, state}, user){
+      return new Promise((resolve, reject) => {
+        const url = `${state.apiHost}/getUsers`;
+        axios.get(url).then((response) => {
+          let savedUser = response.data;
+          console.log(response)
+          savedUser.forEach((value) => {
+            if(value.login == user.login && value.password == md5(user.password)) {
+              resolve()
+            } else { 
+              reject() 
+            }
+          })
+          
+        }).catch(err => reject(err));
+      })
+    }
   }
 });

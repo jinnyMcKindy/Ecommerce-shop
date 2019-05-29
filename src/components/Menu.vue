@@ -24,7 +24,7 @@ export default {
   },
 };
 </script>
-<style type="less">
+<style lang="less">
 	.nav-link--light {
 	    color: #999;
 	}

@@ -93,6 +93,6 @@ export default {
   },
 };
 </script>
-<style scoped>
-
+<style lang="less">
+  @import "main.less";
 </style>

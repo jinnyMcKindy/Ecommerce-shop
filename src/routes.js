@@ -5,6 +5,7 @@ import Main from './components/Main';
 import Politics from './components/Politics';
 import Checkout from './components/Checkout';
 import Sent from './components/Sent';
+import Admin from './components/admin/Admin';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,7 @@ const routes = [
   { path: '/politics', component: Politics, name: "politics" },
   { path: '/checkout', component: Checkout, name: "checkout"},
   { path: '/sent', component: Sent, name: "sent"},
+  { path: '/admin', component: Admin, name: "admin" }
 ];
 const router = new VueRouter({
   mode: 'history',

@@ -103,7 +103,8 @@ export default {
 				city: "",
 				country: "",
 				email: "",
-				name: ""
+				name: "",
+				products: this.$store.getters.getBasket.map(value => value._id)
 			},
 			error: {}
 		}
@@ -114,7 +115,7 @@ export default {
 		},
 		validateForm: function(event){
 			//console.log(this.obj)
-			if(
+			 if(
 				this.obj.phone &&
 				this.obj.address &&
 				this.obj.city &&
@@ -122,7 +123,7 @@ export default {
 				this.obj.email &&
 				this.obj.name &&
 				this.obj.email.indexOf("@") > -1
-			){
+			){ 
 				this.$store.dispatch("saveOrder", this.obj).then(
 					data => { 
 						console.log(data) 

@@ -1,5 +1,5 @@
 <template>
-	<div class="sent">
+	<div class="expand">
 		Заказ сформирован.
 		Наш менеджер свяжется с Вами.
 	</div>
@@ -10,10 +10,5 @@
 	}
 </script>
 <style>
-.sent {
-	text-align: center;
-    margin-bottom: 20px;
-    background-color: white;
-    height: 70vh;
-}
+
 </style>

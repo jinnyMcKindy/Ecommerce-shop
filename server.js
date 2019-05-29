@@ -3,7 +3,8 @@ const cors = require('cors')
 const products = require('./server/models/products');
 const app = express();
 const db = require('./server/models/database');
-var bodyParser = require("body-parser");
+const md5 = require('md5');
+const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -15,7 +16,7 @@ const corsOptions = {
 app.use(cors())
 
 app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:8081");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
@@ -23,10 +24,20 @@ app.all('/*', function(req, res, next) {
 const hostname = '127.0.0.1';
 const port = 3000;
 
-// products.getContent.then = res => console.log(res), err => console.log(err)
-products.saveContent.then = res => console.log(res), err => console.log(err)
+//products.getContent.then = res => console.log(res), err => console.log(err)
+//products.saveContent.then = res => console.log(res), err => console.log(err)
+
+/*
+db.saveUser({login: "admin", password: md5("12345") })
+.then(data => console.log(data), err => console.log(err));
+*/
+
 app.get('/getProducts', cors(corsOptions), (req, res) => {
   products.getContent
+    .then(data => res.json(data), err => res.json(err));
+});
+app.get('/getUsers', cors(corsOptions), (req, res) => {
+  db.getUsers
     .then(data => res.json(data), err => res.json(err));
 });
 app.post('/saveOrder', (req, res) => {
