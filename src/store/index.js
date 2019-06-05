@@ -75,7 +75,6 @@ export default new Vuex.Store({
         const url = `${state.apiHost}/getUsers`;
         axios.get(url).then((response) => {
           let savedUser = response.data;
-          console.log(response)
           savedUser.forEach((value) => {
             if(value.login == user.login && value.password == md5(user.password)) {
               resolve()

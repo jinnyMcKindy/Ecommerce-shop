@@ -1,6 +1,6 @@
 <template>
-	<div class="container admin expand">
-		<div v-if="!logged">
+	<div class="container expand">
+		<div v-if="!logged" class="admin">
 			<div 
 				class="error" 
 				v-for="er in error">
@@ -27,13 +27,20 @@
 			</form>
 		</div>
 		<div v-else>
-			admin
+			<div class="right-align">
+				<button 
+					class="btn btn-default"
+					@click="logout">
+					Выход
+				</button>
+			</div>
+			<div> admin </div>
 		</div>
 </div>
 </template>
 
 <script>
-import * as cookies from '../helpers/cookies.js'
+import { cookie } from '../helpers/cookies.js'
 export default {
 	name: "Admin",
 	data: function(){
@@ -44,17 +51,21 @@ export default {
 			error: ""
 		}
 	},
+	created: function(){
+		let auth = cookie.getCookie("authorised");
+		if(auth){
+			this.logged = true;
+		}
+	},
 	methods: {
 		authorise: function(ev){
 			ev.preventDefault()
 			this.error = this.validate()
 			let obj = { login: this.login, password: this.pwd};
 			if(!this.error.length) this.$store.dispatch("authorise", obj).then(() => {
-				console.log("logged")
-				console.log(cookies)
+				cookie.setCookie("authorised", true);
 				this.logged = true;
 			}, err => { 
-				console.log("not logged", err)
 				this.error.push("Пароль или логин не верны")
 				this.logged = false; 
 			})
@@ -73,6 +84,10 @@ export default {
 				error.push(`Слишком короткий ${property}`) 
 			}
 			return error;
+		},
+		logout(){
+			this.logged = false;
+			cookie.deleteCookie("authorised")
 		}
 	}
 }
@@ -89,5 +104,8 @@ export default {
 }
 .admin__btn {
 	width: 100%;
+}
+.right-align {
+	text-align: right;
 }
 </style>

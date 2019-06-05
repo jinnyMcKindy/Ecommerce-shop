@@ -34,7 +34,7 @@ let cookie = {
 	  document.cookie = updatedCookie;
 	},
 	deleteCookie(name) {
-	  	setCookie(name, "", {
+	  	this.setCookie(name, "", {
 	    	expires: -1
 		})
 	}
