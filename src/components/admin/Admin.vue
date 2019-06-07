@@ -3,8 +3,8 @@
 		<div v-if="!logged" class="admin">
 			<div 
 				class="error" 
-				v-for="er in error">
-				{{er}}
+				v-for="error in errors">
+				{{error}}
 			</div>
 			<form>
 				<div>
@@ -34,21 +34,42 @@
 					Выход
 				</button>
 			</div>
-			<div> admin </div>
+			<div class="admin__table"> 
+				<Table :table="table" />
+				<div class="align-right">
+					<button 
+						class="btn btn-default"
+						@click="save">
+						Сохранить
+					</button>
+				</div>
+			</div>
 		</div>
 </div>
 </template>
 
 <script>
 import { cookie } from '../helpers/cookies.js'
+import Table from '../elements/Table'
 export default {
 	name: "Admin",
+	components: {
+		Table
+	},
 	data: function(){
 		return {
 			logged: false,
 			login: "",
 			pwd: "",
-			error: ""
+			error: "",
+			table: {
+				selectedPaid: 0,
+				selectedSent: 1,
+				optionsPaid: ["Оплачен", "Не оплачен"],
+				optionsSent: ["Отправлен", "Не отправлен"],
+				columns: ["Название", "Статус оплаты", "Статус отправки"],
+				rows: ["1"]
+			}
 		}
 	},
 	created: function(){
@@ -60,15 +81,18 @@ export default {
 	methods: {
 		authorise: function(ev){
 			ev.preventDefault()
-			this.error = this.validate()
+			this.errors = this.validate()
 			let obj = { login: this.login, password: this.pwd};
-			if(!this.error.length) this.$store.dispatch("authorise", obj).then(() => {
+			if(!this.errors.length) this.$store.dispatch("authorise", obj).then(() => {
 				cookie.setCookie("authorised", true);
 				this.logged = true;
 			}, err => { 
-				this.error.push("Пароль или логин не верны")
+				this.errors.push("Пароль или логин не верны")
 				this.logged = false; 
 			})
+		},
+		save: function(){
+			console.log(this.table)
 		},
 		validate: function(){
 			let error = []
@@ -76,14 +100,14 @@ export default {
 			error = this.validateInput(this.pwd, "пароль", error)
 			return error;
 		},
-		validateInput(str, property, error){
+		validateInput(str, property, errors){
 			if(!str) { 
-				error.push(`Введите ${property}`); 
+				errors.push(`Введите ${property}`); 
 			}
 			else if(str.length < 4) { 
-				error.push(`Слишком короткий ${property}`) 
+				errors.push(`Слишком короткий ${property}`) 
 			}
-			return error;
+			return errors;
 		},
 		logout(){
 			this.logged = false;
@@ -106,6 +130,12 @@ export default {
 	width: 100%;
 }
 .right-align {
+	text-align: right;
+}
+.admin__table {
+	margin-top: 10px;
+}
+.align-right {
 	text-align: right;
 }
 </style>
