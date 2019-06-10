@@ -8,35 +8,6 @@
 </template>
 <script>
 import Products from './Products';
-/*
-const url = 'https://swapi.co/api/starships';
-const promise = new Promise((resolve, reject) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url, false);
-  xhr.send();
-  if (xhr.status != 200) {
-    reject(`${xhr.status}: ${xhr.statusText}`);
-  } else {
-    resolve(xhr.responseText);
-  }
-});
-*/
-function parseData(data) {
-  let { results } = JSON.parse(data);
-  const keys = Object.keys(results[0]);
-  if (results.length) {
-    results = results.map((result) => {
-      result.price = (Math.random() * 1000).toFixed(2);
-      keys.map((key) => {
-        let property = result[key];
-        if (Array.isArray(property)) property = property.join(' ');
-        result[key] = property;
-      });
-      return result;
-    });
-    return { results };
-  }
-}
 export default {
   name: 'Main',
   data() {
@@ -55,19 +26,9 @@ export default {
   methods: {
     getData() {
       this.$store.dispatch("actionProducts").then(data => {
-        //console.log("data",data)
         this.figures = data;
       }, 
       error => console.log(error));
-      /*
-      promise.then((data) => {
-        const result = parseData(data);
-        if (result) {
-          this.figures = result.results;
-          console.log(this.figures)
-        }
-      });
-      */
     },
     addProduct(figure) {
       const { name } = figure;

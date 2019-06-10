@@ -124,6 +124,7 @@ export default {
 				this.obj.name &&
 				this.obj.email.indexOf("@") > -1
 			){ 
+				this.obj.totalPrice = this.$store.getters.getTotalPrice;
 				this.$store.dispatch("saveOrder", this.obj).then(
 					data => { 
 						console.log(data) 

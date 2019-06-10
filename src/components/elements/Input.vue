@@ -10,11 +10,11 @@
       />
     </span>
     <span v-if="type === 'select'">
-      <select>
+      <select v-model="input">
         <option
           v-for="(option, key) in options"
           v-bind:key="key"
-          :selected="value == option">
+          :selected="key === 0">
           {{ option }}
         </option>
       </select>
@@ -51,11 +51,12 @@ export default {
   },
   mounted: function(){
   },
-  methods: {
-    change: function(){
+  watch: { 
+    'input': function() {
       this.$emit('changeInput', this.input)
-    }
-  }
+    } 
+  },
+  methods: {}
 }
 </script>
 <style>

@@ -61,14 +61,20 @@ export default {
 			logged: false,
 			login: "",
 			pwd: "",
-			error: "",
+			errors: [],
 			table: {
 				selectedPaid: 0,
 				selectedSent: 1,
 				optionsPaid: ["Оплачен", "Не оплачен"],
 				optionsSent: ["Отправлен", "Не отправлен"],
-				columns: ["Название", "Статус оплаты", "Статус отправки"],
-				rows: ["1"]
+				columns: [
+				"ID", 
+				"Цена", 
+				"Продукты", 
+				"Shipment details", 
+				"Статус оплаты", 
+				"Статус отправки"],
+				rows: [ ["1" , "1200", ["test"], "Address"] ]
 			}
 		}
 	},
@@ -77,6 +83,23 @@ export default {
 		if(auth){
 			this.logged = true;
 		}
+		this.$store.dispatch("actionOrders").then(data => {
+        	console.log(data)
+        	const details = [];
+        	data.forEach((value) => {
+        		let address = `Country: ${data.country}<br>
+        		City: ${data.city}<br>
+        		Address: ${data.address}<br>
+        		Email: ${data.email} <br>
+        		Index: ${data.index} <br>
+        		Name: ${data.name} <br>
+        		Phone: ${data.phone} <br>
+        		`;
+        		details.push(data._id, data.totalPrice, data.products, address);
+        		this.table.rows.push(details);
+        	})
+      	}, 
+      	error => console.log(error));
 	},
 	methods: {
 		authorise: function(ev){

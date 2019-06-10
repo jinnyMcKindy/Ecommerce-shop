@@ -6,15 +6,31 @@
 	      <th 
 	      v-for="(column, index) in table.columns" 
 	      scope="col">
-	      	{{column}}
+	      	<span>
+	      		{{column}}
+	      	</span>
 	      </th>
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
+	    <tr 
+	    v-bind:key="rindex"
+	    v-for="(rows, rindex) in table.rows">
 	      <td 
-	      	v-for="(row, index) in table.rows">
-	  		{{row}}
+	      	v-bind:key="index"
+	      	v-for="(row, index) in rows">
+	  		<span v-if="!Array.isArray(row)"> 
+	  			{{row}}
+	  		</span>
+	  		<span v-else>
+	  			<ul>
+	  				<li 
+	  				v-bind:key="lindex"
+	  				v-for="(list, lindex) in row">
+	  					{{list}}
+	  				</li>
+	  			</ul>
+	  		</span>
 	  	  </td>
 	      <Input 
 	          :value="table.optionsPaid[table.selectedPaid]"
@@ -48,7 +64,7 @@ import Input from './Input'
 		props: ["table"],
 		methods: {
 			change: function(input){
-				console.log(inputs)
+				console.log(input)
 			}
 		}
 	}

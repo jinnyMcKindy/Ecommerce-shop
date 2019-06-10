@@ -12,9 +12,13 @@ export default new Vuex.Store({
     totalItems: 0,
     totalPrice: '0.00',
     products: [],
-    apiHost: "http://localhost:3000"
+    apiHost: "http://localhost:3000",
+    orders: []
   },
   getters: {
+    getOrders(state) {
+      return state.orders
+    },
     getProducts(state) {
       return state.products;
     },
@@ -49,8 +53,22 @@ export default new Vuex.Store({
     setProducts(state, products){
       state.products = products;
     },
+    setOrders(state, orders){
+      state.orders = orders;
+    },
   },
   actions: {
+    actionOrders({commit, state}) {
+      return new Promise((resolve, reject) => {
+        if(state.orders.length) resolve(state.orders);
+          const url = `${state.apiHost}/getOrders`;
+          axios.get(url).then((response) => {
+            const orders = response.data; 
+            commit('setOrders', orders)
+            resolve(orders)
+          }).catch(err => reject(err));
+      })
+    },
     actionProducts({commit, state}) {
       return new Promise((resolve, reject) => {
           if(state.products.length) resolve(state.products);
