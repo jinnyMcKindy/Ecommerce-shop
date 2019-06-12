@@ -10,7 +10,7 @@
       />
     </span>
     <span v-if="type === 'select'">
-      <select v-model="input">
+      <select  class="custom-select" v-model="input">
         <option
           v-for="(option, key) in options"
           v-bind:key="key"

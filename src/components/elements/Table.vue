@@ -18,31 +18,40 @@
 	    v-for="(rows, rindex) in table.rows">
 	      <td 
 	      	v-bind:key="index"
-	      	v-for="(row, index) in rows">
-	  		<span v-if="!Array.isArray(row)"> 
-	  			{{row}}
+	      	v-for="(row, index) in rows"
+	      	class="table__td"
+	      	:class="{'table__id': index===0}"
+	      	>
+	  		<span v-if="!Array.isArray(row)" v-html="row">
 	  		</span>
 	  		<span v-else>
-	  			<ul>
-	  				<li 
-	  				v-bind:key="lindex"
-	  				v-for="(list, lindex) in row">
-	  					{{list}}
-	  				</li>
-	  			</ul>
+	  			<p>
+				  <button class="btn btn-primary btn-details" type="button" 
+				  :disabled="!row.length"
+				  data-toggle="collapse" :data-target="`#collapse${index}${rindex}`" 
+				  aria-expanded="false" :aria-controls="`#collapse${index}${rindex}`">
+				    Показать
+				  </button>
+				</p>
+				<div class="collapse" :id="`collapse${index}${rindex}`" >
+				  <div class="card ">
+				    <ul class="list-group list-group-flush table__list">
+		  				<li 
+		  				class="list-group-item"
+		  				v-bind:key="lindex"
+		  				v-for="(list, lindex) in row">
+		  					{{list}}
+		  				</li>
+		  			</ul>
+				  </div>
+				</div>
 	  		</span>
 	  	  </td>
 	      <Input 
-	          :value="table.optionsPaid[table.selectedPaid]"
+	          :value="table.optionsStatus[table.selectedStatus]"
 	          type="select"
-	          :options="table.optionsPaid"
-	          v-on:changeInput="change"
-	      />
-	      <Input 
-	          :value="table.optionsSent[table.selectedSent]"
-	          type="select"
-	          :options="table.optionsSent"
-	          v-on:changeInput="change"
+	          :options="table.optionsStatus"
+	          v-on:changeInput="(args) => change(args, rows[0])"
 	      />
 	    </tr>
 	  </tbody>
@@ -57,20 +66,21 @@ import Input from './Input'
 			Input
 		},
 		data: function(){
-			return {
-				
-			}
+			return {}
 		},
 		props: ["table"],
 		methods: {
-			change: function(input){
-				console.log(input)
+			change: function(input, id){
+				console.log(input, id)
 			}
 		}
 	}
 </script>
 <style>
-	.admin__table {
-		font-size: 16px;
-	}
+.btn-details {
+	width: 250px;
+}
+.table__list {
+	max-width: 250px;
+}
 </style>

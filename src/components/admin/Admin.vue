@@ -35,14 +35,15 @@
 				</button>
 			</div>
 			<div class="admin__table"> 
-				<Table :table="table" />
-				<div class="align-right">
+				<Table 
+					:table="table" />
+				<!--<div class="align-right">
 					<button 
 						class="btn btn-default"
 						@click="save">
 						Сохранить
 					</button>
-				</div>
+				</div>-->
 			</div>
 		</div>
 </div>
@@ -63,18 +64,20 @@ export default {
 			pwd: "",
 			errors: [],
 			table: {
-				selectedPaid: 0,
-				selectedSent: 1,
-				optionsPaid: ["Оплачен", "Не оплачен"],
-				optionsSent: ["Отправлен", "Не отправлен"],
+				selectedStatus: 0,
+				optionsStatus: [
+				"В работе", 
+				"Отменен", 
+				"Оплачен", 
+				"Отправлен", 
+				"Выслан линк на оплату"],
 				columns: [
 				"ID", 
-				"Цена", 
+				"Сумма", 
 				"Продукты", 
-				"Shipment details", 
-				"Статус оплаты", 
-				"Статус отправки"],
-				rows: [ ["1" , "1200", ["test"], "Address"] ]
+				"Shipment details",
+				"Статус"],
+				rows: []
 			}
 		}
 	},
@@ -84,18 +87,24 @@ export default {
 			this.logged = true;
 		}
 		this.$store.dispatch("actionOrders").then(data => {
-        	console.log(data)
-        	const details = [];
         	data.forEach((value) => {
-        		let address = `Country: ${data.country}<br>
-        		City: ${data.city}<br>
-        		Address: ${data.address}<br>
-        		Email: ${data.email} <br>
-        		Index: ${data.index} <br>
-        		Name: ${data.name} <br>
-        		Phone: ${data.phone} <br>
-        		`;
-        		details.push(data._id, data.totalPrice, data.products, address);
+        		let address = {
+					array: [],
+					notEmpty(value, str){
+						if(value) this.array.push(`${str}: ${value}`)
+						return this;
+					}
+				}
+        		const details = [];
+        		address
+        		.notEmpty(value.country, "Country")
+        		.notEmpty(value.city, "City")
+        		.notEmpty(value.address, "Address")
+        		.notEmpty(value.email, "Email")
+        		.notEmpty(value.index, "Index")
+        		.notEmpty(value.name, "Name")
+        		.notEmpty(value.phone, "Phone");
+        		details.push(value._id, value.totalPrice, value.products, address.array);
         		this.table.rows.push(details);
         	})
       	}, 
@@ -140,7 +149,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less">
 .admin {
 	text-align: center;
 	max-width: 500px;
@@ -157,8 +166,25 @@ export default {
 }
 .admin__table {
 	margin-top: 10px;
+	td:nth-child(5){
+		white-space: nowrap;
+	}
+	.table__id {
+		max-width: 100px;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    display: block;
+	    padding: 5px;
+	    text-overflow: ellipsis;
+	}
 }
 .align-right {
 	text-align: right;
+}
+.admin__table {
+	font-size: 16px;
+	.list-group-item {
+		padding:5px;
+	}
 }
 </style>
