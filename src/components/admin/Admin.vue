@@ -113,7 +113,10 @@ export default {
       	}, 
       	error => console.log(error));
 	},
-	/** test client **/
+	/** test client 
+
+	branch
+	**/
 	methods: {
 		authorise: function(ev){
 			ev.preventDefault()
