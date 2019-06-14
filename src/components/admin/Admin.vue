@@ -114,8 +114,9 @@ export default {
       	error => console.log(error));
 	},
 	/** test client 
-
 	branch
+	master
+ 	branch master
 	**/
 	methods: {
 		authorise: function(ev){
