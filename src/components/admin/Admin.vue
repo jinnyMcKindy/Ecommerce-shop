@@ -36,7 +36,9 @@
 			</div>
 			<div class="admin__table"> 
 				<Table 
-					:table="table" />
+					@changeSelect="setStatus"
+					:table="table" 
+				/>
 				<!--<div class="align-right">
 					<button 
 						class="btn btn-default"
@@ -51,6 +53,7 @@
 
 <script>
 import { cookie } from '../helpers/cookies.js'
+import axios from "axios"
 import Table from '../elements/Table'
 export default {
 	name: "Admin",
@@ -110,6 +113,7 @@ export default {
       	}, 
       	error => console.log(error));
 	},
+	/** test **/
 	methods: {
 		authorise: function(ev){
 			ev.preventDefault()
@@ -123,8 +127,9 @@ export default {
 				this.logged = false; 
 			})
 		},
-		save: function(){
-			console.log(this.table)
+		setStatus: function(obj){
+			let url = `${this.$store.getters.getHost}/setStatus`
+			//axios.post(url, obj)
 		},
 		validate: function(){
 			let error = []

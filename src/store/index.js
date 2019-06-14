@@ -16,6 +16,9 @@ export default new Vuex.Store({
     orders: []
   },
   getters: {
+    getHost(state){
+      return state.apiHost;
+    },
     getOrders(state) {
       return state.orders
     },

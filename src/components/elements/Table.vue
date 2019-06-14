@@ -71,7 +71,7 @@ import Input from './Input'
 		props: ["table"],
 		methods: {
 			change: function(input, id){
-				console.log(input, id)
+				this.$emit('changeSelect', { input, id })
 			}
 		}
 	}
