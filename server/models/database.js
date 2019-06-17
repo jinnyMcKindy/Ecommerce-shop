@@ -1,6 +1,7 @@
 const mongo = require('mongodb').MongoClient;
+const Binary = require('mongodb').Binary;
 const url = 'mongodb://localhost:12345';
-
+const ObjectID = require('mongodb').ObjectID;
 const getProducts = new Promise((resolve, reject) => {
   mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
 		  if (err) {
@@ -98,9 +99,29 @@ const saveUser = (user) => {
 	  	});
 	});
 }
+const setStatus = ({ id, status }) => {
+	console.log(id, status)
+  return new Promise((resolve, reject) => {
+	  	mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+		    if (err) {
+			    console.error('error', err); 
+			    return;
+		    }
+		    const db = client.db('ishop');
+		    const collection = db.collection('orders');
+		    const uuid = new ObjectID(id);
+	      	collection.updateOne({ _id: uuid }, { $set: { status: status } }, (err, items) => {
+		  	  client.close();
+		  	  if(err) reject(err)
+		  	  resolve("resolved");
+		  	});
+	  	});
+	});
+}
 exports.getProducts = getProducts;
 exports.saveProducts = saveProducts;
 exports.saveOrder = saveOrder;
 exports.getOrders = getOrders;
 exports.getUsers = getUsers;
 exports.saveUser = saveUser;
+exports.setStatus = setStatus;

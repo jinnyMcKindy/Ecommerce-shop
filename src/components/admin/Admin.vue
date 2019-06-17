@@ -67,19 +67,21 @@ export default {
 			pwd: "",
 			errors: [],
 			table: {
-				selectedStatus: 0,
+				selectedStatus: [],
 				optionsStatus: [
-				"В работе", 
-				"Отменен", 
-				"Оплачен", 
-				"Отправлен", 
-				"Выслан линк на оплату"],
+						"В работе", 
+						"Отменен", 
+						"Оплачен", 
+						"Отправлен", 
+						"Выслан линк на оплату"
+					],
 				columns: [
-				"ID", 
-				"Сумма", 
-				"Продукты", 
-				"Shipment details",
-				"Статус"],
+						"ID", 
+						"Сумма", 
+						"Продукты", 
+						"Shipment details",
+						"Статус"
+					],
 				rows: []
 			}
 		}
@@ -90,6 +92,7 @@ export default {
 			this.logged = true;
 		}
 		this.$store.dispatch("actionOrders").then(data => {
+			console.log(data)
         	data.forEach((value) => {
         		let address = {
 					array: [],
@@ -108,16 +111,12 @@ export default {
         		.notEmpty(value.name, "Name")
         		.notEmpty(value.phone, "Phone");
         		details.push(value._id, value.totalPrice, value.products, address.array);
+        		this.table.selectedStatus.push(value.status);
         		this.table.rows.push(details);
         	})
       	}, 
       	error => console.log(error));
 	},
-	/** test client 
-	branch
-	master
- 	branch master
-	**/
 	methods: {
 		authorise: function(ev){
 			ev.preventDefault()
@@ -133,7 +132,9 @@ export default {
 		},
 		setStatus: function(obj){
 			let url = `${this.$store.getters.getHost}/setStatus`
-			//axios.post(url, obj)
+			let status = this.table.optionsStatus.indexOf(obj.input)
+			console.log(status, obj.id)
+			axios.post(url, {statusObj : { id: obj.id, status}})
 		},
 		validate: function(){
 			let error = []

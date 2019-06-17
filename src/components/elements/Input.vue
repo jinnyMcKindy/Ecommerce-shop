@@ -14,6 +14,7 @@
         <option
           v-for="(option, key) in options"
           v-bind:key="key"
+          :disabled="key == disabled"
           :selected="key === 0">
           {{ option }}
         </option>
@@ -42,7 +43,8 @@ export default {
     'value', 
     'type', 
     'options', 
-    'subType'
+    'subType',
+    'disabled'
   ],
   data: function(){
     return {

@@ -48,7 +48,7 @@
 	  		</span>
 	  	  </td>
 	      <Input 
-	          :value="table.optionsStatus[table.selectedStatus]"
+	          :value="table.optionsStatus[table.selectedStatus[rindex]]"
 	          type="select"
 	          :options="table.optionsStatus"
 	          v-on:changeInput="(args) => change(args, rows[0])"
