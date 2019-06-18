@@ -8,10 +8,8 @@ const md5 = require('md5');
 const bodyParser = require("body-parser");
 const WebSocket = require('ws');
 const db = dbo.DataBase;
-
 const mongo = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:12345';
-const ObjectID = require('mongodb').ObjectID;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -28,67 +26,56 @@ app.all('/*', function(req, res, next) {
   next();
 });
 
-const hostname = '127.0.0.1';
-const port = 3000;
-
-//products.getContent.then = res => console.log(res), err => console.log(err)
-//products.saveContent.then = res => console.log(res), err => console.log(err)
-
-/*
-db.saveUser({login: "admin", password: md5("12345") })
-.then(data => console.log(data), err => console.log(err));
-*/
-
-app.get('/getProducts', cors(corsOptions), (req, res) => {
-  products.getContent
-    .then(data => res.json(data), err => res.json(err));
-});
-app.get('/getUsers', cors(corsOptions), (req, res) => {
-  db.getUsers()
-    .then(data => res.json(data), err => res.json(err));
-});
-app.post('/saveOrder', (req, res) => {
-	//console.log(req.body)
-	db.saveOrder(req.body.order)
-	.then(data => res.json(data), err => res.json(err));    
-});
-app.post('/setStatus', (req, res) => {
-  //console.log(req.body)
-  db.setStatus(req.body.statusObj)
-  .then((data) => res.json(data), err => res.json("error", err));    
-});
-app.get('/getOrders', cors(corsOptions), (req, res) => {
-  db.getOrders()
-    .then(data => res.json(data), err => res.json(err));
-});
-app.listen(port);
-
-// Websocket
-/*
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-wss.on('connection', (ws) => {
-    ws.on('message', (message) => {
-        console.log('received: %s', message);
-        ws.send(`Hello, you sent -> ${message}`);
-    }); 
-    ws.send('Hi there, I am a WebSocket server');
-});
-
-server.listen(8999, () => {
-    console.log(`Server started on port ${server.address().port} :)`);
-});
-*/
-/** My connection **/
-
+// Mongo Connection
 startMongoDBConnection();
 
 function startMongoDBConnection(){
   mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+    startServerApi(client)
     startWebSocketServer(client);
   })
 }
 
+function startServerApi(client){
+  //products.getContent.then = res => console.log(res), err => console.log(err)
+  //products.saveContent.then = res => console.log(res), err => console.log(err)
+  /*
+  db.saveUser({login: "admin", password: md5("12345") })
+  .then(data => console.log(data), err => console.log(err));
+  */
+  const hostname = '127.0.0.1';
+  const port = 3000;
+  app.get('/getProducts', cors(corsOptions), (req, res) => {
+  products.getContent
+    .then(data => res.json(data), err => res.json(err));  
+  });
+  app.get('/getUsers', cors(corsOptions), (req, res) => {
+    db.getUsers()
+      .then(data => res.json(data), err => res.json(err));
+  });
+  app.post('/saveOrder', (req, res) => {
+    //console.log(req.body)
+    db.saveOrder(req.body.order)
+    .then(data => res.json(data), err => res.json(err));    
+  });
+  app.post('/setStatus', (req, res) => {
+    //console.log(req.body)
+    db.setStatus(req.body.statusObj)
+    .then((data) => res.json(data), err => res.json("error", err));    
+  });
+
+  /* 
+  //deprecated
+  app.get('/getOrders', cors(corsOptions), (req, res) => {
+    db.getOrders()
+      .then(data => res.json(data), err => res.json(err));
+  });
+  */
+  
+  app.listen(port);
+}
+
+//Websocket
 function startWebSocketServer(client){
   const db = client.db('ishop')
   const connections = new Set(); // Storage of connections

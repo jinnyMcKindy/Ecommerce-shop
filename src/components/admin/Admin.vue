@@ -37,15 +37,9 @@
 			<div class="admin__table"> 
 				<Table 
 					@changeSelect="setStatus"
+					@deleteOrder="deleteOrder"
 					:table="table" 
 				/>
-				<!--<div class="align-right">
-					<button 
-						class="btn btn-default"
-						@click="save">
-						Сохранить
-					</button>
-				</div>-->
 			</div>
 		</div>
 </div>
@@ -67,13 +61,13 @@ export default {
 			pwd: "",
 			errors: [],
 			table: {
-				selectedStatus: [],
 				optionsStatus: [
-						"В работе", 
-						"Отменен", 
-						"Оплачен", 
-						"Отправлен", 
-						"Выслан линк на оплату"
+						"1. В работе", 
+						"2. Отменен", 
+						"3. Линк выслан",
+						"4. Оплачен", 
+						"5. Отправлен",
+						"6. Получен"
 					],
 				columns: [
 						"ID", 
@@ -81,8 +75,7 @@ export default {
 						"Продукты", 
 						"Shipment details",
 						"Статус"
-					],
-				rows: []
+					]
 			}
 		}
 	},
@@ -104,31 +97,43 @@ export default {
 			    const orders = JSON.parse(evt.data);
 			    this.table.selectedStatus = [];
 			    this.table.rows = [];
-			    orders.forEach((value) => {
-	        		let address = {
-						array: [],
-						notEmpty(value, str){
-							if(value) this.array.push(`${str}: ${value}`)
-							return this;
-						}
-					}
-	        		const details = [];
-	        		address
-	        		.notEmpty(value.country, "Country")
-	        		.notEmpty(value.city, "City")
-	        		.notEmpty(value.address, "Address")
-	        		.notEmpty(value.email, "Email")
-	        		.notEmpty(value.index, "Index")
-	        		.notEmpty(value.name, "Name")
-	        		.notEmpty(value.phone, "Phone");
-	        		details.push(value._id, value.totalPrice, value.products, address.array);
-	        		this.table.selectedStatus.push(value.status);
-	        		this.table.rows.push(details);
-        		})
+			    let details = this.getDetails(orders);
+			    this.table = {...this.table, ...details}
 			};
 			ws.onclose = () => {
 			    console.log("Connection closed...");
 			};
+		},
+		deleteOrder: function(id){
+			let confirmed = confirm("Вы точно хотите удалить заказ?");
+			if(confirmed) {
+				console.log(id)
+			}
+		},
+		getDetails: function(orders){
+			let obj = { selectedStatus: [], rows: []};
+			orders.forEach((value) => {
+        		let address = {
+					array: [],
+					notEmpty(value, str){
+						if(value) this.array.push(`${str}: ${value}`)
+						return this;
+					}
+				}
+        		const details = [];
+        		address
+        		.notEmpty(value.country, "Country")
+        		.notEmpty(value.city, "City")
+        		.notEmpty(value.address, "Address")
+        		.notEmpty(value.email, "Email")
+        		.notEmpty(value.index, "Index")
+        		.notEmpty(value.name, "Name")
+        		.notEmpty(value.phone, "Phone");
+        		details.push(value._id, value.totalPrice, value.products, address.array);
+        		obj.selectedStatus.push(value.status);
+        		obj.rows.push(details);
+        	})
+			return obj;
 		},
 		authorise: function(ev){
 			ev.preventDefault()

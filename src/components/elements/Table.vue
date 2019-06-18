@@ -53,6 +53,21 @@
 	          :options="table.optionsStatus"
 	          v-on:changeInput="(args) => change(args, rows[0])"
 	      />
+	      	<td>
+		    	<button class="btn btn-warning">
+		    		Товара нет
+		    	</button>
+		    </td>
+		    <td>
+		    	<button class="btn btn-success">
+		    		Линк
+		    	</button>
+		    </td>
+		    <td>
+		    	<button class="btn btn-danger" @click="$emit('deleteOrder', rows[0])">
+		    		<i class="fa fa-times"></i>
+		    	</button>
+		    </td>
 	    </tr>
 	  </tbody>
 	</table>
@@ -77,9 +92,6 @@ import Input from './Input'
 	}
 </script>
 <style>
-.btn-details {
-	width: 250px;
-}
 .table__list {
 	max-width: 250px;
 }
