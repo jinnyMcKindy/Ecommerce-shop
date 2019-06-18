@@ -3,10 +3,16 @@ const cors = require('cors')
 const http = require('http');
 const products = require('./server/models/products');
 const app = express();
-const db = require('./server/models/database');
+const dbo = require('./server/models/database');
 const md5 = require('md5');
 const bodyParser = require("body-parser");
 const WebSocket = require('ws');
+const db = dbo.DataBase;
+
+const mongo = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:12345';
+const ObjectID = require('mongodb').ObjectID;
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -38,7 +44,7 @@ app.get('/getProducts', cors(corsOptions), (req, res) => {
     .then(data => res.json(data), err => res.json(err));
 });
 app.get('/getUsers', cors(corsOptions), (req, res) => {
-  db.getUsers
+  db.getUsers()
     .then(data => res.json(data), err => res.json(err));
 });
 app.post('/saveOrder', (req, res) => {
@@ -52,13 +58,13 @@ app.post('/setStatus', (req, res) => {
   .then((data) => res.json(data), err => res.json("error", err));    
 });
 app.get('/getOrders', cors(corsOptions), (req, res) => {
-  db.getOrders
+  db.getOrders()
     .then(data => res.json(data), err => res.json(err));
 });
 app.listen(port);
 
 // Websocket
-
+/*
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 wss.on('connection', (ws) => {
@@ -72,3 +78,41 @@ wss.on('connection', (ws) => {
 server.listen(8999, () => {
     console.log(`Server started on port ${server.address().port} :)`);
 });
+*/
+/** My connection **/
+
+startMongoDBConnection();
+
+function startMongoDBConnection(){
+  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+    startWebSocketServer(client);
+  })
+}
+
+function startWebSocketServer(client){
+  const db = client.db('ishop')
+  const connections = new Set(); // Storage of connections
+  const lastModification = 0; // Greater modified
+  const server = http.createServer(app);
+
+  const socket = new WebSocket.Server({ server });
+
+  server.listen(8999, () => {
+      console.log(`Server started on port ${server.address().port} :)`);
+  });
+  
+  socket.on('connection', function(req) {
+    var connection = req;
+    connections.add(connection);
+    db
+      .collection('orders')
+      .find()
+      .toArray(function(err, docs){
+        req.send(JSON.stringify(docs));
+      });
+  });
+  socket.on('close', function(req) {
+    client.close();
+    connections.delete(connection);
+  });
+}

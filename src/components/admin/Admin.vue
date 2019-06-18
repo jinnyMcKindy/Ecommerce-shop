@@ -91,33 +91,45 @@ export default {
 		if(auth){
 			this.logged = true;
 		}
-		this.$store.dispatch("actionOrders").then(data => {
-			console.log(data)
-        	data.forEach((value) => {
-        		let address = {
-					array: [],
-					notEmpty(value, str){
-						if(value) this.array.push(`${str}: ${value}`)
-						return this;
-					}
-				}
-        		const details = [];
-        		address
-        		.notEmpty(value.country, "Country")
-        		.notEmpty(value.city, "City")
-        		.notEmpty(value.address, "Address")
-        		.notEmpty(value.email, "Email")
-        		.notEmpty(value.index, "Index")
-        		.notEmpty(value.name, "Name")
-        		.notEmpty(value.phone, "Phone");
-        		details.push(value._id, value.totalPrice, value.products, address.array);
-        		this.table.selectedStatus.push(value.status);
-        		this.table.rows.push(details);
-        	})
-      	}, 
-      	error => console.log(error));
+		this.setOrders();
 	},
 	methods: {
+		setOrders: function(){
+			var ws = new WebSocket('ws://localhost:8999', 'echo-protocol');
+			ws.onopen = () => {
+			    console.log('socket connection opened properly');
+			};
+			ws.onmessage = (evt) => {
+			    //console.log("Message received = " + evt.data);
+			    const orders = JSON.parse(evt.data);
+			    this.table.selectedStatus = [];
+			    this.table.rows = [];
+			    orders.forEach((value) => {
+	        		let address = {
+						array: [],
+						notEmpty(value, str){
+							if(value) this.array.push(`${str}: ${value}`)
+							return this;
+						}
+					}
+	        		const details = [];
+	        		address
+	        		.notEmpty(value.country, "Country")
+	        		.notEmpty(value.city, "City")
+	        		.notEmpty(value.address, "Address")
+	        		.notEmpty(value.email, "Email")
+	        		.notEmpty(value.index, "Index")
+	        		.notEmpty(value.name, "Name")
+	        		.notEmpty(value.phone, "Phone");
+	        		details.push(value._id, value.totalPrice, value.products, address.array);
+	        		this.table.selectedStatus.push(value.status);
+	        		this.table.rows.push(details);
+        		})
+			};
+			ws.onclose = () => {
+			    console.log("Connection closed...");
+			};
+		},
 		authorise: function(ev){
 			ev.preventDefault()
 			this.errors = this.validate()
@@ -135,6 +147,7 @@ export default {
 			let status = this.table.optionsStatus.indexOf(obj.input)
 			console.log(status, obj.id)
 			axios.post(url, {statusObj : { id: obj.id, status}})
+			this.setOrders();
 		},
 		validate: function(){
 			let error = []

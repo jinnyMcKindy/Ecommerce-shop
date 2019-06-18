@@ -1,10 +1,11 @@
 const HTMLParser = require('node-html-parser');
-const db = require('./database');
+const dbo = require('./database');
 const fs = require('fs');
 const fileName = './server/items.txt';
+const db = dbo.DataBase;
 
 const getContent = new Promise((resolve, reject) => {
-  db.getProducts.then(res => resolve(res), err => reject(err))
+  db.getProducts().then(res => resolve(res), err => reject(err))
 })
 
 function parseProduct(res) {
