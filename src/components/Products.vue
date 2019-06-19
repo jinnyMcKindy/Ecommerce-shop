@@ -18,7 +18,7 @@
                    <Button 
                      v-else 
                      v-bind:text="'Удалить'" 
-                     class="btn btn-danger pull-right" 
+                     class="btn btn-danger pull-right products-btn__delete" 
                      :figure="figure" 
                      v-on:buy="$emit('buy', figure)">
                    </Button>

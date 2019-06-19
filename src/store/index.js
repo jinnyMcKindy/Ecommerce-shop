@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios"
 const md5 = require('md5');
-
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -69,6 +68,14 @@ export default new Vuex.Store({
             const orders = response.data; 
             commit('setOrders', orders)
             resolve(orders)
+          }).catch(err => reject(err));
+      })
+    },
+    deleteOrder({comit, state}, id){
+      return new Promise((resolve, reject) => {
+          const url = `${state.apiHost}/deleteOrder`;
+          axios.post(url, { id }).then((response) => {
+            resolve(response)
           }).catch(err => reject(err));
       })
     },

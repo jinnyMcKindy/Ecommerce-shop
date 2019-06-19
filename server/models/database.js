@@ -106,8 +106,25 @@ const DataBase = {
 		  	});
 		});
 	},
-	 setStatus({ id, status }){
-		console.log(id, status)
+	deleteOrder(id){
+		return new Promise((resolve, reject) => {
+		  	mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+			    if (err) {
+				    console.error('error', err);
+				    return;
+			    }
+			    const db = client.db('ishop');
+			    const collection = db.collection('orders');
+			    const uuid = new ObjectID(id);
+		      	collection.deleteOne({ _id: uuid }, (err, result) => {
+				  client.close()
+				  if(err) reject(err)
+				  resolve(result)
+			    });
+		  	});
+		});
+	},
+	setStatus({ id, status }){
 	  return new Promise((resolve, reject) => {
 		  	mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
 			    if (err) {

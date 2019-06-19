@@ -38,7 +38,7 @@
 				<Table 
 					@changeSelect="setStatus"
 					@deleteOrder="deleteOrder"
-					:table="table" 
+					:table="table"
 				/>
 			</div>
 		</div>
@@ -73,7 +73,7 @@ export default {
 						"ID", 
 						"Сумма", 
 						"Продукты", 
-						"Shipment details",
+						"Адрес",
 						"Статус"
 					]
 			}
@@ -90,24 +90,29 @@ export default {
 		setOrders: function(){
 			var ws = new WebSocket('ws://localhost:8999', 'echo-protocol');
 			ws.onopen = () => {
-			    console.log('socket connection opened properly');
+			    //console.log('socket connection opened properly');
 			};
 			ws.onmessage = (evt) => {
-			    //console.log("Message received = " + evt.data);
+			   // console.log("Message received = " + evt.data);
 			    const orders = JSON.parse(evt.data);
 			    this.table.selectedStatus = [];
 			    this.table.rows = [];
 			    let details = this.getDetails(orders);
-			    this.table = {...this.table, ...details}
+			    this.table = { ...this.table, ...details }
 			};
 			ws.onclose = () => {
-			    console.log("Connection closed...");
+			    //console.log("Connection closed...");
 			};
 		},
 		deleteOrder: function(id){
 			let confirmed = confirm("Вы точно хотите удалить заказ?");
 			if(confirmed) {
-				console.log(id)
+				this.$store.dispatch('deleteOrder', id).then(
+					res => { 
+						this.setOrders()
+					}, 
+					err => console.log(err)
+				)
 			}
 		},
 		getDetails: function(orders){
@@ -149,10 +154,12 @@ export default {
 		},
 		setStatus: function(obj){
 			let url = `${this.$store.getters.getHost}/setStatus`
-			let status = this.table.optionsStatus.indexOf(obj.input)
-			console.log(status, obj.id)
-			axios.post(url, {statusObj : { id: obj.id, status}})
-			this.setOrders();
+			let status = Number.isInteger(obj.input) ? 
+				obj.input : this.table.optionsStatus.indexOf(obj.input)
+			axios.post(url, { statusObj : { id: obj.id, status } })
+			.then((response) => {
+			    this.setOrders();
+			})
 		},
 		validate: function(){
 			let error = []

@@ -33,7 +33,7 @@
 				    Показать
 				  </button>
 				</p>
-				<div class="collapse" :id="`collapse${index}${rindex}`" >
+				<div class="collapse" :id="`collapse${index}${rindex}`">
 				  <div class="card ">
 				    <ul class="list-group list-group-flush table__list">
 		  				<li 
@@ -53,21 +53,30 @@
 	          :options="table.optionsStatus"
 	          v-on:changeInput="(args) => change(args, rows[0])"
 	      />
-	      	<td>
-		    	<button class="btn btn-warning">
-		    		Товара нет
-		    	</button>
-		    </td>
-		    <td>
-		    	<button class="btn btn-success">
-		    		Линк
-		    	</button>
-		    </td>
-		    <td>
-		    	<button class="btn btn-danger" @click="$emit('deleteOrder', rows[0])">
-		    		<i class="fa fa-times"></i>
-		    	</button>
-		    </td>
+      	  <td>
+	    	<button 
+	    	@click="change(1, rows[0])"
+	    	:disabled="table.selectedStatus[rindex] == 1"
+	    	class="btn btn-warning">
+	    		Товара нет
+	    	</button>
+	      </td>
+	      <td>
+	    	<button 
+	    	@click="change(2, rows[0])"
+	    	:disabled="table.selectedStatus[rindex] == 2"
+	    	class="btn btn-success">
+	    		Линк
+	    	</button>
+	      </td>
+	      <td>
+	    	<button 
+	    		class="btn btn-danger" 
+	    		@click="$emit('deleteOrder', rows[0])"
+	    		>
+	    		<i class="fa fa-times"></i>
+	    	</button>
+	      </td>
 	    </tr>
 	  </tbody>
 	</table>

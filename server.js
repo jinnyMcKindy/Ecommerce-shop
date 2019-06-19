@@ -63,7 +63,10 @@ function startServerApi(client){
     db.setStatus(req.body.statusObj)
     .then((data) => res.json(data), err => res.json("error", err));    
   });
-
+  app.post('/deleteOrder', (req, res) => {
+    db.deleteOrder(req.body.id)
+    .then((data) => res.json(data), err => res.json("error", err));    
+  });
   /* 
   //deprecated
   app.get('/getOrders', cors(corsOptions), (req, res) => {

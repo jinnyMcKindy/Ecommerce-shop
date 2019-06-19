@@ -1,7 +1,7 @@
 <template>
 		<Details
 			v-if="figures.length"
-			class="details"
+			class="details checkout"
 	        @close="toHome">
 	            <div 
 	            	class="details__figures" 
@@ -49,6 +49,15 @@ export default {
 </script>
 
 <style lang="less">
+	.checkout {
+		.products-btn__delete {
+			display: none;
+		}
+		.product__price {
+			float: unset;
+    		text-align: right;
+    	}
+	}
 	.details__price {
 		margin-bottom: 20px;
 		.product__price {
