@@ -1,8 +1,10 @@
 <template>
     <div class="container">
-        <Products :figures="figures"
-                  v-on:buy="buy"
-                  :basket="basket">
+        <Products 
+            :figures="figures"
+            v-on:buy="buy"
+            v-bind:key="key"
+            :basket="basket">
         </Products>
     </div>
 </template>
@@ -12,24 +14,20 @@ export default {
   name: 'Main',
   data() {
     return {
-      figures: [],
       basket: [],
+      figures: [],
+      key: 0
     };
   },
-  components: { Products },
-  created() {
-    this.getData();
-    setInterval(() => {
-      this.getData();
-    }, 60000);
-  },
-  methods: {
-    getData() {
+  created: function(){
       this.$store.dispatch("actionProducts").then(data => {
         this.figures = data;
+        this.key++
       }, 
       error => console.log(error));
-    },
+  },
+  components: { Products },
+  methods: {
     addProduct(figure) {
       const { name } = figure;
       this.basket.push(name);

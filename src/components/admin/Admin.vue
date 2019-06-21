@@ -135,7 +135,8 @@ export default {
         		.notEmpty(value.name, "Name")
         		.notEmpty(value.phone, "Phone");
         		details.push(value._id, value.totalPrice, value.products, address.array);
-        		obj.selectedStatus.push(value.status);
+        		let status = value.status ? value.status : 0;
+        		obj.selectedStatus.push(status);
         		obj.rows.push(details);
         	})
 			return obj;

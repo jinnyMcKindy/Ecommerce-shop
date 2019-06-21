@@ -10,12 +10,11 @@
       />
     </span>
     <span v-if="type === 'select'">
-      <select class="custom-select" v-model="input">
+      <select :disabled="disabled" class="custom-select" v-model="input">
         <option
           v-for="(option, key) in options"
           v-bind:key="key"
-          :disabled="key == disabled"
-          :selected="key === 0">
+          :disabled="disabled">
           {{ option }}
         </option>
       </select>
@@ -42,24 +41,23 @@ export default {
   props: [
     'value', 
     'type', 
+    'disabled',
     'options', 
     'subType',
     'disabled'
   ],
   data: function(){
-    return {
-     //input: this.value
-    }
+    return {}
   },
   computed: {
-    input: function(){
-      return this.value
+    input: {
+      get: function () {
+        return this.value;
+      },
+      set: function (newValue) {
+        this.$emit('changeInput', newValue)
+      }
     }
-  },
-  watch: { 
-    'input': function() {
-      this.$emit('changeInput', this.input)
-    } 
   },
   methods: {}
 }

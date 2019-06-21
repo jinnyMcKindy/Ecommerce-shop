@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 let callback = function(el, binding, vnode) { 
   	let value = binding.value;
-  	el.innerHTML = `${value} руб.`
+  	el.innerHTML = `${value}`
 }
 function init() {
   Vue.directive('currency', {
