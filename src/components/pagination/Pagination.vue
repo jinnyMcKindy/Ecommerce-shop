@@ -1,18 +1,19 @@
 <template>
   <div>
     <div class="c2c-pagination">
-         <dot-component 
-            :Max="leftMax" 
-            v-on:click-dots="clickDots" 
+         <dot-component
+            :Max="leftMax"
+            v-on:click-dots="clickDots"
             value="left"
             :icon="leftIcon">
          </dot-component>
-         <page-component 
-            v-for="(page, index) in range(first, visiblePages)" 
+         <page-component
+            v-for="(page) in range(first, visiblePages)"
             :key="page.id"
             v-on:navigate-of="navigate(page)"
             :page="page"
-            :class="['page-' + page]">
+            :ref="`page-${page}`"
+            :class="['page-' + page, active == page ? 'active' : '']">
         </page-component>
         <dot-component
           :Max="rightMax"
@@ -30,111 +31,102 @@ import DotComponent from './DotComponent';
 
 export default {
   name: 'Pagination',
-  props:  [ "leftIcon", "rightIcon", "results", "maxAmountOfPages", "perPage" ],
-  data: function () {
+  props: ['leftIcon', 'rightIcon', 'results', 'maxAmountOfPages', 'perPage'],
+  data() {
     return {
-       text : "",
-       shownotfound: false,
-       size : 0,
-       pages: 0,
-       visiblePages: 0,
-       rightMax: false,
-       leftMax: false,
-       first: 1,
-       dirty: true,
-       oldUrl : "",
-    }
+      text: '',
+      shownotfound: false,
+      size: 0,
+      pages: 0,
+      visiblePages: 0,
+      rightMax: false,
+      leftMax: false,
+      first: 1,
+      dirty: true,
+      oldUrl: '',
+      active: 0,
+    };
   },
-    components: {
-      PageComponent, 
-      DotComponent
+  components: {
+    PageComponent,
+    DotComponent,
+  },
+  mounted() {
+    this.size = this.results.length; // количество найденных совпадений
+    this.setPages(this.results.length); // высчитываем кол-во страниц для пагинации
+  },
+  methods: {
+    setPages(len) {
+      if (len <= this.perPage) {
+        this.pages = 0;
+        return;
+      }
+      const pages = Math.ceil(len / this.perPage);
+      this.pages = pages;
+      this.navigate(1);
     },
-    mounted: function(){
-        this.size = this.results.length; //количество найденных совпадений
-        this.setPages(this.results.length); //высчитываем кол-во страниц для пагинации
+    navigate(indexPage) {
+      const end = indexPage - 1;
+      const offset = this.perPage * end;
+      const visible = Object.values(this.results).splice(offset, this.perPage);
+      this.$emit('setResults', visible);
+      this.active = indexPage;
+      if (this.dirty) this.checkDots();
     },
-    methods: { 
-        setPages : function(len){
-         // console.log(this.results)
-            if( len <= this.perPage ){ //если вывод списка помещается на 1 страницу
-               this.pages = 0; //цифры пагинации
-               return;
-            }
-            let pages = Math.ceil( len/ this.perPage );
-            this.pages = pages;
-            this.navigate(1); //навигация с 1 страницы
-        },
-        navigate : function ( indexPage ) {
-            var end = indexPage-1; //если кликнутый оффсет равен 2, то обрезаем с 10, если 1, то с 0
-            var offset = this.perPage * end; //находим индекс, с которого обрезаем массив
-            let visible = Object.values( this.results ).splice( offset, this.perPage ); //выводим 
-            this.$emit('setResults', visible)
-            setTimeout(()=>{
-              var x = document.getElementsByClassName("page");
-              var i;
-              for (i = 0; i < x.length; i++) {
-                  x[i].classList.remove("active");
-                  var ind = "page-"+indexPage;
-                  if( x[i].classList.contains( ind ) ){
-                          x[i].classList.add("active");
-                  }
-              }
-            })
-            if(this.dirty) this.checkDots();   
-        },
-        checkDots(){
-            if( this.pages <= this.maxAmountOfPages ) {
-                this.visiblePages = this.pages; 
-            }
-            else {
-                this.visiblePages = this.maxAmountOfPages;
-                this.rightMax = true; 
-                this.leftMax = false;
-            }
-        },
-        clickDots: function (dotName){
-            this.dirty = false;
-            this.leftMax = true;
-            this.rightMax = true; 
-            let obj;
-            dotName === "right" ?  obj = this.rightDir() : obj = this.leftDir();
-            [ this.first, this.visiblePages ] = obj;
-            this.navigate( obj[0] );
-        },
-        rightDir: function(){
-            let first, last, obj;
-            last = this.visiblePages + this.maxAmountOfPages;
-            first = this.visiblePages;
-            if( last >= this.pages ){ 
-                last =  this.pages;
-                this.rightMax = false; 
-            }
-            obj = [ first, last ];
-            return obj;
-        },
-        leftDir: function(){
-            let first, last, obj;
-            last = this.first;
-            first = last - this.maxAmountOfPages;
-            if(first === 1) this.leftMax = false; 
-            if(first <= 0){
-                   first = 1;
-                   this.leftMax = false; 
-            }
-            obj = [ first, last ];
-            return obj;
-        },
-        range: function(min,max){
-            var array = [],
-                j = 0;
-                for(var i = min; i <= max; i++){
-                    array[j] = i;
-                    j++;
-            }
-            return array;
-        }
-    } 
-}
+    checkDots() {
+      if (this.pages <= this.maxAmountOfPages) {
+        this.visiblePages = this.pages;
+      } else {
+        this.visiblePages = this.maxAmountOfPages;
+        this.rightMax = true;
+        this.leftMax = false;
+      }
+    },
+    clickDots(dotName) {
+      this.dirty = false;
+      this.leftMax = true;
+      this.rightMax = true;
+      let obj;
+      dotName === 'right' ? obj = this.rightDir() : obj = this.leftDir();
+      [this.first, this.visiblePages] = obj;
+      this.navigate(obj[0]);
+    },
+    rightDir() {
+      let first; let last; let
+        obj;
+      last = this.visiblePages + this.maxAmountOfPages;
+      first = this.visiblePages;
+      if (last >= this.pages) {
+        last = this.pages;
+        this.rightMax = false;
+      }
+      obj = [first, last];
+      return obj;
+    },
+    leftDir() {
+      let first; let last; let
+        obj;
+      last = this.first;
+      first = last - this.maxAmountOfPages;
+      if (first === 1) this.leftMax = false;
+      if (first <= 0) {
+        first = 1;
+        this.leftMax = false;
+      }
+      obj = [first, last];
+      return obj;
+    },
+    range(min, max) {
+      const array = [];
+      let j = 0;
+      for (let i = min; i <= max; i++) {
+        array[j] = i;
+        j++;
+      }
+      return array;
+    },
+  },
+};
 </script>
 <style scoped>
 h1, h2 {
