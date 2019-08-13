@@ -69,6 +69,7 @@ export default {
       const end = indexPage - 1;
       const offset = this.perPage * end;
       const visible = Object.values(this.results).splice(offset, this.perPage);
+      //console.log(end, offset, visible, this.results)
       this.$emit('setResults', visible);
       this.active = indexPage;
       if (this.dirty) this.checkDots();
@@ -92,10 +93,11 @@ export default {
       this.navigate(obj[0]);
     },
     rightDir() {
-      let first; let last; let
-        obj;
+      let first; 
+      let last; 
+      let obj;
       last = this.visiblePages + this.maxAmountOfPages;
-      first = this.visiblePages;
+      first = this.visiblePages+1;
       if (last >= this.pages) {
         last = this.pages;
         this.rightMax = false;
@@ -106,7 +108,7 @@ export default {
     leftDir() {
       let first; let last; let
         obj;
-      last = this.first;
+      last = this.first-1;
       first = last - this.maxAmountOfPages;
       if (first === 1) this.leftMax = false;
       if (first <= 0) {

@@ -2,10 +2,7 @@
 
 ## Description
 
-This is single page application. Client side is made with VueJS, server side is made with NodeJS + MongoDB.
-Application get list of products from the third-party API, save them to the MongoDB and display on the main page.
-User can choose, move to cart and order the prodicts.
-There's also admin page to manage the orders.
+The front end of the single page application is written in VueJS, the back end uses NodeJS and MongoDB. The application displays a list of products received from a third-party API and then saved in the MongoDB database. Users can select products, add them to cart and order them. For the manager, there is an admin page for managing orders.
 
 ## Required
 
