@@ -1,0 +1,226 @@
+<template>
+	<div class="container expand">
+		<div v-if="!logged" class="admin">
+			<div 
+				class="error" 
+				v-for="error in errors">
+				{{error}}
+			</div>
+			<form>
+				<div>
+					<input 
+						v-model="login"
+						type="login" 
+						class="form-control admin-control" />
+				</div>
+				<div>
+					<input 
+						v-model="pwd"
+						type="password" 
+						class="form-control admin-control" />
+				</div>
+				<div>
+					<button 
+						@click="authorise" 
+						class="btn btn-info admin__btn">Войти</button>
+				</div>
+			</form>
+		</div>
+		<div v-else>
+			<div class="right-align">
+				<button 
+					class="btn btn-default"
+					@click="logout">
+					Выход
+				</button>
+			</div>
+			<div class="admin__table"> 
+				<Table 
+					@changeSelect="setStatus"
+					@deleteOrder="deleteOrder"
+					:table="table"
+				/>
+			</div>
+		</div>
+</div>
+</template>
+
+<script>
+import { cookie } from '../helpers/cookies.js'
+import axios from "axios"
+import Table from '../elements/Table'
+export default {
+	name: "Admin",
+	components: {
+		Table
+	},
+	data: function(){
+		return {
+			logged: false,
+			login: "",
+			pwd: "",
+			errors: [],
+			table: {
+				optionsStatus: [
+						"1. В работе", 
+						"2. Отменен", 
+						"3. Линк выслан",
+						"4. Оплачен", 
+						"5. Отправлен",
+						"6. Получен"
+					],
+				columns: [
+						"ID", 
+						"Сумма", 
+						"Продукты", 
+						"Адрес",
+						"Статус"
+					]
+			}
+		}
+	},
+	created: function(){
+		let auth = cookie.getCookie("authorised");
+		if(auth){
+			this.logged = true;
+		}
+		this.setOrders();
+	},
+	methods: {
+		setOrders: function(){
+			var ws = new WebSocket('ws://localhost:8999', 'echo-protocol');
+			ws.onopen = () => {
+			    //console.log('socket connection opened properly');
+			};
+			ws.onmessage = (evt) => {
+			   // console.log("Message received = " + evt.data);
+			    const orders = JSON.parse(evt.data);
+			    this.table.selectedStatus = [];
+			    this.table.rows = [];
+			    let details = this.getDetails(orders);
+			    this.table = { ...this.table, ...details }
+			};
+			ws.onclose = () => {
+			    //console.log("Connection closed...");
+			};
+		},
+		deleteOrder: function(id){
+			let confirmed = confirm("Вы точно хотите удалить заказ?");
+			if(confirmed) {
+				this.$store.dispatch('deleteOrder', id).then(
+					res => { 
+						this.setOrders()
+					}, 
+					err => console.log(err)
+				)
+			}
+		},
+		getDetails: function(orders){
+			let obj = { selectedStatus: [], rows: []};
+			orders.forEach((value) => {
+        		let address = {
+					array: [],
+					notEmpty(value, str){
+						if(value) this.array.push(`${str}: ${value}`)
+						return this;
+					}
+				}
+        		const details = [];
+        		address
+        		.notEmpty(value.country, "Country")
+        		.notEmpty(value.city, "City")
+        		.notEmpty(value.address, "Address")
+        		.notEmpty(value.email, "Email")
+        		.notEmpty(value.index, "Index")
+        		.notEmpty(value.name, "Name")
+        		.notEmpty(value.phone, "Phone");
+        		details.push(value._id, value.totalPrice, value.products, address.array);
+        		let status = value.status ? value.status : 0;
+        		obj.selectedStatus.push(status);
+        		obj.rows.push(details);
+        	})
+			return obj;
+		},
+		authorise: function(ev){
+			ev.preventDefault()
+			this.errors = this.validate()
+			let obj = { login: this.login, password: this.pwd};
+			if(!this.errors.length) this.$store.dispatch("authorise", obj).then(() => {
+				cookie.setCookie("authorised", true);
+				this.logged = true;
+			}, err => { 
+				this.errors.push("Пароль или логин не верны")
+				this.logged = false; 
+			})
+		},
+		setStatus: function(obj){
+			let url = `${this.$store.getters.getHost}/setStatus`
+			let status = Number.isInteger(obj.input) ? 
+				obj.input : this.table.optionsStatus.indexOf(obj.input)
+			axios.post(url, { statusObj : { id: obj.id, status } })
+			.then((response) => {
+			    this.setOrders();
+			})
+		},
+		validate: function(){
+			let error = []
+			error = this.validateInput(this.login, "логин", error)
+			error = this.validateInput(this.pwd, "пароль", error)
+			return error;
+		},
+		validateInput(str, property, errors){
+			if(!str) { 
+				errors.push(`Введите ${property}`); 
+			}
+			else if(str.length < 4) { 
+				errors.push(`Слишком короткий ${property}`) 
+			}
+			return errors;
+		},
+		logout(){
+			this.logged = false;
+			cookie.deleteCookie("authorised")
+		}
+	}
+}
+</script>
+
+<style lang="less">
+.admin {
+	text-align: center;
+	max-width: 500px;
+	margin: auto;
+}
+.admin-control {
+	margin-bottom: 10px;
+}
+.admin__btn {
+	width: 100%;
+}
+.right-align {
+	text-align: right;
+}
+.admin__table {
+	margin-top: 10px;
+	td:nth-child(5){
+		white-space: nowrap;
+	}
+	.table__id {
+		max-width: 100px;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    display: block;
+	    padding: 5px;
+	    text-overflow: ellipsis;
+	}
+}
+.align-right {
+	text-align: right;
+}
+.admin__table {
+	font-size: 16px;
+	.list-group-item {
+		padding:5px;
+	}
+}
+</style>

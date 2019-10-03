@@ -2,7 +2,7 @@ const request = require('request');
 const fs = require('fs');
 const HTMLParser = require('node-html-parser');
 
-const fileName = './server/items.txt';
+const fileName = './items.txt';
 const db = require('./database');
 
 const url_phones = 'https://ru.aliexpress.com/category/202001195/mobile-phones.html?site=rus&isrefine=y';

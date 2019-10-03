@@ -11,7 +11,16 @@ Make sure you have MongoDB client, npm and last version of NodeJS set up on your
 - Node version `v11.8.0`
 - npm version `6.9.0`
 
-## Project setup
+## Docker setup
+
+```
+docker-compose build
+```
+```
+docker-compose up
+```
+
+## Project dev setup
 ```
 npm install
 ```
@@ -41,7 +50,7 @@ npm run test
 
 ### MongoDB start on specific port
 ```
-sudo mongod --port 12345
+sudo mongod --port 27017
 ```
 ### Shutdown MongoDB
 
@@ -59,5 +68,6 @@ node ./server
 
 (api)[https://rapidapi.com/?utm_campaign=Quora&utm_medium=link_Marketplace&utm_source=Quora]
 
-Used my gmail to sign in
+### Issue
 
+Сначала открывается коннект по выборке продуктов до того, как продукты в него положены, и так и держится. Надо переписать на монгуз.

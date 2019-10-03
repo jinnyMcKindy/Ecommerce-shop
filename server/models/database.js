@@ -1,11 +1,12 @@
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:12345';
+const url = 'mongodb://mongo:27017/';
 const ObjectID = require('mongodb').ObjectID;
 
 const DataBase = {
 	getProducts() { 
 		return new Promise((resolve, reject) => {
 		  	mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+		  		console.log('MongoDB Connected', client, err)
 				  if (err) {
 				    console.error('error', err);
 				    return;
@@ -13,10 +14,11 @@ const DataBase = {
 				  const db = client.db('ishop');
 				  const collection = db.collection('products');
 				  collection.find().toArray((err, items) => {
-				  	client.close();
+				  	console.log("items", items, err)
+				  	//client.close();
 				  	resolve(items);
 				  });
-		  	});
+		  	})
 		})
 	},
 	saveProducts(contents) {
@@ -28,9 +30,9 @@ const DataBase = {
 				  }
 			    const db = client.db('ishop');
 			    const collection = db.collection('products');
-			  	collection.deleteMany({ })
+			  	//collection.deleteMany({ })
 			    collection.insertMany(contents, (err, result) => {
-				   	client.close();
+				   //	client.close();
 				  	if(err) reject(err)
 				  	resolve(result)
 			  	})
@@ -82,7 +84,7 @@ const DataBase = {
 			    const db = client.db('ishop');
 			    const collection = db.collection('users');
 			    collection.find().toArray((err, items) => {
-			  	  client.close();
+			  	  //client.close();
 			  	  if(err) reject(err)
 			  	  resolve(items);
 			  	});
@@ -99,7 +101,7 @@ const DataBase = {
 			    const db = client.db('ishop');
 			    const collection = db.collection('users');
 		      	collection.insertOne(user, (err, result) => {
-				  client.close()
+				//  client.close()
 				  if(err) reject(err)
 				  resolve(result)
 			    });
