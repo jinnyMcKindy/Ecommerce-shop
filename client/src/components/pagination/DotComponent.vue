@@ -1,16 +1,18 @@
 <template>
-  <div class="c2c-dot" 
-  v-on:click="$emit('click-dots', value)" 
-  v-html="icon"
-  v-if="Max">
-  <div class="dot-inner"></div>
-</div>
+  <div
+    v-if="Max"
+    class="c2c-dot"
+    @click="$emit('click-dots', value)"
+    v-html="icon"
+  >
+    <div class="dot-inner" />
+  </div>
 </template>
 <script>
-  export default {
-    name : 'dot-component',
-    props : ["Max", "value", "icon"],
-  };
+export default {
+  name: 'DotComponent',
+  props: ['max', 'value', 'icon'],
+};
 </script>
 <style>
   .c2c-dot {

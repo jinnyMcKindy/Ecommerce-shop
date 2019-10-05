@@ -1,27 +1,27 @@
 <template>
   <div>
     <div class="c2c-pagination">
-         <dot-component
-            :Max="leftMax"
-            v-on:click-dots="clickDots"
-            value="left"
-            :icon="leftIcon">
-         </dot-component>
-         <page-component
-            v-for="(page) in range(first, visiblePages)"
-            :key="page.id"
-            v-on:navigate-of="navigate(page)"
-            :page="page"
-            :ref="`page-${page}`"
-            :class="['page-' + page, active == page ? 'active' : '']">
-        </page-component>
-        <dot-component
-          :Max="rightMax"
-          v-on:click-dots="clickDots"
-          value="right"
-          :icon="rightIcon">
-        </dot-component>
-     </div>
+      <dot-component
+        :max="leftMax"
+        value="left"
+        :icon="leftIcon"
+        @click-dots="clickDots"
+      />
+      <page-component
+        v-for="(page) in range(first, visiblePages)"
+        :key="page.id"
+        :ref="`page-${page}`"
+        :page="page"
+        :class="['page-' + page, active == page ? 'active' : '']"
+        @navigate-of="navigate(page)"
+      />
+      <dot-component
+        :max="rightMax"
+        value="right"
+        :icon="rightIcon"
+        @click-dots="clickDots"
+      />
+    </div>
   </div>
 </template>
 
@@ -31,6 +31,10 @@ import DotComponent from './DotComponent';
 
 export default {
   name: 'Pagination',
+  components: {
+    PageComponent,
+    DotComponent,
+  },
   props: ['leftIcon', 'rightIcon', 'results', 'maxAmountOfPages', 'perPage'],
   data() {
     return {
@@ -46,10 +50,6 @@ export default {
       oldUrl: '',
       active: 0,
     };
-  },
-  components: {
-    PageComponent,
-    DotComponent,
   },
   mounted() {
     this.size = this.results.length; // количество найденных совпадений
@@ -69,7 +69,7 @@ export default {
       const end = indexPage - 1;
       const offset = this.perPage * end;
       const visible = Object.values(this.results).splice(offset, this.perPage);
-      //console.log(end, offset, visible, this.results)
+      // console.log(end, offset, visible, this.results)
       this.$emit('setResults', visible);
       this.active = indexPage;
       if (this.dirty) this.checkDots();
@@ -93,11 +93,11 @@ export default {
       this.navigate(obj[0]);
     },
     rightDir() {
-      let first; 
-      let last; 
+      let first;
+      let last;
       let obj;
       last = this.visiblePages + this.maxAmountOfPages;
-      first = this.visiblePages+1;
+      first = this.visiblePages + 1;
       if (last >= this.pages) {
         last = this.pages;
         this.rightMax = false;
@@ -108,7 +108,7 @@ export default {
     leftDir() {
       let first; let last; let
         obj;
-      last = this.first-1;
+      last = this.first - 1;
       first = last - this.maxAmountOfPages;
       if (first === 1) this.leftMax = false;
       if (first <= 0) {

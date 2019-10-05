@@ -1,55 +1,80 @@
 <template>
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+          </div>
 
-                    <div class="modal-header">
-                        <slot name="header">
-                            default header
-                        </slot>
-                    </div>
-
-                    <div class="modal-body">
-                        <slot name="body">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-sm">ФИО</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-sm">Адрес</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-sm">Дата доставки</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                        </slot>
-                    </div>
-
-                    <div class="modal-footer">
-                        <slot name="footer">
-
-                            <button class="modal-default-button" @click="$emit('close')">
-                                Подтвердить заказ
-                            </button>
-                        </slot>
-                    </div>
+          <div class="modal-body">
+            <slot name="body">
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span
+                    id="inputGroup-sizing-sm"
+                    class="input-group-text"
+                  >ФИО</span>
                 </div>
-            </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                >
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span
+                    id="inputGroup-sizing-sm"
+                    class="input-group-text"
+                  >Адрес</span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                >
+              </div>
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span
+                    id="inputGroup-sizing-sm"
+                    class="input-group-text"
+                  >Дата доставки</span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                >
+              </div>
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <button
+                class="modal-default-button"
+                @click="$emit('close')"
+              >
+                Подтвердить заказ
+              </button>
+            </slot>
+          </div>
         </div>
-    </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
 export default {
-  name: 'modal',
+  name: 'Modal',
 };
 </script>
 

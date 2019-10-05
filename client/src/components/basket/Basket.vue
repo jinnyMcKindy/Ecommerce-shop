@@ -1,21 +1,30 @@
 <template>
-    <div class="container basket">
-        <div>
-           <div class="empty" v-if="!figures.length">Пусто</div>
-            <Products :figures="figures"
-                v-on:buy="removeItem" >
-            </Products>
-            <div class="basket__price" v-if="figures.length">
-                Сумма заказа: <span v-currency="totalPrice"></span>
-              <router-link 
-                class="btn btn-info pull-right" 
-                to="/checkout">
-              Оформить заказ
-            </router-link>
-            </div>
-        </div>
-
+  <div class="container basket">
+    <div>
+      <div
+        v-if="!figures.length"
+        class="empty"
+      >
+        Пусто
+      </div>
+      <Products
+        :figures="figures"
+        @buy="removeItem"
+      />
+      <div
+        v-if="figures.length"
+        class="basket__price"
+      >
+        Сумма заказа: <span v-currency="totalPrice" />
+        <router-link
+          class="btn btn-info pull-right"
+          to="/checkout"
+        >
+          Оформить заказ
+        </router-link>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 import Products from '@/products/Products';
@@ -23,20 +32,20 @@ import modal from '@/modal';
 
 export default {
   name: 'Basket',
+  components: { Products },
   data() {
     return {
       figures: [],
       showModal: false,
     };
   },
-  created() {
-    this.figures = this.$store.state.basket;
-  },
-  components: { Products },
   computed: {
     totalPrice() {
       return this.$store.state.totalPrice;
     },
+  },
+  created() {
+    this.figures = this.$store.state.basket;
   },
   methods: {
     clicked() {

@@ -1,16 +1,36 @@
 <template>
-	<footer class="footer footer-border menu-light">
-		<div class="container footer-wrapper">
-			<router-link class="nav-link nav-link--light" to="/politics">Политика</router-link>
-			<router-link class="nav-link nav-link--light" to="/politics">Доставка</router-link>
-			<router-link class="nav-link nav-link--light" to="/politics">Возврат</router-link>
-			<router-link class="nav-link nav-link--light" to="/politics">Контакты</router-link>
-		</div>
-		<small>
-			Персональные данные посетителей сайта обрабатываются в соответствии  <router-link to="/politics">с официальной политикой.</router-link>
-			Сайт *** носит информационный характер и не является публичной офертой, определяемой положениями Статьи 437 ГК РФ.
-		</small>
-	</footer>
+  <footer class="footer footer-border menu-light">
+    <div class="container footer-wrapper">
+      <router-link
+        class="nav-link nav-link--light"
+        to="/politics"
+      >
+        Политика
+      </router-link>
+      <router-link
+        class="nav-link nav-link--light"
+        to="/politics"
+      >
+        Доставка
+      </router-link>
+      <router-link
+        class="nav-link nav-link--light"
+        to="/politics"
+      >
+        Возврат
+      </router-link>
+      <router-link
+        class="nav-link nav-link--light"
+        to="/politics"
+      >
+        Контакты
+      </router-link>
+    </div>
+    <small>
+      Персональные данные посетителей сайта обрабатываются в соответствии  <router-link to="/politics">с официальной политикой.</router-link>
+      Сайт *** носит информационный характер и не является публичной офертой, определяемой положениями Статьи 437 ГК РФ.
+    </small>
+  </footer>
 </template>
 <script>
 

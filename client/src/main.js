@@ -1,10 +1,11 @@
 import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import VueTheMask from 'vue-the-mask';
 import App from './App.vue';
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import VueTheMask from 'vue-the-mask'
-Vue.use(VueTheMask)
-Vue.use(VueAxios, axios)
+
+Vue.use(VueTheMask);
+Vue.use(VueAxios, axios);
 /*
 // Apollo
 import VueApollo from 'vue-apollo';
@@ -28,6 +29,6 @@ const apolloProvider = new VueApollo({
 });
 */
 new Vue({
-  //apolloProvider,
+  // apolloProvider,
   render: h => h(App),
 }).$mount('#app');

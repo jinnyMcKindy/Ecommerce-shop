@@ -2,36 +2,42 @@
   <td>
     <span v-if="type === 'input'">
       <input
+        v-model="input"
         :type="subType === 'number' ? 'number' : 'text'"
         :value="value"
-        @keyup="change"
         class="input"
-        v-model="input"
-      />
+        @keyup="change"
+      >
     </span>
     <span v-if="type === 'select'">
-      <select :disabled="disabled" class="custom-select" v-model="input">
+      <select
+        v-model="input"
+        :disabled="disabled"
+        class="custom-select"
+      >
         <option
           v-for="(option, key) in options"
-          v-bind:key="key"
-          :disabled="disabled">
+          :key="key"
+          :disabled="disabled"
+        >
           {{ option }}
         </option>
       </select>
     </span>
     <div v-if="type === 'textarea'">
-      <textarea 
-       ref="textarea"
-       class="textarea-inner"
-       v-model="input"
-       @keyup="change">  
-       </textarea>
+      <textarea
+        ref="textarea"
+        v-model="input"
+        class="textarea-inner"
+        @keyup="change"
+      />
     </div>
     <div v-if="type === 'checkbox'">
-      <input 
-      :checked="value" 
-      type="checkbox" 
-      class="form-check-input" />
+      <input
+        :checked="value"
+        type="checkbox"
+        class="form-check-input"
+      >
     </div>
   </td>
 </template>
@@ -39,29 +45,28 @@
 export default {
   name: 'Input',
   props: [
-    'value', 
-    'type', 
+    'value',
+    'type',
     'disabled',
-    'options', 
+    'options',
     'subType',
-    'disabled'
   ],
-  data: function(){
-    return {}
+  data() {
+    return {};
   },
   computed: {
     input: {
-      get: function () {
+      get() {
         return this.value;
       },
-      set: function (newValue) {
-        this.$emit('changeInput', newValue)
-      }
-    }
+      set(newValue) {
+        this.$emit('changeInput', newValue);
+      },
+    },
   },
-  methods: {}
-}
+  methods: {},
+};
 </script>
 <style>
-  
+
 </style>

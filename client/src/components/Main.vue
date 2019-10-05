@@ -1,32 +1,33 @@
 <template>
-    <div class="container">
-        <Products 
-            :figures="figures"
-            v-on:buy="buy"
-            v-bind:key="key"
-            :basket="basket">
-        </Products>
-    </div>
+  <div class="container">
+    <Products
+      :key="key"
+      :figures="figures"
+      :basket="basket"
+      @buy="buy"
+    />
+  </div>
 </template>
 <script>
 import Products from './products/Products';
+
 export default {
   name: 'Main',
+  components: { Products },
   data() {
     return {
       basket: [],
       figures: [],
-      key: 0
+      key: 0,
     };
   },
-  created: function(){
-      this.$store.dispatch("actionProducts").then(data => {
-        this.figures = data;
-        this.key++
-      }, 
-      error => console.log(error));
+  created() {
+    this.$store.dispatch('actionProducts').then((data) => {
+      this.figures = data;
+      this.key++;
+    },
+    error => console.log(error));
   },
-  components: { Products },
   methods: {
     addProduct(figure) {
       const { name } = figure;

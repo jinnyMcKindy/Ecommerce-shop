@@ -1,14 +1,14 @@
 import Vue from 'vue';
 
-let callback = function(el, binding, vnode) { 
-  	let value = binding.value;
-  	el.innerHTML = `${value}`
-}
+function callback(el, binding) {
+  	const { value } = binding;
+  	el.innerHTML = `${value}`;
+};
 function init() {
   Vue.directive('currency', {
     bind: callback,
     update: callback,
-    unbind: callback
-  })
+    unbind: callback,
+  });
 }
-export { init };
+export default { init };

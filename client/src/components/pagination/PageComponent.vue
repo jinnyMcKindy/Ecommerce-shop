@@ -1,9 +1,14 @@
 <template>
-  <div v-on:click="$emit('navigate-of')" class="page">{{page}}</div>
+  <div
+    class="page"
+    @click="$emit('navigate-of')"
+  >
+    {{ page }}
+  </div>
 </template>
 <script>
-  export default {
-    name : 'page-component',
-    props : ["page", "maxAmount"],
-  };
+export default {
+  name: 'PageComponent',
+  props: ['page', 'maxAmount'],
+};
 </script>

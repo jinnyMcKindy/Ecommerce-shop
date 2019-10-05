@@ -1,48 +1,49 @@
 <template>
-   <div class="product-wrapper">
-      <results v-for="(figure, index) in visible" 
-        v-bind:key="index"
-        :figure="figure"
-        @buy="(figure) => $emit('buy', figure)"> 
-      </results>
-       <Pagination
-          :rightIcon="rightIcon"
-          :leftIcon="leftIcon"
-          v-bind:key="pkey"
-          :results="figures"
-          :maxAmountOfPages="maxAmountOfPages"
-          :perPage="perPage"
-          @setResults="setResults">
-          <div slot="orders"></div>
-        </Pagination>
-   </div>
+  <div class="product-wrapper">
+    <results
+      v-for="(figure, index) in visible"
+      :key="index"
+      :figure="figure"
+      @buy="(figure) => $emit('buy', figure)"
+    />
+    <Pagination
+      :key="pkey"
+      :right-icon="rightIcon"
+      :left-icon="leftIcon"
+      :results="figures"
+      :max-amount-of-pages="maxAmountOfPages"
+      :per-page="perPage"
+      @setResults="setResults"
+    >
+      <div slot="orders" />
+    </Pagination>
+  </div>
 </template>
 
 <script>
-import Button from '@/elements/Button';
 import Pagination from '@/pagination/Pagination';
 import Results from '@/pagination/Results';
+
 export default {
   name: 'Products',
-  props: ['basket', 'figures'],
-  components: { 
-    Button,
+  components: {
     Results,
-    Pagination
+    Pagination,
   },
-  mounted: function(){ 
-    this.pkey = this.pkey + Math.random(0, 10);
-  },
+  props: ['basket', 'figures'],
   data() {
     return {
       activeNames: [],
       visible: this.figures,
-      leftIcon : '<i class="fa fa-arrow-left"></i>',
+      leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
-      pkey: "p",
-      maxAmountOfPages : 4,
-      perPage : 6,
+      pkey: 'p',
+      maxAmountOfPages: 4,
+      perPage: 6,
     };
+  },
+  mounted() {
+    this.pkey = this.pkey + Math.random(0, 10);
   },
   methods: {
     showBuy(name) {
@@ -50,7 +51,7 @@ export default {
       const exists = basket.filter(item => item.name == name);
       return exists.length;
     },
-    setResults: function(visible){
+    setResults(visible) {
       this.visible = visible;
     },
     expand(name) {

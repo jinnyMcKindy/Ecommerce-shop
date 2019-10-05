@@ -3,10 +3,10 @@ module.exports = {
     '@vue/app',
   ],
   plugins: [
-    ["babel-plugin-root-import",
+    ['babel-plugin-root-import',
       {
-        "rootPathSuffix": "./src/components/",
-        "rootPathPrefix": "@/"
-      }]
-  ]
+        rootPathSuffix: './src/components/',
+        rootPathPrefix: '@/',
+      }],
+  ],
 };

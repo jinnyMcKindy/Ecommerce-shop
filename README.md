@@ -40,11 +40,7 @@ npm run build
 npm run test
 ```
 
-### Fix js errors 
-
-``` node_modules/.bin/eslint ./server --fix ```
-
-### Lint errors 
+### Lint and fix js errors 
 
 ``` npm run lint ```
 

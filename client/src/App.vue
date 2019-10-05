@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Menu class="menu-light"/>
+    <Menu class="menu-light" />
     <div class="container">
       <div class="row">
         <div class="col col-md-12 main">
-          <router-view></router-view>
+          <router-view />
         </div>
       </div>
     </div>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -19,10 +19,11 @@ import store from './store';
 import router from './routes';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
-import * as directives from './components/helpers/directives.js'
-directives.init()
+import * as directives from './components/helpers/directives.js';
+
+directives.init();
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Menu,
     Footer,
