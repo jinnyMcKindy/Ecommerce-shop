@@ -6,7 +6,7 @@ const DataBase = {
 	getProducts() { 
 		return new Promise((resolve, reject) => {
 		  	mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-		  		console.log('MongoDB Connected', client, err)
+		  		console.log('MongoDB Connected')
 				  if (err) {
 				    console.error('error', err);
 				    return;
@@ -14,9 +14,9 @@ const DataBase = {
 				  const db = client.db('ishop');
 				  const collection = db.collection('products');
 				  collection.find().toArray((err, items) => {
-				  	console.log("items", items, err)
+				  	//console.log("items", items, err)
 				  	//client.close();
-				  	resolve(items);
+				  	setTimeout(() => resolve(items), 1000);
 				  });
 		  	})
 		})
@@ -32,7 +32,7 @@ const DataBase = {
 			    const collection = db.collection('products');
 			  	//collection.deleteMany({ })
 			    collection.insertMany(contents, (err, result) => {
-				   //	client.close();
+				    //client.close();
 				  	if(err) reject(err)
 				  	resolve(result)
 			  	})

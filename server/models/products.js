@@ -5,7 +5,7 @@ const fileName = './items.txt';
 const db = dbo.DataBase;
 
 const getContent = new Promise((resolve, reject) => {
-  db.getProducts().then(res => {console.log(res); resolve(res)}, err => { console.log(err); reject(err)})
+  db.getProducts().then(res => resolve(res), err => { console.log(err); reject(err)})
 })
 
 function parseProduct(res) {
@@ -27,7 +27,6 @@ const saveContent = new Promise((resolve, reject) => {
     if (err) reject(err);
     if (contents) {
     	let tt = parseProduct(contents)
-      console.log(tt)
     	db.saveProducts(tt).then(res => resolve(res), err => reject(err))
     } else { reject('No content'); }
   })

@@ -34,19 +34,19 @@ startMongoDBConnection();
 
 function startMongoDBConnection() {
   mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    startServerApi(client);
+    //products.getContent.then(res => console.log(res.length, 'There"re products'), err => console.log(err)
+    products.saveContent.then(res => {
+      console.log('Saved products')
+      startServerApi(client);
+    }, err => console.log(err))
+    
+    db.saveUser({login: "admin", password: md5("12345") })
+    .then(data => console.log('Saved admin'), err => console.log(err));
    // startWebSocketServer(client);
   });
 }
 
-function startServerApi(client) {
-  
-   //products.getContent.then = res => console.log(res), err => console.log(err)
-   products.saveContent.then = res => console.log('saved',res), err => console.log(err)
-  
-  db.saveUser({login: "admin", password: md5("12345") })
-  .then(data => console.log(data), err => console.log(err));
-  
+function startServerApi(client) {  
   const hostname = '127.0.0.1';
   const port = 3000;
   app.get('/getProducts', cors(corsOptions), (req, res) => {

@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "node server.js"
+    "start": "node -r esm server.js"
   },
   "dependencies": {
     "babel-plugin-root-import": "^6.4.1",
@@ -15,9 +15,9 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "express": "^4.17.0",
-    "mongoose": "^5.2.7",
     "md5": "^2.2.1",
     "mongodb": "^3.2.3",
+    "mongoose": "^5.2.7",
     "node-html-parser": "^1.1.14",
     "request": "^2.88.0",
     "ws": "^7.0.1"
