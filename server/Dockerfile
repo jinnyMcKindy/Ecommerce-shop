@@ -1,7 +1,5 @@
 FROM node:10
 
-RUN npm install -g http-server
-
 WORKDIR /server
 
 COPY ./package*.json ./

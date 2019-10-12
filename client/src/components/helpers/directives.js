@@ -11,4 +11,4 @@ function init() {
     unbind: callback,
   });
 }
-export default { init };
+export default init;

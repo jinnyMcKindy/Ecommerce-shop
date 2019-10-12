@@ -19,9 +19,9 @@ import store from './store';
 import router from './routes';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
-import * as directives from './components/helpers/directives.js';
+import init from './components/helpers/directives.js';
 
-directives.init();
+init();
 export default {
   name: 'App',
   components: {
