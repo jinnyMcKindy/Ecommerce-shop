@@ -33,6 +33,7 @@ docker-compose up
 ## Lint errors
 
 To lint errors in `/client` folder:
+``` npm i```
 
 ``` npm run lint ```
 
