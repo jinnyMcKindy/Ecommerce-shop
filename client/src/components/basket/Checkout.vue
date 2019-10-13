@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import Details from '@/order/details/Details';
-import Products from '@/products/Products';
+import Details from '@/components/order/details/Details';
+import Products from '@/components/products/Products';
 
 export default {
   name: 'Checkout',

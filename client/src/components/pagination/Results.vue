@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import Button from '@/elements/Button';
+import Button from '@/components/elements/Button';
 
 export default {
   name: 'Results',

@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import Pagination from '@/pagination/Pagination';
-import Results from '@/pagination/Results';
+import Pagination from '@/components/pagination/Pagination';
+import Results from '@/components/pagination/Results';
 
 export default {
   name: 'Products',

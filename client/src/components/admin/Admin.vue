@@ -58,8 +58,8 @@
 
 <script>
 import axios from 'axios';
-import { cookie } from '../helpers/cookies.js';
-import Table from '../elements/Table';
+import { cookie } from '@/components/helpers/cookies.js';
+import Table from '@/components/elements/Table';
 
 export default {
   name: 'Admin',

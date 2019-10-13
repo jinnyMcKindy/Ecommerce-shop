@@ -27,8 +27,8 @@
   </div>
 </template>
 <script>
-import Products from '@/products/Products';
-import modal from '@/modal';
+import Products from '@/components/products/Products';
+import modal from '@/components/modal';
 
 export default {
   name: 'Basket',

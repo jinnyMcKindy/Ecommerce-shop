@@ -15,6 +15,13 @@ Make sure you have MongoDB client, npm and last version of NodeJS set up on your
 Note: App runs on the Ports 8080, 3000, 2017. Make sure they're free.
 Note: Application is still in development!
 
+## Build client SSR
+
+```
+cd /client
+npm run build-server
+```
+
 ## Docker setup
 
 ```

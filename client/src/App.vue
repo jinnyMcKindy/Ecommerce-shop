@@ -15,12 +15,12 @@
 <script>
 
 import Vue from 'vue';
-import store from './store';
-import router from './routes';
-import Menu from './components/Menu';
-import Footer from './components/Footer';
-import init from './components/helpers/directives.js';
-
+import store from '@/store';
+import createRouter from '@/routes';
+import Menu from '@/components/Menu';
+import Footer from '@/components/Footer';
+import init from '@/components/helpers/directives.js';
+let router = createRouter();
 init();
 export default {
   name: 'App',
