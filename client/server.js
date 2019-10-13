@@ -5,9 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const bundle =  require('./dist/server.bundle.js');
 const renderer = require('vue-server-renderer').createRenderer({
-  template: fs.readFileSync('./index.html', 'utf-8')
+  template: fs.readFileSync('./public/index_server.html', 'utf-8')
 });
-let port = 4040;
+let port = 8080;
 server.use('/dist', express.static(path.join(__dirname, './dist')));
 
 server.get('*', (req, res) => { 
