@@ -35,4 +35,4 @@ To lint errors in `/client` folder:
 
 ### Issue
 
-Сначала открывается коннект по выборке продуктов до того, как продукты в него положены, и так и держится. Надо переписать на монгуз.
+Make `http-server` (SSR) work with Vue Router.
