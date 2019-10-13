@@ -3,13 +3,17 @@
 ## Description
 
 The front end of the single page application is written in VueJS, the back end uses NodeJS and MongoDB. The application displays a list of products received from a third-party API and then saved in the MongoDB database. Users can select products, add them to cart and order them. For the manager, there is an admin page for managing orders.
+The application is set up with Docker.
 
 ## Required
 
 Make sure you have MongoDB client, npm and last version of NodeJS set up on your local machine.
 
-- Node version `v11.8.0`
-- npm version `6.9.0`
+- (Docker)[https://docs.docker.com/install/] `latest`
+- (Docker compose)[https://docs.docker.com/compose/install/] `latest`
+
+Note: App runs on the Ports 8080, 3000, 2017. Make sure they're free.
+Note: Application is still in development!
 
 ## Docker setup
 
@@ -19,46 +23,11 @@ docker-compose build
 ```
 docker-compose up
 ```
+## Lint errors
 
-## Project dev setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lint and fix js errors 
+To lint errors in `/client` folder:
 
 ``` npm run lint ```
-
-### MongoDB start on specific port
-```
-sudo mongod --port 27017
-```
-### Shutdown MongoDB
-
-``` 
-mongod --shutdown
-```
-
-### Start server-side application on NodeJS
-
-```
-node ./server 
-```
 
 ### Aliexpress api 
 
