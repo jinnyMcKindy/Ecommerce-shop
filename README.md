@@ -9,8 +9,8 @@ The application is set up with Docker.
 
 Make sure you have MongoDB client, npm and last version of NodeJS set up on your local machine.
 
-- (Docker)[https://docs.docker.com/install/] `latest`
-- (Docker compose)[https://docs.docker.com/compose/install/] `latest`
+- [Docker](https://docs.docker.com/install/) `latest`
+- [Docker compose](https://docs.docker.com/compose/install/) `latest`
 
 Note: App runs on the Ports 8080, 3000, 2017. Make sure they're free.
 Note: Application is still in development!
@@ -31,7 +31,7 @@ To lint errors in `/client` folder:
 
 ### Aliexpress api 
 
-(api)[https://rapidapi.com/?utm_campaign=Quora&utm_medium=link_Marketplace&utm_source=Quora]
+[api](https://rapidapi.com/?utm_campaign=Quora&utm_medium=link_Marketplace&utm_source=Quora)
 
 ### Issue
 
