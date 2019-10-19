@@ -15,7 +15,7 @@
         v-if="figures.length"
         class="basket__price"
       >
-        Сумма заказа: <span v-currency="totalPrice" />
+        Сумма заказа: <span>{{ totalPrice | currency}}</span>
         <router-link
           class="btn btn-info pull-right"
           to="/checkout"

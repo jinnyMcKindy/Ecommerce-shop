@@ -7,7 +7,7 @@ const bundle =  require('./dist/server.bundle.js');
 const renderer = require('vue-server-renderer').createRenderer({
   template: fs.readFileSync('./public/index_server.html', 'utf-8')
 });
-let port = 8080;
+let port = 8081;
 server.use('/dist', express.static(path.join(__dirname, './dist')));
 
 server.get('*', (req, res) => { 
@@ -37,5 +37,8 @@ server.get('*', (req, res) => {
     console.log(err);
   });  
 });  
+app.post('*', function (req, res) {
+  res.send('POST request to the homepage');
+});
 console.log(`Server runs on ${port}`)
 server.listen(port);

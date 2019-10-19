@@ -15,7 +15,7 @@
       to="/basket"
     >
       В корзине: {{ totalItems }} Сумма:
-      <span v-currency="totalPrice" />
+      <span>{{ totalPrice | currency }}</span>
     </router-link>
   </nav>
 </template>

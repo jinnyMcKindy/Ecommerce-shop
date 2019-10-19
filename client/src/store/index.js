@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-
+import * as json from './products.json'
+console.log(json, 'json')
 const md5 = require('md5');
 
 Vue.use(Vuex);
@@ -89,7 +90,12 @@ export default new Vuex.Store({
           const products = response.data;
           commit('setProducts', products);
           resolve(products);
-        }).catch(err => reject(err));
+        }).catch(err => {
+          console.log("Couldn't get products")
+          commit('setProducts', json);
+          reject(err);
+
+        });
       });
     },
     saveOrder({ commit, state }, order) {

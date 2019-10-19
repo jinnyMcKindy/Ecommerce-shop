@@ -19,7 +19,7 @@ import store from '@/store';
 import createRouter from '@/routes';
 import Menu from '@/components/Menu';
 import Footer from '@/components/Footer';
-import init from '@/components/helpers/directives.js';
+import init from '@/components/helpers/filters.js';
 let router = createRouter();
 init();
 export default {
@@ -28,7 +28,7 @@ export default {
     Menu,
     Footer,
   },
-  router,
+ // router,
   store,
 };
 </script>

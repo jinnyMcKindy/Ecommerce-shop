@@ -16,7 +16,7 @@
       slot="price"
       class="details__price"
     >
-      К оплате: <span v-currency="price" />
+      К оплате: <span>{{ price | currency }}</span>
     </div>
   </Details>
 </template>

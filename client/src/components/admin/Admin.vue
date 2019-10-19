@@ -96,7 +96,7 @@ export default {
     if (auth) {
       this.logged = true;
     }
-    this.setOrders();
+   // this.setOrders();
   },
   methods: {
     setOrders() {
