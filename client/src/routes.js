@@ -16,6 +16,7 @@ const routes = [
   { path: '/checkout', component: Checkout, name: 'checkout' },
   { path: '/sent', component: Sent, name: 'sent' },
   { path: '/admin', component: Admin, name: 'admin' },
+  { path: "*", redirect: { name: 'home' }}
 ];
 const createRouter = function() {
 	return new VueRouter({

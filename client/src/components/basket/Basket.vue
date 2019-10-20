@@ -48,9 +48,6 @@ export default {
     this.figures = this.$store.state.basket;
   },
   methods: {
-    clicked() {
-      console.log('clicked');
-    },
     removeItem(figure) {
       this.$store.commit('deleteProduct', figure);
     },

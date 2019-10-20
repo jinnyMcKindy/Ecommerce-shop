@@ -51,24 +51,21 @@ export default {
       size: 0
     };
   },
-  serverPrefetch () {
+  serverPrefetch(){
     return this.preFetch()
   },
   computed: {
     results: function(){
-      console.log('propResults computed')
       return this.propResults;
     }
   },
   mounted: function(){
-    console.log('propResults mount')
     if(this.results.length){
         this.size = this.results.length;
         this.setPages(this.results.length);
       }
   },
   created: function(){
-    console.log('propResults create')
     if(this.results.length){
         this.size = this.results.length;
         this.setPages(this.results.length);
@@ -100,7 +97,6 @@ export default {
       const end = indexPage - 1;
       const offset = this.perPage * end;
       const visible = Object.values(this.results).splice(offset, this.perPage);
-      // console.log(end, offset, visible, this.results)
       this.$emit('setResults', visible);
       this.active = indexPage;
       if (this.dirty) this.checkDots();
