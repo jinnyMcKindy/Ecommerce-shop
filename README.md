@@ -2,6 +2,8 @@
 
 ## Description
 
+[Demo](https://volokolamskspb.github.io/Ecommerce-shop)
+
 The front end of the single page application is written in VueJS, the back end uses NodeJS and MongoDB. The application displays a list of products received from a third-party API and then saved in the MongoDB database. Users can select products, add them to cart and order them. For the manager, there is an admin page for managing orders.
 The application is set up with Docker.
 
