@@ -1,6 +1,0 @@
-client/node_modules
-server/node_modules
-npm-debug.log
-**/node_modules
-**/dist
-README.md
