@@ -9,8 +9,8 @@
     <Pagination
       :key="pkey"
       :right-icon="rightIcon"
+      :propResults="figures"
       :left-icon="leftIcon"
-      :results="figures"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
       @setResults="setResults"
@@ -19,7 +19,6 @@
     </Pagination>
   </div>
 </template>
-
 <script>
 import Pagination from '@/components/pagination/Pagination';
 import Results from '@/components/pagination/Results';
@@ -34,13 +33,29 @@ export default {
   data() {
     return {
       activeNames: [],
-      visible: this.figures,
+      total: null,
       leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
       pkey: 'p',
       maxAmountOfPages: 4,
       perPage: 6,
     };
+  },
+  computed: {
+    visible: {
+      get: function () {
+        let n = this.total;
+        if(!this.total) n = Object.values(this.figures).splice(0, this.perPage);
+        return n;
+      },
+      // сеттер:
+      set: function (newValue) {
+        this.total = newValue;
+      }
+    },
+  },
+  serverPrefetch () {
+     return this.$store.dispatch('actionProducts')
   },
   mounted() {
     this.pkey = this.pkey + Math.random(0, 10);

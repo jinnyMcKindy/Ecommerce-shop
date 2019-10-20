@@ -10,24 +10,29 @@
 </template>
 <script>
 import Products from './products/Products';
-
+import Vue from 'vue';
 export default {
   name: 'Main',
   components: { Products },
   data() {
     return {
       basket: [],
-      figures: [],
       key: 0,
     };
   },
-  created() {
-    this.$store.dispatch('actionProducts').then((data) => {
-      this.figures = data;
-      this.key++;
-    },
-    error => console.log(error));
+  computed: {
+    figures () {
+      return this.$store.state.products;
+    }
   },
+  serverPrefetch () {
+    return this.$store.dispatch('actionProducts');
+  },
+  mounted() {
+    if(!this.figures.length){
+      this.$store.dispatch('actionProducts');
+    }
+  }, 
   methods: {
     addProduct(figure) {
       const { name } = figure;

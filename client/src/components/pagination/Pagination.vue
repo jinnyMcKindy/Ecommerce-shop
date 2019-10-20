@@ -35,12 +35,11 @@ export default {
     PageComponent,
     DotComponent,
   },
-  props: ['leftIcon', 'rightIcon', 'results', 'maxAmountOfPages', 'perPage'],
+  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage'],
   data() {
     return {
       text: '',
       shownotfound: false,
-      size: 0,
       pages: 0,
       visiblePages: 0,
       rightMax: false,
@@ -49,13 +48,45 @@ export default {
       dirty: true,
       oldUrl: '',
       active: 0,
+      size: 0
     };
   },
-  mounted() {
-    this.size = this.results.length; // количество найденных совпадений
-    this.setPages(this.results.length); // высчитываем кол-во страниц для пагинации
+  serverPrefetch () {
+    return this.preFetch()
+  },
+  computed: {
+    results: function(){
+      console.log('propResults computed')
+      return this.propResults;
+    }
+  },
+  mounted: function(){
+    console.log('propResults mount')
+    if(this.results.length){
+        this.size = this.results.length;
+        this.setPages(this.results.length);
+      }
+  },
+  created: function(){
+    console.log('propResults create')
+    if(this.results.length){
+        this.size = this.results.length;
+        this.setPages(this.results.length);
+      }
+  },
+  watch: {
+    results: function(val){
+      if(val.length){
+        this.size = val.length;
+        this.setPages(val.length);
+      }
+    }
   },
   methods: {
+    /* for server-side */
+    preFetch(){
+      return this.$store.dispatch('actionProducts')
+    },
     setPages(len) {
       if (len <= this.perPage) {
         this.pages = 0;

@@ -37,7 +37,7 @@ export default {
       price: 0,
     };
   },
-  created() {
+  mounted() {
     this.figures = this.$store.getters.getBasket;
     this.price = this.$store.getters.getTotalPrice;
     if (!this.figures.length) this.$router.push({ name: 'home' });

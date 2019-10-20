@@ -24,6 +24,7 @@ server.get('*', (req, res) => {
 
     renderer.renderToString(app, context, function (err, html) {   
       if (err) {
+        console.log(err)
         if (err.code === 404) {
           res.status(404).end('Page not found')
         } else {
@@ -37,8 +38,5 @@ server.get('*', (req, res) => {
     console.log(err);
   });  
 });  
-app.post('*', function (req, res) {
-  res.send('POST request to the homepage');
-});
 console.log(`Server runs on ${port}`)
 server.listen(port);

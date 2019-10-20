@@ -36,7 +36,14 @@ export default {
     Button,
   },
   props: ['figure'],
+  serverPrefetch () {
+    return this.preFetch()
+  },
   methods: {
+    /* for server-side */
+    preFetch(){
+      return this.$store.dispatch('actionProducts')
+    },
     showBuy(name) {
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);

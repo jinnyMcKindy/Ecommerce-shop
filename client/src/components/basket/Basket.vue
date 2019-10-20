@@ -44,7 +44,7 @@ export default {
       return this.$store.state.totalPrice;
     },
   },
-  created() {
+  mounted() {
     this.figures = this.$store.state.basket;
   },
   methods: {

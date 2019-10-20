@@ -11,9 +11,14 @@
       </li>
     </ul>
     <router-link
+          class="nav-link nav-link--light"
+          to="/admin"
+        >
+          Админка
+    </router-link>
+    <router-link
       class="nav-link nav-link--light"
-      to="/basket"
-    >
+      to="/basket">
       В корзине: {{ totalItems }} Сумма:
       <span>{{ totalPrice | currency }}</span>
     </router-link>

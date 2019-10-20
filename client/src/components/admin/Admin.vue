@@ -91,7 +91,7 @@ export default {
       },
     };
   },
-  created() {
+  mounted() {
     const auth = cookie.getCookie('authorised');
     if (auth) {
       this.logged = true;

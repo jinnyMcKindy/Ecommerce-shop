@@ -1,22 +1,23 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import * as json from './products.json'
-console.log(json, 'json')
+import json from '@/store/products.json'
+
 const md5 = require('md5');
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
-export default new Vuex.Store({
-  state: {
-    basket: [],
-    totalItems: 0,
-    totalPrice: '0.00',
-    products: [],
-    apiHost: 'http://localhost:3000',
-    orders: [],
-  },
+function createStore () {
+  return  new Vuex.Store({
+    state: () => ({
+        basket: [],
+        totalItems: 0,
+        totalPrice: '0.00',
+        products: [],
+        apiHost: 'http://localhost:3000',
+        orders: [],
+    }),
   getters: {
     getHost(state) {
       return state.apiHost;
@@ -74,7 +75,7 @@ export default new Vuex.Store({
         }).catch(err => reject(err));
       });
     },
-    deleteOrder({ comit, state }, id) {
+    deleteOrder({ commit, state }, id) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/deleteOrder`;
         axios.post(url, { id }).then((response) => {
@@ -83,20 +84,15 @@ export default new Vuex.Store({
       });
     },
     actionProducts({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        if (state.products.length) resolve(state.products);
+        if (state.products.length) return;
         const url = `${state.apiHost}/getProducts`;
-        axios.get(url).then((response) => {
+        return axios.get(url).then((response) => {
           const products = response.data;
           commit('setProducts', products);
-          resolve(products);
         }).catch(err => {
           console.log("Couldn't get products")
           commit('setProducts', json);
-          reject(err);
-
         });
-      });
     },
     saveOrder({ commit, state }, order) {
       return new Promise((resolve, reject) => {
@@ -123,3 +119,5 @@ export default new Vuex.Store({
     },
   },
 });
+}
+export default createStore;

@@ -60,7 +60,9 @@ module.exports = {
     publicPath: path.resolve(__dirname, 'dist'),
     filename: 'build.js'
   },
-
+  optimization: {
+    minimize: true
+  },
   plugins: [
     new VueLoaderPlugin()
   ],

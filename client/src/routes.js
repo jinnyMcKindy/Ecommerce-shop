@@ -17,7 +17,7 @@ const routes = [
   { path: '/sent', component: Sent, name: 'sent' },
   { path: '/admin', component: Admin, name: 'admin' },
 ];
-const createRouter = function() { 
+const createRouter = function() {
 	return new VueRouter({
 	  mode: 'history',
 	  routes,
