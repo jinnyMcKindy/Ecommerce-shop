@@ -3,7 +3,8 @@
     <Products
       :key="key"
       :figures="figures"
-      :basket="basket"
+      :visible="visible"
+      @setResults="setResults"
       @buy="buy"
     />
   </div>
@@ -16,8 +17,8 @@ export default {
   components: { Products },
   data() {
     return {
-      basket: [],
       key: 0,
+      visible: this.figures
     };
   },
   computed: {
@@ -36,13 +37,14 @@ export default {
   methods: {
     addProduct(figure) {
       const { name } = figure;
-      this.basket.push(name);
       this.$store.commit('addProduct', figure);
     },
+    setResults(visible) {
+      console.log('set Results', visible)
+      this.visible = visible;
+    },
     deleteProduct(figure) {
-      const { name } = figure;
-      const index = this.basket.indexOf(name);
-      this.basket.splice(index, 1);
+      console.log('deleteProduct', figure)
       this.$store.commit('deleteProduct', figure);
     },
     buy(figure) {

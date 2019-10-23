@@ -8,8 +8,11 @@
         Пусто
       </div>
       <Products
+        :key="key"
         :figures="figures"
+        :visible="visible"
         @buy="removeItem"
+        @setResults="setResults"
       />
       <div
         v-if="figures.length"
@@ -35,21 +38,29 @@ export default {
   components: { Products },
   data() {
     return {
-      figures: [],
       showModal: false,
+      key: 0,
+      visible: this.figures
     };
   },
   computed: {
     totalPrice() {
       return this.$store.state.totalPrice;
     },
+    figures() {
+      return this.$store.state.basket;
+    }
   },
-  mounted() {
-    this.figures = this.$store.state.basket;
+  mounted(){
+    this.visible = this.figures
   },
   methods: {
+    setResults(visible) {
+      this.visible = visible;
+    },
     removeItem(figure) {
       this.$store.commit('deleteProduct', figure);
+      this.visible = this.visible.filter(v => v._id !== figure._id)
     },
     closeModal() {
       this.showModal = false;

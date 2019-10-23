@@ -2,7 +2,7 @@
   <div
     class="list-group-item"
     @click="expand(figure.name)"
-  >
+    >
     <div class="product__content">
       {{ figure.name }}
     </div>
@@ -10,7 +10,7 @@
       <div class="product__price">{{ figure.price | currency }}</div>
       <slot name="buttons">
         <Button
-          v-if="!showBuy(figure.name)"
+          v-if="!showBuy(figure._id)"
           :text="'Купить'"
           class="btn btn-info pull-right"
           :figure="figure"
@@ -44,9 +44,10 @@ export default {
     preFetch(){
       return this.$store.dispatch('actionProducts')
     },
-    showBuy(name) {
-      const { basket } = this.$store.state;
-      const exists = basket.filter(item => item.name == name);
+    showBuy(id) {
+      const { basket } = this.$store.state;      
+      const exists = basket.filter(item => item._id == id);
+      console.log(basket, id, exists) //задержка
       return exists.length;
     },
     expand(name) {

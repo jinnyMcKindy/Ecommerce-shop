@@ -22,10 +22,6 @@ import init from '@/components/helpers/filters.js';
 init();
 export default {
   name: 'App',
-  mounted: function(){
-    console.log(this.$route.path, this.$route)
-    
-  },
   components: {
     Menu,
     Footer,

@@ -13,7 +13,7 @@
       :left-icon="leftIcon"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
-      @setResults="setResults"
+      @setResults="(visible) => $emit('setResults', visible)"
     >
       <div slot="orders" />
     </Pagination>
@@ -29,30 +29,16 @@ export default {
     Results,
     Pagination,
   },
-  props: ['basket', 'figures'],
+  props: [ 'figures', 'visible'],
   data() {
     return {
       activeNames: [],
-      total: null,
       leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
       pkey: 'p',
       maxAmountOfPages: 4,
-      perPage: 6,
+      perPage: 6
     };
-  },
-  computed: {
-    visible: {
-      get: function () {
-        let n = this.total;
-        if(!this.total) n = Object.values(this.figures).splice(0, this.perPage);
-        return n;
-      },
-      // сеттер:
-      set: function (newValue) {
-        this.total = newValue;
-      }
-    },
   },
   serverPrefetch () {
      return this.$store.dispatch('actionProducts')
@@ -65,9 +51,6 @@ export default {
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
       return exists.length;
-    },
-    setResults(visible) {
-      this.visible = visible;
     },
     expand(name) {
       /*
