@@ -5,7 +5,7 @@
       :key="index"
       :figure="figure"
       :showBuy='showBuy'
-      @buy="(figure) => $emit('buy', figure)"
+      @buy="(figure) => $emit('buy', {figure, index})"
     />
     <Pagination
       :key="pkey"
@@ -43,7 +43,6 @@ export default {
   },
   mounted() {
     this.pkey = this.pkey + Math.random(0, 10);
-    console.log(this.pkey)
   },
   methods: {
     expand(name) {

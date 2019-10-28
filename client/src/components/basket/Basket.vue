@@ -59,9 +59,9 @@ export default {
     setResults(visible) {
       this.visible = visible;
     },
-    removeItem(figure) {
-      this.$store.commit('deleteProduct', figure);
-      this.visible = this.visible.filter(v => v._id !== figure._id)
+    removeItem({ figure, index }) {
+      this.$store.commit('deleteProduct', figure); //make update for products
+     // this.visible.splice(index, 1)
     },
     closeModal() {
       this.showModal = false;

@@ -47,20 +47,26 @@ function createStore () {
       state.orders = orders;
     },
     addProduct(state, figure) {
-      /* need to add numbers of ordered item in case it exists in basket */
-      state.basket.push(figure);
+      /* need to increase numbers of ordered item in case it exists in basket */
+      let productExists = state.basket.find((val) => val._id === figure._id)
+      if(productExists) productExists.count++;
+      else { 
+        figure.count = 1;
+        state.basket.push(figure); 
+      }
       state.totalItems++;
       state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
     },
     deleteProduct(state, figure) {
-      const { name } = figure;
-      state.basket.forEach((item, index) => {
-        if (item.name == name) {
-          figure.inBasket = true;
-          state.basket.splice(index, 1);
-          state.totalPrice = (Number.parseFloat(state.totalPrice) - item.price).toFixed(2);
-        }
-      });
+      let ind = 0;
+      let productExists = state.basket.find((val, index) => {
+        ind = index;
+        return val._id === figure._id;
+      })
+      if(productExists) {
+        if(productExists.count > 1) productExists.count--; /* need to decrease numbers of ordered item in case it exists in basket */
+        else state.basket.splice(ind, 1); /* remove item if there's onle 1 in the basket*/
+      }
       state.totalItems--;
     },
   },

@@ -65,8 +65,12 @@ export default {
   watch: {
     results: function(val){
       if(val.length){
-        console.log(val.length)
+        console.log(val.length, this.perPage, this.active)
         /* Update size of pages but no redirect to the 1st page */
+        let previous = this.active - 1;
+        if(previous && val === this.perPage * previous){
+          //this.navigate(previous)
+        }
         this.size = val.length;
         this.setPages(val.length);
       }

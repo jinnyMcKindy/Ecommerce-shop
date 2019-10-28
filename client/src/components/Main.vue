@@ -46,7 +46,7 @@ export default {
     deleteProduct(figure) {
       this.$store.commit('deleteProduct', figure);
     },
-    buy(figure) {
+    buy({ figure, index }) {
       const { name } = figure;
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
