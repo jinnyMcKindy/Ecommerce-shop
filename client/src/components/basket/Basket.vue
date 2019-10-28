@@ -10,6 +10,7 @@
       <Products
         :key="key"
         :figures="figures"
+        :showBuy="false"
         :visible="visible"
         @buy="removeItem"
         @setResults="setResults"

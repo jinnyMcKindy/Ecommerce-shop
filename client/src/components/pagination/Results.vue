@@ -10,18 +10,17 @@
       <div class="product__price">{{ figure.price | currency }}</div>
       <slot name="buttons">
         <Button
-          v-if="!showBuy(figure._id)"
+          v-if="showBuy"
           :text="'Купить'"
           class="btn btn-info pull-right"
-          :figure="figure"
-          @buy="$emit('buy', figure)"
+          @buy="buy(figure)"
         />
         <Button
           v-else
           :text="'Удалить'"
           class="btn btn-danger pull-right products-btn__delete"
           :figure="figure"
-          @buy="$emit('buy', figure)"
+          @buy="buy(figure)"
         />
       </slot>
     </div>
@@ -35,7 +34,12 @@ export default {
   components: {
     Button,
   },
-  props: ['figure'],
+  data: function(){
+    return {
+
+    }
+  },
+  props: ['figure', 'showBuy'],
   serverPrefetch () {
     return this.preFetch()
   },
@@ -44,11 +48,8 @@ export default {
     preFetch(){
       return this.$store.dispatch('actionProducts')
     },
-    showBuy(id) {
-      const { basket } = this.$store.state;      
-      const exists = basket.filter(item => item._id == id);
-      console.log(basket, id, exists) //задержка
-      return exists.length;
+    buy(figure){
+      this.$emit('buy', figure)
     },
     expand(name) {
       /*

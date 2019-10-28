@@ -1,7 +1,7 @@
 <template>
   <button
     role="button"
-    @click.stop.prevent="$emit('buy', figure)"
+    @click.stop.prevent="$emit('buy')"
   >
     {{ text }}
   </button>
@@ -10,7 +10,7 @@
 <script>
 export default {
   name: 'Button',
-  props: ['figure', 'text'],
+  props: ['text'],
 };
 </script>
 

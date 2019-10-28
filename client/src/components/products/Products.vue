@@ -4,6 +4,7 @@
       v-for="(figure, index) in visible"
       :key="index"
       :figure="figure"
+      :showBuy='showBuy'
       @buy="(figure) => $emit('buy', figure)"
     />
     <Pagination
@@ -29,7 +30,7 @@ export default {
     Results,
     Pagination,
   },
-  props: [ 'figures', 'visible'],
+  props: ['figures', 'visible', 'showBuy'],
   data() {
     return {
       activeNames: [],
@@ -40,18 +41,11 @@ export default {
       perPage: 6
     };
   },
-  serverPrefetch () {
-     return this.$store.dispatch('actionProducts')
-  },
   mounted() {
     this.pkey = this.pkey + Math.random(0, 10);
+    console.log(this.pkey)
   },
   methods: {
-    showBuy(name) {
-      const { basket } = this.$store.state;
-      const exists = basket.filter(item => item.name == name);
-      return exists.length;
-    },
     expand(name) {
       /*
         if( this.activeNames.includes(name) ) {

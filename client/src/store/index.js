@@ -6,7 +6,6 @@ import json from '@/store/products.json'
 const md5 = require('md5');
 
 Vue.use(Vuex);
-const debug = process.env.NODE_ENV !== 'production';
 
 function createStore () {
   return  new Vuex.Store({
@@ -16,7 +15,7 @@ function createStore () {
         totalPrice: '0.00',
         products: [],
         apiHost: 'http://localhost:3000',
-        orders: [],
+        orders: []
     }),
   getters: {
     getHost(state) {
@@ -33,24 +32,9 @@ function createStore () {
     },
     getTotalPrice(state) {
       return state.totalPrice;
-    },
+    }
   },
   mutations: {
-    addProduct(state, figure) {
-      state.basket.push(figure);
-      state.totalItems++;
-      state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
-    },
-    deleteProduct(state, figure) {
-      const { name } = figure;
-      state.basket.forEach((item, index) => {
-        if (item.name == name) {
-          state.basket.splice(index, 1);
-          state.totalPrice = (Number.parseFloat(state.totalPrice) - item.price).toFixed(2);
-        }
-      });
-      state.totalItems--;
-    },
     deleteAll(state) {
       state.basket = [];
       state.totalItems = 0;
@@ -61,6 +45,23 @@ function createStore () {
     },
     setOrders(state, orders) {
       state.orders = orders;
+    },
+    addProduct(state, figure) {
+      /* need to add numbers of ordered item in case it exists in basket */
+      state.basket.push(figure);
+      state.totalItems++;
+      state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
+    },
+    deleteProduct(state, figure) {
+      const { name } = figure;
+      state.basket.forEach((item, index) => {
+        if (item.name == name) {
+          figure.inBasket = true;
+          state.basket.splice(index, 1);
+          state.totalPrice = (Number.parseFloat(state.totalPrice) - item.price).toFixed(2);
+        }
+      });
+      state.totalItems--;
     },
   },
   actions: {
@@ -94,7 +95,7 @@ function createStore () {
           commit('setProducts', json);
         });
     },
-    saveOrder({ commit, state }, order) {
+    saveOrder({ state }, order) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/saveOrder`;
         axios.post(url, { order }).then((response) => {
@@ -102,7 +103,7 @@ function createStore () {
         }).catch(err => reject(err));
       });
     },
-    authorise({ commit, state }, user) {
+    authorise({ state }, user) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/getUsers`;
         axios.get(url).then((response) => {

@@ -2,6 +2,7 @@
   <div class="container">
     <Products
       :key="key"
+      :showBuy="true"
       :figures="figures"
       :visible="visible"
       @setResults="setResults"
@@ -40,22 +41,23 @@ export default {
       this.$store.commit('addProduct', figure);
     },
     setResults(visible) {
-      console.log('set Results', visible)
       this.visible = visible;
     },
     deleteProduct(figure) {
-      console.log('deleteProduct', figure)
       this.$store.commit('deleteProduct', figure);
     },
     buy(figure) {
       const { name } = figure;
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
-      if (exists.length) {
+      this.addProduct(figure);
+      /*
+       if (exists.length) {
         this.deleteProduct(figure);
       } else {
-        this.addProduct(figure);
+        //this.addProduct(figure); 
       }
+      */
     },
   },
 };

@@ -47,12 +47,9 @@ export default {
       first: 1,
       dirty: true,
       oldUrl: '',
-      active: 0,
+      active: 1,
       size: 0
     };
-  },
-  serverPrefetch(){
-    return this.preFetch()
   },
   computed: {
     results: function(){
@@ -65,15 +62,11 @@ export default {
         this.setPages(this.results.length);
       }
   },
-  created: function(){
-    if(this.results.length){
-        this.size = this.results.length;
-        this.setPages(this.results.length);
-      }
-  },
   watch: {
     results: function(val){
       if(val.length){
+        console.log(val.length)
+        /* Update size of pages but no redirect to the 1st page */
         this.size = val.length;
         this.setPages(val.length);
       }
@@ -91,7 +84,7 @@ export default {
       }
       const pages = Math.ceil(len / this.perPage);
       this.pages = pages;
-      this.navigate(1);
+      this.navigate(this.active); //When there're no pages to redirect to the previous
     },
     navigate(indexPage) {
       const end = indexPage - 1;
