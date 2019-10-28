@@ -7,7 +7,7 @@
       {{ figure.name }}
     </div>
     <div class="buttons">
-      <div class="product__price">{{ figure.price | currency }}</div>
+      <div class="product__price">{{ figure.count }} {{ figure.price | currency }}</div>
       <slot name="buttons">
         <Button
           v-if="showBuy"
