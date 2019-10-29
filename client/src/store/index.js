@@ -6,6 +6,9 @@ import json from '@/store/products.json'
 const md5 = require('md5');
 
 Vue.use(Vuex);
+function floatOperation(num, num2, operator){
+  return eval(`(Number.parseFloat(${num}) ${operator} Number.parseFloat(${num2})).toFixed(2)`)
+}
 
 function createStore () {
   return  new Vuex.Store({
@@ -55,7 +58,7 @@ function createStore () {
         state.basket.push(figure); 
       }
       state.totalItems++;
-      state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
+      state.totalPrice = floatOperation(state.totalPrice, figure.price, '+')
     },
     deleteProduct(state, figure) {
       let ind = 0;
@@ -64,10 +67,11 @@ function createStore () {
         return val._id === figure._id;
       })
       if(productExists) {
-        if(productExists.count > 1) productExists.count--; /* need to decrease numbers of ordered item in case it exists in basket */
-        else state.basket.splice(ind, 1); /* remove item if there's onle 1 in the basket*/
+        state.totalItems--;
+        state.totalPrice = floatOperation(state.totalPrice, productExists.price, '-')
+        if(productExists.count <= 1) state.basket.splice(ind, 1); /* remove item if there's onle 1 in the basket*/
+        productExists.count--
       }
-      state.totalItems--;
     },
   },
   actions: {
@@ -82,7 +86,7 @@ function createStore () {
         }).catch(err => reject(err));
       });
     },
-    deleteOrder({ commit, state }, id) {
+    deleteOrder({ state }, id) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/deleteOrder`;
         axios.post(url, { id }).then((response) => {
@@ -114,13 +118,16 @@ function createStore () {
         const url = `${state.apiHost}/getUsers`;
         axios.get(url).then((response) => {
           const savedUser = response.data;
+          let logged = false;
           savedUser.forEach((value) => {
             if (value.login == user.login && value.password == md5(user.password)) {
-              resolve();
+              logged = true;
             } else {
-              reject();
+              logged = false;
             }
           });
+          if(logged) resolve() 
+          else reject()
         }).catch(err => reject(err));
       });
     },

@@ -11,6 +11,7 @@
         :key="key"
         :figures="figures"
         :showBuy="false"
+        :activePage="activePage"
         :visible="visible"
         @buy="removeItem"
         @setResults="setResults"
@@ -41,6 +42,7 @@ export default {
     return {
       showModal: false,
       key: 0,
+      activePage: 1,
       visible: this.figures
     };
   },
@@ -59,9 +61,18 @@ export default {
     setResults(visible) {
       this.visible = visible;
     },
-    removeItem({ figure, index }) {
+    removeItem({ figure, index, currentPage }) {
+      console.log(figure, this.visible.length)
+      if(figure.count === 0 && this.visible.length === 1){
+        this.activePage--;
+         this.key++;
+         return;
+      }
       this.$store.commit('deleteProduct', figure); //make update for products
-     // this.visible.splice(index, 1)
+      console.log(currentPage)
+      this.activePage = currentPage;
+      this.key++; //to Update number of selected products
+ 
     },
     closeModal() {
       this.showModal = false;

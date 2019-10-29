@@ -42,6 +42,8 @@
     bottom: 0;
     width: 100%;
     text-align: center;
+    bottom: 0;
+    position: absolute;
 }
 .footer-border {
 	border-top: 1px solid #e9e9e9;

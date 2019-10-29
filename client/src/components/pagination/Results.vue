@@ -7,7 +7,10 @@
       {{ figure.name }}
     </div>
     <div class="buttons">
-      <div class="product__price">{{ figure.count }} {{ figure.price | currency }}</div>
+      <div class="product__price"> 
+        {{ figure.price | currency }}
+        <span class="selected" v-if="figure.count">В корзине: {{ figure.count }}</span> 
+      </div>
       <slot name="buttons">
         <Button
           v-if="showBuy"
@@ -26,6 +29,13 @@
     </div>
   </div>
 </template>
+<style scoped lang="less">
+  .selected {
+    padding: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 5px;
+  }
+</style>
 <script>
 import Button from '@/components/elements/Button';
 

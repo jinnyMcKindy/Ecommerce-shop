@@ -4,6 +4,7 @@
       :key="key"
       :showBuy="true"
       :figures="figures"
+      :activePage="activePage"
       :visible="visible"
       @setResults="setResults"
       @buy="buy"
@@ -19,7 +20,8 @@ export default {
   data() {
     return {
       key: 0,
-      visible: this.figures
+      visible: this.figures,
+      activePage: 1
     };
   },
   computed: {
@@ -46,11 +48,13 @@ export default {
     deleteProduct(figure) {
       this.$store.commit('deleteProduct', figure);
     },
-    buy({ figure, index }) {
+    buy({ figure, index, currentPage }) {
       const { name } = figure;
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
       this.addProduct(figure);
+      this.key++; //to Update number of selected products
+      this.activePage = currentPage;
       /*
        if (exists.length) {
         this.deleteProduct(figure);

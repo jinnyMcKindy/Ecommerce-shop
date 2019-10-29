@@ -35,7 +35,7 @@ export default {
     PageComponent,
     DotComponent,
   },
-  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage'],
+  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage', 'activePage'],
   data() {
     return {
       text: '',
@@ -47,7 +47,7 @@ export default {
       first: 1,
       dirty: true,
       oldUrl: '',
-      active: 1,
+      active: this.activePage,
       size: 0
     };
   },
@@ -64,13 +64,9 @@ export default {
   },
   watch: {
     results: function(val){
+      console.log(val)
       if(val.length){
-        console.log(val.length, this.perPage, this.active)
-        /* Update size of pages but no redirect to the 1st page */
         let previous = this.active - 1;
-        if(previous && val === this.perPage * previous){
-          //this.navigate(previous)
-        }
         this.size = val.length;
         this.setPages(val.length);
       }
@@ -96,6 +92,7 @@ export default {
       const visible = Object.values(this.results).splice(offset, this.perPage);
       this.$emit('setResults', visible);
       this.active = indexPage;
+      this.$emit('setPage', this.active)
       if (this.dirty) this.checkDots();
     },
     checkDots() {

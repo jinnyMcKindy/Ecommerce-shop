@@ -5,12 +5,14 @@
       :key="index"
       :figure="figure"
       :showBuy='showBuy'
-      @buy="(figure) => $emit('buy', {figure, index})"
+      @buy="(figure) => $emit('buy', {figure, index, currentPage})"
     />
     <Pagination
       :key="pkey"
       :right-icon="rightIcon"
       :propResults="figures"
+      @setPage="(page) => currentPage = page"
+      :activePage="activePage"
       :left-icon="leftIcon"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
@@ -30,16 +32,22 @@ export default {
     Results,
     Pagination,
   },
-  props: ['figures', 'visible', 'showBuy'],
+  props: ['figures', 'visible', 'showBuy', 'activePage'],
   data() {
     return {
       activeNames: [],
       leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
       pkey: 'p',
-      maxAmountOfPages: 4,
-      perPage: 6
+      maxAmountOfPages: 10,
+      perPage: 10,
+      currentPage: this.activePage
     };
+  },
+  watch: {
+    resultKey: function(){
+
+    }
   },
   mounted() {
     this.pkey = this.pkey + Math.random(0, 10);
@@ -73,6 +81,7 @@ export default {
   }
   .product__content {
     padding-right: 20px;
+    max-width: 70%;
   }
   li {
       margin: 5px;
