@@ -2,8 +2,11 @@
   <div class="container">
     <Products
       :key="key"
+      :showBuy="true"
       :figures="figures"
-      :basket="basket"
+      :activePage="activePage"
+      :visible="visible"
+      @setResults="setResults"
       @buy="buy"
     />
   </div>
@@ -16,8 +19,9 @@ export default {
   components: { Products },
   data() {
     return {
-      basket: [],
       key: 0,
+      visible: this.figures,
+      activePage: 1
     };
   },
   computed: {
@@ -36,24 +40,28 @@ export default {
   methods: {
     addProduct(figure) {
       const { name } = figure;
-      this.basket.push(name);
       this.$store.commit('addProduct', figure);
     },
+    setResults(visible) {
+      this.visible = visible;
+    },
     deleteProduct(figure) {
-      const { name } = figure;
-      const index = this.basket.indexOf(name);
-      this.basket.splice(index, 1);
       this.$store.commit('deleteProduct', figure);
     },
-    buy(figure) {
+    buy({ figure, index, currentPage }) {
       const { name } = figure;
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
-      if (exists.length) {
+      this.addProduct(figure);
+      this.key++; //to Update number of selected products
+      this.activePage = currentPage;
+      /*
+       if (exists.length) {
         this.deleteProduct(figure);
       } else {
-        this.addProduct(figure);
+        //this.addProduct(figure); 
       }
+      */
     },
   },
 };

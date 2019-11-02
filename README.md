@@ -24,14 +24,6 @@ cd /client
 npm run serve
 ```
 
-## Build client SSR
-
-```
-cd /client
-npm run build-server
-npm run start-server
-```
-
 ## Docker setup
 
 ```

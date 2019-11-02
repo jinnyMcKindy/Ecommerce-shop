@@ -4,17 +4,20 @@
       v-for="(figure, index) in visible"
       :key="index"
       :figure="figure"
-      @buy="(figure) => $emit('buy', figure)"
+      :showBuy='showBuy'
+      @buy="(figure) => $emit('buy', {figure, index, currentPage})"
     />
     <!--Issue with basket in pagination-->
     <Pagination
       :key="pkey"
       :right-icon="rightIcon"
       :propResults="figures"
+      @setPage="(page) => currentPage = page"
+      :activePage="activePage"
       :left-icon="leftIcon"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
-      @setResults="setResults"
+      @setResults="(visible) => $emit('setResults', visible)"
     >
       <div slot="orders" />
     </Pagination>
@@ -30,48 +33,22 @@ export default {
     Results,
     Pagination,
   },
-  props: ['basket', 'figures'],
+  props: ['figures', 'visible', 'showBuy', 'activePage'],
   data() {
     return {
       activeNames: [],
-      total: null,
       leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
       pkey: 'p',
-      maxAmountOfPages: 4,
-      perPage: 6,
+      maxAmountOfPages: 10,
+      perPage: 10,
+      currentPage: this.activePage
     };
-  },
-  computed: {
-    visible: {
-      get: function () {
-        let n = this.total;
-        if(!this.total) {
-          n = Object.values(this.figures);
-        }
-        return n;
-      },
-      // сеттер:
-      set: function (newValue) {
-        this.total = newValue;
-      }
-    },
-  },
-  serverPrefetch () {
-     return this.$store.dispatch('actionProducts')
   },
   mounted() {
     this.pkey = this.pkey + Math.random(0, 10);
   },
   methods: {
-    showBuy(name) {
-      const { basket } = this.$store.state;
-      const exists = basket.filter(item => item.name == name);
-      return exists.length;
-    },
-    setResults(visible) {
-      this.visible = visible;
-    },
     expand(name) {
       /*
         if( this.activeNames.includes(name) ) {
@@ -100,6 +77,7 @@ export default {
   }
   .product__content {
     padding-right: 20px;
+    max-width: 70%;
   }
   li {
       margin: 5px;

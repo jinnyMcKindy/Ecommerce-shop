@@ -35,7 +35,7 @@ export default {
     PageComponent,
     DotComponent,
   },
-  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage'],
+  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage', 'activePage'],
   data() {
     return {
       text: '',
@@ -47,12 +47,9 @@ export default {
       first: 1,
       dirty: true,
       oldUrl: '',
-      active: 0,
+      active: this.activePage,
       size: 0
     };
-  },
-  serverPrefetch(){
-    return this.preFetch()
   },
   computed: {
     results: function(){
@@ -65,14 +62,9 @@ export default {
         this.setPages(this.results.length);
       }
   },
-  created: function(){
-    if(this.results.length){
-        this.size = this.results.length;
-        this.setPages(this.results.length);
-      }
-  },
   watch: {
     results: function(val){
+      //console.log(val.length, this.active, this.activePage)
       if(val.length){
         this.size = val.length;
         this.setPages(val.length);
@@ -81,9 +73,6 @@ export default {
   },
   methods: {
     /* for server-side */
-    preFetch(){
-      return this.$store.dispatch('actionProducts')
-    },
     setPages(len) {
       if (len <= this.perPage) {
         this.pages = 0;
@@ -91,7 +80,7 @@ export default {
       }
       const pages = Math.ceil(len / this.perPage);
       this.pages = pages;
-      this.navigate(1);
+      this.navigate(this.active); //When there're no pages to redirect to the previous
     },
     navigate(indexPage) {
       const end = indexPage - 1;
@@ -99,6 +88,7 @@ export default {
       const visible = Object.values(this.results).splice(offset, this.perPage);
       this.$emit('setResults', visible);
       this.active = indexPage;
+      this.$emit('setPage', this.active)
       if (this.dirty) this.checkDots();
     },
     checkDots() {

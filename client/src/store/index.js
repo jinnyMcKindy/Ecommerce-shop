@@ -6,7 +6,9 @@ import json from '@/store/products.json'
 const md5 = require('md5');
 
 Vue.use(Vuex);
-const debug = process.env.NODE_ENV !== 'production';
+function floatOperation(num, num2, operator){
+  return eval(`(Number.parseFloat(${num}) ${operator} Number.parseFloat(${num2})).toFixed(2)`)
+}
 
 function createStore () {
   return  new Vuex.Store({
@@ -16,7 +18,8 @@ function createStore () {
         totalPrice: '0.00',
         products: [],
         apiHost: 'http://localhost:3000',
-        orders: [],
+        orders: [], 
+        footer: false
     }),
   getters: {
     getHost(state) {
@@ -34,24 +37,11 @@ function createStore () {
     getTotalPrice(state) {
       return state.totalPrice;
     },
+    getFooter(state){
+      return state.footer
+    }
   },
   mutations: {
-    addProduct(state, figure) {
-      state.basket.push(figure);
-      state.totalItems++;
-      state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
-    },
-    deleteProduct(state, figure) {
-      const { _id } = figure;
-      state.basket.forEach((item, index) => {
-        if (item._id == _id) {
-          console.log(item, 'splicing')
-          state.basket.splice(index, 1);
-          state.totalPrice = (Number.parseFloat(state.totalPrice) - item.price).toFixed(2);
-        }
-      });
-      if(state.totalItems) state.totalItems--;
-    },
     deleteAll(state) {
       state.basket = [];
       state.totalItems = 0;
@@ -60,8 +50,35 @@ function createStore () {
     setProducts(state, products) {
       state.products = products;
     },
+    setFooter(state, footer){
+      state.footer = footer;
+    },
     setOrders(state, orders) {
       state.orders = orders;
+    },
+    addProduct(state, figure) {
+      /* need to increase numbers of ordered item in case it exists in basket */
+      let productExists = state.basket.find((val) => val._id === figure._id)
+      if(productExists) productExists.count++;
+      else { 
+        figure.count = 1;
+        state.basket.push(figure); 
+      }
+      state.totalItems++;
+      state.totalPrice = floatOperation(state.totalPrice, figure.price, '+')
+    },
+    deleteProduct(state, figure) {
+      let ind = 0;
+      let productExists = state.basket.find((val, index) => {
+        ind = index;
+        return val._id === figure._id;
+      })
+      if(productExists) {
+        state.totalItems--;
+        state.totalPrice = floatOperation(state.totalPrice, productExists.price, '-')
+        if(productExists.count <= 1) state.basket.splice(ind, 1); /* remove item if there's onle 1 in the basket*/
+        productExists.count--
+      }
     },
   },
   actions: {
@@ -76,7 +93,7 @@ function createStore () {
         }).catch(err => reject(err));
       });
     },
-    deleteOrder({ commit, state }, id) {
+    deleteOrder({ state }, id) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/deleteOrder`;
         axios.post(url, { id }).then((response) => {
@@ -95,7 +112,7 @@ function createStore () {
           commit('setProducts', json);
         });
     },
-    saveOrder({ commit, state }, order) {
+    saveOrder({ state }, order) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/saveOrder`;
         axios.post(url, { order }).then((response) => {
@@ -103,18 +120,21 @@ function createStore () {
         }).catch(err => reject(err));
       });
     },
-    authorise({ commit, state }, user) {
+    authorise({ state }, user) {
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/getUsers`;
         axios.get(url).then((response) => {
           const savedUser = response.data;
+          let logged = false;
           savedUser.forEach((value) => {
             if (value.login == user.login && value.password == md5(user.password)) {
-              resolve();
+              logged = true;
             } else {
-              reject();
+              logged = false;
             }
           });
+          if(logged) resolve() 
+          else reject()
         }).catch(err => reject(err));
       });
     },

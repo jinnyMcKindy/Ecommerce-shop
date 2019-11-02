@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer footer-border menu-light">
+  <footer class="footer footer-border menu-light" :class="{absoluteClass}">
     <div class="container footer-wrapper">
       <router-link
         class="nav-link nav-link--light"
@@ -33,7 +33,19 @@
   </footer>
 </template>
 <script>
-
+export default {
+  name: 'Footer',
+  data: function(){
+    return {
+      footerClass: false
+    }
+  },
+  computed: {
+    absoluteClass(){
+      return this.$store.getters.getFooter
+    }
+  },
+}
 </script>
 <style type="less">
 .footer {
@@ -42,6 +54,11 @@
     bottom: 0;
     width: 100%;
     text-align: center;
+   
+}
+.absoluteClass {
+  bottom: 0;
+  position: absolute;
 }
 .footer-border {
 	border-top: 1px solid #e9e9e9;

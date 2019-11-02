@@ -8,8 +8,13 @@
         Пусто
       </div>
       <Products
+        :key="key"
         :figures="figures"
+        :showBuy="false"
+        :activePage="activePage"
+        :visible="visible"
         @buy="removeItem"
+        @setResults="setResults"
       />
       <div
         v-if="figures.length"
@@ -35,23 +40,38 @@ export default {
   components: { Products },
   data() {
     return {
-      figures: [],
       showModal: false,
+      key: 0,
+      activePage: 1,
+      visible: this.figures
     };
   },
   computed: {
     totalPrice() {
       return this.$store.state.totalPrice;
     },
+    figures() {
+      return this.$store.state.basket;
+    }
   },
-  mounted() {
-    this.figures = this.$store.state.basket;
-    console.log(this.figures)
+  mounted(){
+    this.visible = this.figures
   },
   methods: {
-    removeItem(figure) {
-      console.log(figure)
-      this.$store.commit('deleteProduct', figure);
+    setResults(visible) {
+      this.visible = visible;
+    },
+    removeItem({ figure, index, currentPage }) {
+      console.log(figure, this.visible.length)
+      if(figure.count === 0 && this.visible.length === 1){
+        this.activePage--;
+         this.key++;
+         return;
+      }
+      this.$store.commit('deleteProduct', figure); //make update for products
+      console.log(currentPage)
+      this.activePage = currentPage;
+      this.key++; //to Update number of selected products
     },
     closeModal() {
       this.showModal = false;
