@@ -10,6 +10,7 @@
       <Products
         :key="key"
         :figures="figures"
+        :perPage="3"
         :showBuy="false"
         :activePage="activePage"
         :visible="visible"
@@ -62,16 +63,16 @@ export default {
       this.visible = visible;
     },
     removeItem({ figure, index, currentPage }) {
-      console.log(figure, this.visible.length)
-      if(figure.count === 0 && this.visible.length === 1){
-        this.activePage--;
-         this.key++;
-         return;
-      }
       this.$store.commit('deleteProduct', figure); //make update for products
-      console.log(currentPage)
       this.activePage = currentPage;
       this.key++; //to Update number of selected products
+      this.$nextTick(()=> {
+        if(figure.count === 0 && this.visible.length === 0){
+          this.activePage--;
+          this.key++;
+          return;
+        }
+      })
     },
     closeModal() {
       this.showModal = false;

@@ -4,6 +4,7 @@
       :key="key"
       :showBuy="true"
       :figures="figures"
+      :perPage="10"
       :activePage="activePage"
       :visible="visible"
       @setResults="setResults"

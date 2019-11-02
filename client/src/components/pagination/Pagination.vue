@@ -47,16 +47,18 @@ export default {
       first: 1,
       dirty: true,
       oldUrl: '',
-      active: this.activePage,
-      size: 0
+      size: 0,
+      active: this.activePage
     };
   },
   computed: {
     results: function(){
       return this.propResults;
-    }
+    },
+    
   },
   mounted: function(){
+    console.log('mounted', this.active, this.activePage, this.results.length)
     if(this.results.length){
         this.size = this.results.length;
         this.setPages(this.results.length);
@@ -64,7 +66,7 @@ export default {
   },
   watch: {
     results: function(val){
-      //console.log(val.length, this.active, this.activePage)
+      console.log('watch', this.active, this.activePage, this.results.length)
       if(val.length){
         this.size = val.length;
         this.setPages(val.length);
@@ -74,7 +76,12 @@ export default {
   methods: {
     /* for server-side */
     setPages(len) {
-      if (len <= this.perPage) {
+      //console.log(len, this.activePage, this.active)
+      if(len === this.perPage){
+        this.pages--;
+        this.navigate(this.active)
+      }
+      else if (len < this.perPage) {
         this.pages = 0;
         return;
       }
@@ -89,7 +96,7 @@ export default {
       this.$emit('setResults', visible);
       this.active = indexPage;
       this.$emit('setPage', this.active)
-      if (this.dirty) this.checkDots();
+      if(this.dirty) this.checkDots();
     },
     checkDots() {
       if (this.pages <= this.maxAmountOfPages) {

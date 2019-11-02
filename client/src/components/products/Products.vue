@@ -33,7 +33,7 @@ export default {
     Results,
     Pagination,
   },
-  props: ['figures', 'visible', 'showBuy', 'activePage'],
+  props: ['figures', 'visible', 'showBuy', 'activePage', 'perPage'],
   data() {
     return {
       activeNames: [],
@@ -41,7 +41,6 @@ export default {
       rightIcon: '<i class="fa fa-arrow-right"></i>',
       pkey: 'p',
       maxAmountOfPages: 10,
-      perPage: 10,
       currentPage: this.activePage
     };
   },
