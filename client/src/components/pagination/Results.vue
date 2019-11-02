@@ -10,7 +10,7 @@
       <div class="product__price">{{ figure.price | currency }}</div>
       <slot name="buttons">
         <Button
-          v-if="!showBuy(figure.name)"
+          v-if="!showBuy(figure._id)"
           :text="'Купить'"
           class="btn btn-info pull-right"
           :figure="figure"
@@ -44,9 +44,9 @@ export default {
     preFetch(){
       return this.$store.dispatch('actionProducts')
     },
-    showBuy(name) {
+    showBuy(id) {
       const { basket } = this.$store.state;
-      const exists = basket.filter(item => item.name == name);
+      const exists = basket.filter(item => item._id == id);
       return exists.length;
     },
     expand(name) {

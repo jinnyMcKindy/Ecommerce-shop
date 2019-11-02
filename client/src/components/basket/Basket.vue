@@ -46,9 +46,11 @@ export default {
   },
   mounted() {
     this.figures = this.$store.state.basket;
+    console.log(this.figures)
   },
   methods: {
     removeItem(figure) {
+      console.log(figure)
       this.$store.commit('deleteProduct', figure);
     },
     closeModal() {

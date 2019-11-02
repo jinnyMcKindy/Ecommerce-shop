@@ -42,14 +42,15 @@ function createStore () {
       state.totalPrice = (Number.parseFloat(state.totalPrice) + Number.parseFloat(figure.price)).toFixed(2);
     },
     deleteProduct(state, figure) {
-      const { name } = figure;
+      const { _id } = figure;
       state.basket.forEach((item, index) => {
-        if (item.name == name) {
+        if (item._id == _id) {
+          console.log(item, 'splicing')
           state.basket.splice(index, 1);
           state.totalPrice = (Number.parseFloat(state.totalPrice) - item.price).toFixed(2);
         }
       });
-      state.totalItems--;
+      if(state.totalItems) state.totalItems--;
     },
     deleteAll(state) {
       state.basket = [];

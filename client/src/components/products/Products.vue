@@ -6,6 +6,7 @@
       :figure="figure"
       @buy="(figure) => $emit('buy', figure)"
     />
+    <!--Issue with basket in pagination-->
     <Pagination
       :key="pkey"
       :right-icon="rightIcon"
@@ -45,7 +46,9 @@ export default {
     visible: {
       get: function () {
         let n = this.total;
-        if(!this.total) n = Object.values(this.figures).splice(0, this.perPage);
+        if(!this.total) {
+          n = Object.values(this.figures);
+        }
         return n;
       },
       // сеттер:
