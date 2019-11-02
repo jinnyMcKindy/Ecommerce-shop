@@ -12,7 +12,7 @@
         :key="page.id"
         :ref="`page-${page}`"
         :page="page"
-        :class="['page-' + page, active == page ? 'active' : '']"
+        :class="pageClass(page)"
         @navigate-of="navigate(page)"
       />
       <dot-component
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import PageComponent from './PageComponent';
 import DotComponent from './DotComponent';
 
@@ -35,7 +36,13 @@ export default {
     PageComponent,
     DotComponent,
   },
-  props: ['leftIcon', 'rightIcon', 'propResults', 'maxAmountOfPages', 'perPage', 'activePage'],
+  props: ['leftIcon', 
+          'rightIcon',
+          'type', 
+          'propResults', 
+          'maxAmountOfPages', 
+          'perPage', 
+          'activePage'],
   data() {
     return {
       text: '',
@@ -55,10 +62,33 @@ export default {
     results: function(){
       return this.propResults;
     },
-    
+    ...mapGetters([
+      'getPagination'
+    ])
+  },
+  beforeDestroy: function(){
+    this.$store.commit('setPagination', { 
+      type: this.type, 
+      val:  { pages: this.pages, 
+              visiblePages: this.visiblePages, 
+              first: this.first, 
+              rightMax: this.rightMax, 
+              leftMax: this.leftMax,
+              dirty: this.dirty,
+              active: this.active
+            } 
+    })
   },
   mounted: function(){
-    console.log('mounted', this.active, this.activePage, this.results.length)
+    
+    let pagSettings = this.getPagination[this.type]
+    this.pages = pagSettings.pages;
+    this.visiblePages = pagSettings.visiblePages;
+    this.first = pagSettings.first;
+    this.rightMax = pagSettings.rightMax;
+    this.leftMax = pagSettings.leftMax;
+    this.dirty = pagSettings.dirty;
+    if(this.type === 'products') this.active = pagSettings.active; //To highlight active page
     if(this.results.length){
         this.size = this.results.length;
         this.setPages(this.results.length);
@@ -75,6 +105,9 @@ export default {
   },
   methods: {
     /* for server-side */
+    pageClass: function(page){
+      return ['page-' + page, this.active == page ? 'active' : ''];
+    },
     setPages(len) {
       //console.log(len, this.activePage, this.active)
       if(len === this.perPage){

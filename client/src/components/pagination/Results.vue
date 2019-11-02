@@ -13,7 +13,7 @@
       </div>
       <slot name="buttons">
         <Button
-          v-if="showBuy"
+          v-if="type === 'products'"
           :text="'Купить'"
           class="btn btn-info pull-right"
           @buy="buy(figure)"
@@ -49,7 +49,7 @@ export default {
 
     }
   },
-  props: ['figure', 'showBuy'],
+  props: ['figure', 'type'],
   serverPrefetch () {
     return this.preFetch()
   },

@@ -11,7 +11,7 @@
         :key="key"
         :figures="figures"
         :perPage="3"
-        :showBuy="false"
+        type="basket"
         :activePage="activePage"
         :visible="visible"
         @buy="removeItem"

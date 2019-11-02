@@ -4,13 +4,13 @@
       v-for="(figure, index) in visible"
       :key="index"
       :figure="figure"
-      :showBuy='showBuy'
+      :type='type'
       @buy="(figure) => $emit('buy', {figure, index, currentPage})"
     />
     <!--Issue with basket in pagination-->
     <Pagination
-      :key="pkey"
       :right-icon="rightIcon"
+      :type='type'
       :propResults="figures"
       @setPage="(page) => currentPage = page"
       :activePage="activePage"
@@ -33,19 +33,15 @@ export default {
     Results,
     Pagination,
   },
-  props: ['figures', 'visible', 'showBuy', 'activePage', 'perPage'],
+  props: ['figures', 'visible', 'type', 'activePage', 'perPage'],
   data() {
     return {
       activeNames: [],
       leftIcon: '<i class="fa fa-arrow-left"></i>',
       rightIcon: '<i class="fa fa-arrow-right"></i>',
-      pkey: 'p',
       maxAmountOfPages: 10,
       currentPage: this.activePage
     };
-  },
-  mounted() {
-    this.pkey = this.pkey + Math.random(0, 10);
   },
   methods: {
     expand(name) {

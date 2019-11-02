@@ -2,7 +2,7 @@
   <div class="container">
     <Products
       :key="key"
-      :showBuy="true"
+      type="products"
       :figures="figures"
       :perPage="10"
       :activePage="activePage"
@@ -54,8 +54,8 @@ export default {
       const { basket } = this.$store.state;
       const exists = basket.filter(item => item.name == name);
       this.addProduct(figure);
+     // this.activePage = currentPage;
       this.key++; //to Update number of selected products
-      this.activePage = currentPage;
       /*
        if (exists.length) {
         this.deleteProduct(figure);

@@ -19,9 +19,27 @@ function createStore () {
         products: [],
         apiHost: 'http://localhost:3000',
         orders: [], 
-        footer: false
+        footer: false,
+        pagination: {
+          products: {
+            pages: 0,
+            visiblePages: 0,
+            rightMax: false,
+            leftMax: false,
+            first: 1,
+            active: 1,
+            dirty: true,
+          }, 
+          basket: {
+            pages: 0, 
+            rightMax: false,
+            leftMax: false,
+            first: 1,
+            dirty: true,
+            visiblePages: 0
+          }}
     }),
-  getters: {
+   getters: {
     getHost(state) {
       return state.apiHost;
     },
@@ -39,6 +57,9 @@ function createStore () {
     },
     getFooter(state){
       return state.footer
+    },
+    getPagination(state){
+      return state.pagination;
     }
   },
   mutations: {
@@ -46,6 +67,9 @@ function createStore () {
       state.basket = [];
       state.totalItems = 0;
       state.totalPrice = '0.00';
+    },
+    setPagination(state, {type, val}){
+      state.pagination[type] = val
     },
     setProducts(state, products) {
       state.products = products;
