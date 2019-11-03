@@ -3,11 +3,7 @@
     <table class="table admin__table">
       <thead>
         <tr>
-          <th
-            v-for="(column, index) in table.columns"
-            :key="index"
-            scope="col"
-          >
+          <th v-for="(column, index) in table.columns" :key="index" scope="col">
             <span>
               {{ column }}
             </span>
@@ -15,20 +11,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(rows, productIndex) in table.rows"
-          :key="productIndex"
-        >
+        <tr v-for="(rows, productIndex) in table.rows" :key="productIndex">
           <td
             v-for="(row, index) in rows"
             :key="index"
-            :class="{'table__id': index===0}"
+            :class="{ table__id: index === 0 }"
             class="table__td"
           >
-            <span
-              v-if="!Array.isArray(row)"
-              v-html="row"
-            />
+            <span v-if="!Array.isArray(row)" v-html="row" />
             <span v-else>
               <p>
                 <button
@@ -43,10 +33,7 @@
                   Показать
                 </button>
               </p>
-              <div
-                :id="`collapse${index}${productIndex}`"
-                class="collapse"
-              >
+              <div :id="`collapse${index}${productIndex}`" class="collapse">
                 <div class="card ">
                   <ul class="list-group list-group-flush table__list">
                     <li
@@ -66,8 +53,8 @@
             :disabled="table.selectedStatus[productIndex] === 1"
             :options="table.optionsStatus"
             type="select"
-            @changeInput="(args) => change(args, rows[0])"
-          >
+            @changeInput="args => change(args, rows[0])"
+          />
           <td>
             <button
               :disabled="table.selectedStatus[productIndex] === 1"
@@ -100,26 +87,43 @@
   </div>
 </template>
 <script>
-import Input from './Input';
+import Input from "./Input";
 
 export default {
-  name: 'Table',
+  name: "Table",
   components: {
-    Input,
+    Input
   },
-  props: ['table'],
+  props: {
+    table: {
+      type: Object,
+      default: function() {
+        return {
+          optionsStatus: [
+            "1. В работе",
+            "2. Отменен",
+            "3. Линк выслан",
+            "4. Оплачен",
+            "5. Отправлен",
+            "6. Получен"
+          ],
+          columns: ["ID", "Сумма", "Продукты", "Адрес", "Статус"]
+        };
+      }
+    }
+  },
   data() {
     return {};
   },
   methods: {
     change(input, id) {
-      this.$emit('changeSelect', { input, id });
-    },
-  },
+      this.$emit("changeSelect", { input, id });
+    }
+  }
 };
 </script>
 <style>
 .table__list {
-	max-width: 250px;
+  max-width: 250px;
 }
 </style>

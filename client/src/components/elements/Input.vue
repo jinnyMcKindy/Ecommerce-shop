@@ -36,7 +36,18 @@
 <script>
 export default {
   name: "Input",
-  props: ["value", "type", "disabled", "options", "subType"],
+  props: {
+    value: { type: Boolean, default: false },
+    type: { type: String, default: "input" },
+    disabled: { type: Boolean, default: false },
+    options: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
+    subType: { type: String, default: "text" }
+  },
   data() {
     return {};
   },

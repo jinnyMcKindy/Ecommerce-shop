@@ -6,6 +6,6 @@
 <script>
 export default {
   name: "PageComponent",
-  props: ["page", "maxAmount"]
+  props: { page: { type: Number, default: 1 } }
 };
 </script>

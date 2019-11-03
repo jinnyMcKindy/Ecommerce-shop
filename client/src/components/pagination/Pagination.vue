@@ -3,13 +3,15 @@
     <div class="c2c-pagination">
       <DotComponent
         :max="leftMax"
-        :icon="leftIcon"
+        class="paginationItem"
+        :icon="`<img src=&quot;double-left.svg&quot; alt=&quot;arrow&quot;>`"
         value="toStart"
         @click-dots="clickDots"
       />
       <DotComponent
         :max="leftMax"
-        :icon="leftIcon"
+        class="paginationItem"
+        :icon="`<img src=&quot;back.svg&quot; alt=&quot;arrow&quot;>`"
         value="left"
         @click-dots="clickDots"
       />
@@ -17,19 +19,22 @@
         v-for="page in range(first, visiblePages)"
         :key="page.id"
         :ref="`page-${page}`"
+        class="paginationItem"
         :page="page"
         :class="pageClass(page)"
         @navigate-of="navigate(page)"
       />
       <DotComponent
         :max="rightMax"
-        :icon="rightIcon"
+        :icon="`<img src=&quot;next.svg&quot; alt=&quot;arrow&quot;>`"
         value="right"
+        class="paginationItem"
         @click-dots="clickDots"
       />
       <DotComponent
         :max="rightMax"
-        :icon="rightIcon"
+        class="paginationItem"
+        :icon="`<img src=&quot;double-right.svg&quot; alt=&quot;arrow&quot;>`"
         value="toEnd"
         @click-dots="clickDots"
       />
@@ -48,15 +53,18 @@ export default {
     PageComponent,
     DotComponent
   },
-  props: [
-    "leftIcon",
-    "rightIcon",
-    "type",
-    "propResults",
-    "maxAmountOfPages",
-    "perPage",
-    "activePage"
-  ],
+  props: {
+    type: { type: String, default: "" },
+    propResults: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
+    maxAmountOfPages: { type: Number, default: 3 },
+    perPage: { type: Number, default: 5 },
+    activePage: { type: Number, default: 1 }
+  },
   data() {
     return {
       text: "",
@@ -112,7 +120,7 @@ export default {
     if (this.type === "products") this.active = pagSettings.active; //To highlight active page
     if (this.results.length) {
       this.size = this.results.length;
-       this.setPages(this.results.length)
+      this.setPages(this.results.length);
     }
   },
   methods: {
@@ -157,11 +165,15 @@ export default {
       this.rightMax = true;
       if (dotName === "toEnd") {
         this.rightMax = false;
+        this.first = this.pages - this.maxAmountOfPages;
+        this.visiblePages = this.pages;
         this.navigate(this.pages);
         return;
       }
       if (dotName === "toStart") {
         this.leftMax = false;
+        this.first = 1;
+        this.visiblePages = this.maxAmountOfPages;
         this.navigate(1);
         return;
       }

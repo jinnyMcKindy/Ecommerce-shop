@@ -7,8 +7,6 @@
   </div>
 </template>
 <script>
-//import Payment from './Payment';
-
 export default {
   name: "Sent"
 };

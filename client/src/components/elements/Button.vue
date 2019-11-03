@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "Button",
-  props: ["text"]
+  props: { text: { type: String, default: "Нажать" } }
 };
 </script>
 

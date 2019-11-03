@@ -43,7 +43,15 @@ export default {
   components: {
     Button
   },
-  props: ["figure", "type"],
+  props: {
+    figure: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    },
+    type: { type: String, default: "basket" }
+  },
   data: function() {
     return {};
   },
@@ -54,16 +62,14 @@ export default {
     /* for server-side */
     buy(figure) {
       this.$emit("buy", figure);
-    },
-    expand(name) {
-      /*
+    }
+    /* expand(name) {
         if( this.activeNames.includes(name) ) {
             let index = this.activeNames.indexOf(name);
             this.activeNames.splice(index, 1); } else {
             this.activeNames.push(name);
         }
-      */
-    }
+    } */
   }
 };
 </script>

@@ -11,7 +11,11 @@
 <script>
 export default {
   name: "DotComponent",
-  props: ["max", "value", "icon"]
+  props: {
+    max: { type: Boolean, default: true },
+    value: { type: String, default: "right" },
+    icon: { type: String, default: '<i class="fa fa-arrow-right"></i>' }
+  }
 };
 </script>
 <style>

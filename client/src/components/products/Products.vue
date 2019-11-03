@@ -9,11 +9,9 @@
     />
     <!--Issue with basket in pagination-->
     <Pagination
-      :right-icon="rightIcon"
       :type="type"
       :prop-results="figures"
       :active-page="activePage"
-      :left-icon="leftIcon"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
       @setPage="page => (currentPage = page)"
@@ -27,25 +25,46 @@
 import Pagination from "@/components/pagination/Pagination";
 import Results from "@/components/pagination/Results";
 
+function setHeight() {
+  let footer = window.innerHeight > this.$el.clientHeight;
+  this.$store.commit("setFooter", footer);
+}
+
 export default {
   name: "Products",
   components: {
     Results,
     Pagination
   },
-  props: ["figures", "visible", "type", "activePage", "perPage"],
+  props: {
+    figures: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
+    visible: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
+    type: { type: String, default: "basket", required: false },
+    activePage: { type: Number, default: 1 },
+    perPage: { type: Number, default: 5 }
+  },
   data() {
     return {
       activeNames: [],
-      leftIcon: '<i class="fa fa-arrow-left"></i>',
-      rightIcon: '<i class="fa fa-arrow-right"></i>',
       maxAmountOfPages: 10,
       currentPage: this.activePage
     };
   },
+  mounted() {
+    setHeight.bind(this)();
+  },
   updated() {
-    let footer = window.innerHeight > this.$el.clientHeight;
-    this.$store.commit("setFooter", footer);
+    setHeight.bind(this)();
   }
 };
 </script>
