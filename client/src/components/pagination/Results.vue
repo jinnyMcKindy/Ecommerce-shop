@@ -1,18 +1,14 @@
 <template>
-  <div
-    class="list-group-item"
-    @click="expand(figure.name)"
-  >
+  <div class="list-group-item" @click="expand(figure.name)">
     <div class="product__content">
       {{ figure.name }}
     </div>
     <div class="buttons">
-      <div class="product__price"> 
+      <div class="product__price">
         {{ figure.price | currency }}
-        <span
-          v-if="figure.count"
-          class="selected"
-        >В корзине: {{ figure.count }}</span> 
+        <span v-if="figure.count" class="selected"
+          >В корзине: {{ figure.count }}</span
+        >
       </div>
       <slot name="buttons">
         <Button
@@ -33,33 +29,31 @@
   </div>
 </template>
 <style scoped lang="less">
-  .selected {
-    padding: 5px;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: 5px;
-  }
+.selected {
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 5px;
+}
 </style>
 <script>
-import Button from '@/components/elements/Button';
+import Button from "@/components/elements/Button";
 
 export default {
-  name: 'Results',
+  name: "Results",
   components: {
-    Button,
+    Button
   },
-  props: ['figure', 'type'],
-  data: function(){
-    return {
-
-    }
+  props: ["figure", "type"],
+  data: function() {
+    return {};
   },
-  serverPrefetch () {
-    return this.preFetch()
+  serverPrefetch() {
+    return this.preFetch();
   },
   methods: {
     /* for server-side */
-    buy(figure){
-      this.$emit('buy', figure)
+    buy(figure) {
+      this.$emit("buy", figure);
     },
     expand(name) {
       /*
@@ -69,7 +63,7 @@ export default {
             this.activeNames.push(name);
         }
       */
-    },
-  },
+    }
+  }
 };
 </script>

@@ -1,10 +1,7 @@
 <template>
   <div class="container basket">
     <div>
-      <div
-        v-if="!figures.length"
-        class="empty"
-      >
+      <div v-if="!figures.length" class="empty">
         Пусто
       </div>
       <Products
@@ -17,15 +14,9 @@
         @buy="removeItem"
         @setResults="setResults"
       />
-      <div
-        v-if="figures.length"
-        class="basket__price"
-      >
+      <div v-if="figures.length" class="basket__price">
         Сумма заказа: <span>{{ totalPrice | currency }}</span>
-        <router-link
-          class="btn btn-info pull-right"
-          to="/checkout"
-        >
+        <router-link class="btn btn-info pull-right" to="/checkout">
           Оформить заказ
         </router-link>
       </div>
@@ -33,9 +24,9 @@
   </div>
 </template>
 <script>
-import Products from '@/components/products/Products';
+import Products from "@/components/products/Products";
 export default {
-  name: 'Basket',
+  name: "Basket",
   components: { Products },
   data() {
     return {
@@ -53,38 +44,38 @@ export default {
       return this.$store.state.basket;
     }
   },
-  mounted(){
-    this.visible = this.figures
+  mounted() {
+    this.visible = this.figures;
   },
   methods: {
     setResults(visible) {
       this.visible = visible;
     },
     removeItem({ figure, currentPage }) {
-      this.$store.commit('deleteProduct', figure); //make update for products
+      this.$store.commit("deleteProduct", figure); //make update for products
       this.activePage = currentPage;
       this.key++; //to Update number of selected products
-      this.$nextTick(()=> {
-        if(figure.count === 0 && this.visible.length === 0){
+      this.$nextTick(() => {
+        if (figure.count === 0 && this.visible.length === 0) {
           this.activePage--;
           this.key++;
           return;
         }
-      })
+      });
     },
     closeModal() {
       this.showModal = false;
       this.figures = [];
-      this.$store.commit('deleteAll');
-      this.$router.push('/');
-    },
-  },
+      this.$store.commit("deleteAll");
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 
 <style scoped>
 .dum {
-  color : black;
+  color: black;
 }
 .pull-right {
   float: right;
@@ -93,8 +84,8 @@ export default {
   min-height: calc(100vh - 200px);
 }
 .basket__price {
-    margin-top: 10px;
-    padding:10px;
+  margin-top: 10px;
+  padding: 10px;
 }
 .empty {
   text-align: center;

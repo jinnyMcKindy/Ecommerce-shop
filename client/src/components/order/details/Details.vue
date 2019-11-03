@@ -4,24 +4,22 @@
       <slot name="figures" />
       <slot name="price" />
       <div class="details__form">
-        <div
-          v-if="error.send"
-          class="alert alert-danger"
-          role="alert"
-        >
+        <div v-if="error.send" class="alert alert-danger" role="alert">
           Ошибка отправки:
           {{ error.send }}
         </div>
         <form>
           <div class="form-group">
-            <label for="contacts">Контактная информация <span class="red">*</span></label>
+            <label for="contacts"
+              >Контактная информация <span class="red">*</span></label
+            >
             <input
               v-model="obj.name"
               required
               type="text"
               class="form-control"
               placeholder="Иванов Иван Иванович"
-            >
+            />
           </div>
           <div class="form-group">
             <label>Email <span class="red">*</span></label>
@@ -32,11 +30,10 @@
               class="form-control"
               aria-describedby="emailHelp"
               placeholder="ivanov@mail.ru"
+            />
+            <small id="emailHelp" class="form-text text-muted"
+              >Для подтверждения заказа и оплаты</small
             >
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-            >Для подтверждения заказа и оплаты</small>
           </div>
           <div class="form-group">
             <label>Телефоны <span class="red">*</span></label>
@@ -48,10 +45,9 @@
               type="tel"
               placeholder="+7(926)880-88-88"
             />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-            >Для службы доставки</small>
+            <small id="emailHelp" class="form-text text-muted"
+              >Для службы доставки</small
+            >
           </div>
           <div class="form-group">
             <label>Страна <span class="red">*</span></label>
@@ -62,7 +58,7 @@
               class="form-control"
               placeholder="Россия"
               value="Россия"
-            >
+            />
           </div>
           <div class="form-group">
             <label>Город <span class="red">*</span></label>
@@ -72,15 +68,11 @@
               type="text"
               class="form-control"
               placeholder="Москва"
-            >
+            />
           </div>
           <div class="form-group">
             <label>Индекс</label>
-            <input
-              v-model="obj.index"
-              type="text"
-              class="form-control"
-            >
+            <input v-model="obj.index" type="text" class="form-control" />
           </div>
           <div class="form-group">
             <label>Адрес доставки <span class="red">*</span></label>
@@ -89,17 +81,17 @@
               required
               type="text"
               class="form-control"
-            >
+            />
           </div>
           <div>
             <small class="disclaimer">
-              Нажимая «Подтвердить», я соглашаюсь с тем, что AliExpress сохраняет заполненную мной информацию и передаёт по требованию таможне, а также с условиями публичной оферты (подробная информация доступна здесь (здесь).
+              Нажимая «Подтвердить», я соглашаюсь с тем, что AliExpress
+              сохраняет заполненную мной информацию и передаёт по требованию
+              таможне, а также с условиями публичной оферты (подробная
+              информация доступна здесь (здесь).
             </small>
           </div>
-          <button
-            class="btn btn-info pull-right"
-            @click="confirmOrder"
-          >
+          <button class="btn btn-info pull-right" @click="confirmOrder">
             Подтвердить заказ
           </button>
           <div class="clear" />
@@ -110,20 +102,20 @@
 </template>
 <script>
 export default {
-  name: 'Details',
+  name: "Details",
   data() {
     return {
       obj: {
-        phone: '',
-        address: '',
-        index: '',
-        city: '',
-        country: '',
-        email: '',
-        name: '',
-        products: this.$store.getters.getBasket.map(value => value._id),
+        phone: "",
+        address: "",
+        index: "",
+        city: "",
+        country: "",
+        email: "",
+        name: "",
+        products: this.$store.getters.getBasket.map(value => value._id)
       },
-      error: {},
+      error: {}
     };
   },
   methods: {
@@ -131,32 +123,32 @@ export default {
       this.validateForm(event);
     },
     validateForm(event) {
-			 if (
-        this.obj.phone
-				&& this.obj.address
-				&& this.obj.city
-				&& this.obj.country
-				&& this.obj.email
-				&& this.obj.name
-				&& this.obj.email.indexOf('@') > -1
+      if (
+        this.obj.phone &&
+        this.obj.address &&
+        this.obj.city &&
+        this.obj.country &&
+        this.obj.email &&
+        this.obj.name &&
+        this.obj.email.indexOf("@") > -1
       ) {
         this.obj.totalPrice = this.$store.getters.getTotalPrice;
-        this.$store.dispatch('saveOrder', this.obj).then(
-          (data) => {
+        this.$store.dispatch("saveOrder", this.obj).then(
+          data => {
             console.log(data);
-            this.$emit('close');
+            this.$emit("close");
           },
-          (err) => {
+          err => {
             console.log(err);
             this.error.send = err;
-          },
+          }
         );
         event.preventDefault();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">
-	@import "details.less";
+@import "details.less";
 </style>

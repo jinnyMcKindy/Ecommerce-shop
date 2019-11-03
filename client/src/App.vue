@@ -13,29 +13,28 @@
 </template>
 
 <script>
-
-import Menu from '@/components/Menu';
-import Footer from '@/components/Footer';
-import init from '@/components/helpers/filters.js';
+import Menu from "@/components/Menu";
+import Footer from "@/components/Footer";
+import init from "@/components/helpers/filters.js";
 
 init();
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Menu,
-    Footer,
+    Footer
   }
 };
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-.menu-light{
+.menu-light {
   border-bottom: 1px solid #e9e9e9;
   background-color: #f8f8f8;
   padding-right: 10px;

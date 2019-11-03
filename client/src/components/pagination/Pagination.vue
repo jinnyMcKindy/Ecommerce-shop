@@ -1,33 +1,33 @@
 <template>
   <div>
     <div class="c2c-pagination">
-      <dot-component
+      <DotComponent
         :max="leftMax"
         :icon="leftIcon"
         value="toStart"
         @click-dots="clickDots"
       />
-      <dot-component
+      <DotComponent
         :max="leftMax"
         :icon="leftIcon"
         value="left"
         @click-dots="clickDots"
       />
-      <page-component
-        v-for="(page) in range(first, visiblePages)"
+      <PageComponent
+        v-for="page in range(first, visiblePages)"
         :key="page.id"
         :ref="`page-${page}`"
         :page="page"
         :class="pageClass(page)"
         @navigate-of="navigate(page)"
       />
-      <dot-component
+      <DotComponent
         :max="rightMax"
         :icon="rightIcon"
         value="right"
         @click-dots="clickDots"
       />
-      <dot-component
+      <DotComponent
         :max="rightMax"
         :icon="rightIcon"
         value="toEnd"
@@ -38,26 +38,28 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import PageComponent from './PageComponent';
-import DotComponent from './DotComponent';
+import { mapGetters } from "vuex";
+import PageComponent from "./PageComponent";
+import DotComponent from "./DotComponent";
 
 export default {
-  name: 'Pagination',
+  name: "Pagination",
   components: {
     PageComponent,
-    DotComponent,
+    DotComponent
   },
-  props: ['leftIcon', 
-          'rightIcon',
-          'type', 
-          'propResults', 
-          'maxAmountOfPages', 
-          'perPage', 
-          'activePage'],
+  props: [
+    "leftIcon",
+    "rightIcon",
+    "type",
+    "propResults",
+    "maxAmountOfPages",
+    "perPage",
+    "activePage"
+  ],
   data() {
     return {
-      text: '',
+      text: "",
       shownotfound: false,
       pages: 0,
       visiblePages: 0,
@@ -65,67 +67,65 @@ export default {
       leftMax: false,
       first: 1,
       dirty: true,
-      oldUrl: '',
+      oldUrl: "",
       size: 0,
       active: this.activePage
     };
   },
   computed: {
-    results: function(){
+    results: function() {
       return this.propResults;
     },
-    ...mapGetters([
-      'getPagination'
-    ])
+    ...mapGetters(["getPagination"])
   },
   watch: {
-    results: function(val){
-      console.log('watch', this.active, this.activePage, this.results.length)
-      if(val.length){
+    results: function(val) {
+      console.log("watch", this.active, this.activePage, this.results.length);
+      if (val.length) {
         this.size = val.length;
         this.setPages(val.length);
       }
     }
   },
-  beforeDestroy: function(){
-    this.$store.commit('setPagination', { 
-      type: this.type, 
-      val:  { pages: this.pages, 
-              visiblePages: this.visiblePages, 
-              first: this.first, 
-              rightMax: this.rightMax, 
-              leftMax: this.leftMax,
-              dirty: this.dirty,
-              active: this.active
-            } 
-    })
+  beforeDestroy: function() {
+    this.$store.commit("setPagination", {
+      type: this.type,
+      val: {
+        pages: this.pages,
+        visiblePages: this.visiblePages,
+        first: this.first,
+        rightMax: this.rightMax,
+        leftMax: this.leftMax,
+        dirty: this.dirty,
+        active: this.active
+      }
+    });
   },
-  mounted: function(){
-    let pagSettings = this.getPagination[this.type]
+  mounted: function() {
+    let pagSettings = this.getPagination[this.type];
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
     this.first = pagSettings.first;
     this.rightMax = pagSettings.rightMax;
     this.leftMax = pagSettings.leftMax;
     this.dirty = pagSettings.dirty;
-    if(this.type === 'products') this.active = pagSettings.active; //To highlight active page
-    if(this.results.length){
-        this.size = this.results.length;
-        this.setPages(this.results.length);
-      }
+    if (this.type === "products") this.active = pagSettings.active; //To highlight active page
+    if (this.results.length) {
+      this.size = this.results.length;
+       this.setPages(this.results.length)
+    }
   },
   methods: {
     /* for server-side */
-    pageClass: function(page){
-      return ['page-' + page, this.active == page ? 'active' : ''];
+    pageClass: function(page) {
+      return ["page-" + page, this.active == page ? "active" : ""];
     },
     setPages(len) {
       //console.log(len, this.activePage, this.active)
-      if(len === this.perPage){
+      if (len === this.perPage) {
         this.pages--;
-        this.navigate(this.active)
-      }
-      else if (len < this.perPage) {
+        this.navigate(this.active);
+      } else if (len < this.perPage) {
         this.pages = 0;
         return;
       }
@@ -137,10 +137,10 @@ export default {
       const end = indexPage - 1;
       const offset = this.perPage * end;
       const visible = Object.values(this.results).splice(offset, this.perPage);
-      this.$emit('setResults', visible);
+      this.$emit("setResults", visible);
       this.active = indexPage;
-      this.$emit('setPage', this.active)
-      if(this.dirty) this.checkDots();
+      this.$emit("setPage", this.active);
+      if (this.dirty) this.checkDots();
     },
     checkDots() {
       if (this.pages <= this.maxAmountOfPages) {
@@ -155,18 +155,18 @@ export default {
       this.dirty = false;
       this.leftMax = true;
       this.rightMax = true;
-      if(dotName === 'toEnd'){
+      if (dotName === "toEnd") {
         this.rightMax = false;
-        this.navigate(this.pages)
+        this.navigate(this.pages);
         return;
       }
-      if(dotName === 'toStart'){
+      if (dotName === "toStart") {
         this.leftMax = false;
-        this.navigate(1)
+        this.navigate(1);
         return;
       }
       let obj;
-      dotName === 'right' ? obj = this.rightDir() : obj = this.leftDir();
+      dotName === "right" ? (obj = this.rightDir()) : (obj = this.leftDir());
       [this.first, this.visiblePages] = obj;
       this.navigate(obj[0]);
     },
@@ -184,8 +184,9 @@ export default {
       return obj;
     },
     leftDir() {
-      let first; let last; let
-        obj;
+      let first;
+      let last;
+      let obj;
       last = this.first - 1;
       first = last - this.maxAmountOfPages;
       if (first === 1) this.leftMax = false;
@@ -204,10 +205,10 @@ export default {
         j++;
       }
       return array;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-  @import "pagination.less";
+@import "pagination.less";
 </style>

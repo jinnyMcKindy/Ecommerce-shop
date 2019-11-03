@@ -3,13 +3,13 @@
 </template>
 <script>
 export default {
-  name: 'Payment',
+  name: "Payment",
   data() {
     return {};
   },
-  methods: {},
+  methods: {}
 };
 </script>
 <style lang="less">
-	@import "payment.less";
+@import "payment.less";
 </style>

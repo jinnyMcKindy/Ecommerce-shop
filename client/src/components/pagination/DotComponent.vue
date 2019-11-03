@@ -10,17 +10,17 @@
 </template>
 <script>
 export default {
-  name: 'DotComponent',
-  props: ['max', 'value', 'icon'],
+  name: "DotComponent",
+  props: ["max", "value", "icon"]
 };
 </script>
 <style>
-  .c2c-dot {
-	  display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .dot-inner {
-    transform: translateY(50%);
-  };
+.c2c-dot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dot-inner {
+  transform: translateY(50%);
+}
 </style>

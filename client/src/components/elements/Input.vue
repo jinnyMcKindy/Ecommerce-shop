@@ -7,14 +7,10 @@
         :value="value"
         class="input"
         @keyup="change"
-      >
+      />
     </span>
     <span v-if="type === 'select'">
-      <select
-        v-model="input"
-        :disabled="disabled"
-        class="custom-select"
-      >
+      <select v-model="input" :disabled="disabled" class="custom-select">
         <option
           v-for="(option, key) in options"
           :key="key"
@@ -33,24 +29,14 @@
       />
     </div>
     <div v-if="type === 'checkbox'">
-      <input
-        :checked="value"
-        type="checkbox"
-        class="form-check-input"
-      >
+      <input :checked="value" type="checkbox" class="form-check-input" />
     </div>
   </td>
 </template>
 <script>
 export default {
-  name: 'Input',
-  props: [
-    'value',
-    'type',
-    'disabled',
-    'options',
-    'subType',
-  ],
+  name: "Input",
+  props: ["value", "type", "disabled", "options", "subType"],
   data() {
     return {};
   },
@@ -60,13 +46,11 @@ export default {
         return this.value;
       },
       set(newValue) {
-        this.$emit('changeInput', newValue);
-      },
-    },
+        this.$emit("changeInput", newValue);
+      }
+    }
   },
-  methods: {},
+  methods: {}
 };
 </script>
-<style>
-
-</style>
+<style></style>

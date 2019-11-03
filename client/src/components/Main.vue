@@ -13,9 +13,9 @@
   </div>
 </template>
 <script>
-import Products from './products/Products';
+import Products from "./products/Products";
 export default {
-  name: 'Main',
+  name: "Main",
   components: { Products },
   data() {
     return {
@@ -25,35 +25,35 @@ export default {
     };
   },
   computed: {
-    figures () {
+    figures() {
       return this.$store.state.products;
     }
   },
-  serverPrefetch () {
-    return this.$store.dispatch('actionProducts');
+  serverPrefetch() {
+    return this.$store.dispatch("actionProducts");
   },
   mounted() {
-    if(!this.figures.length){
-      this.$store.dispatch('actionProducts');
+    if (!this.figures.length) {
+      this.$store.dispatch("actionProducts");
     }
-  }, 
+  },
   methods: {
     addProduct(figure) {
-      this.$store.commit('addProduct', figure);
+      this.$store.commit("addProduct", figure);
     },
     setResults(visible) {
-this.visible = visible
+      this.visible = visible;
     },
     deleteProduct(figure) {
-      this.$store.commit('deleteProduct', figure);
+      this.$store.commit("deleteProduct", figure);
     },
     buy({ figure }) {
       this.addProduct(figure);
       this.key++; //to Update number of selected products
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">
-  @import "main.less";
+@import "main.less";
 </style>

@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="expand">
-      Заказ сформирован.
-      Наш менеджер свяжется с Вами.
+      Заказ сформирован. Наш менеджер свяжется с Вами.
     </div>
     <div />
   </div>
@@ -11,9 +10,7 @@
 //import Payment from './Payment';
 
 export default {
-  name: 'Sent',
+  name: "Sent"
 };
 </script>
-<style>
-
-</style>
+<style></style>
