@@ -10,10 +10,10 @@
       <Products
         :key="key"
         :figures="figures"
-        :perPage="3"
-        type="basket"
-        :activePage="activePage"
+        :per-page="3"
+        :active-page="activePage"
         :visible="visible"
+        type="basket"
         @buy="removeItem"
         @setResults="setResults"
       />
@@ -21,7 +21,7 @@
         v-if="figures.length"
         class="basket__price"
       >
-        Сумма заказа: <span>{{ totalPrice | currency}}</span>
+        Сумма заказа: <span>{{ totalPrice | currency }}</span>
         <router-link
           class="btn btn-info pull-right"
           to="/checkout"
@@ -34,8 +34,6 @@
 </template>
 <script>
 import Products from '@/components/products/Products';
-import modal from '@/components/modal';
-
 export default {
   name: 'Basket',
   components: { Products },
@@ -62,7 +60,7 @@ export default {
     setResults(visible) {
       this.visible = visible;
     },
-    removeItem({ figure, index, currentPage }) {
+    removeItem({ figure, currentPage }) {
       this.$store.commit('deleteProduct', figure); //make update for products
       this.activePage = currentPage;
       this.key++; //to Update number of selected products
@@ -86,13 +84,13 @@ export default {
 
 <style scoped>
 .dum {
-    color : black;
+  color : black;
 }
 .pull-right {
-    float: right;
+  float: right;
 }
 .basket {
-    min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 200px);
 }
 .basket__price {
     margin-top: 10px;

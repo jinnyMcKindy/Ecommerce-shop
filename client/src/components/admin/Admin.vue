@@ -120,7 +120,7 @@ export default {
       const confirmed = confirm('Вы точно хотите удалить заказ?');
       if (confirmed) {
         this.$store.dispatch('deleteOrder', id).then(
-          (res) => {
+          () => {
             this.setOrders();
           },
           err => console.log(err),
@@ -161,7 +161,7 @@ export default {
         this.$store.dispatch('authorise', obj).then(() => {
           cookie.setCookie('authorised', true);
           this.logged = true;
-        }, (err) => {
+        }, () => {
           this.errors.push('Пароль или логин не верны');
           this.logged = false;
         });
@@ -172,7 +172,7 @@ export default {
       const status = Number.isInteger(obj.input)
         ? obj.input : this.table.optionsStatus.indexOf(obj.input);
       axios.post(url, { statusObj: { id: obj.id, status } })
-        .then((response) => {
+        .then(() => {
 			    this.setOrders();
         });
     },

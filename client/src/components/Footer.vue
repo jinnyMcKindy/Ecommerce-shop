@@ -1,5 +1,8 @@
 <template>
-  <footer class="footer footer-border menu-light" :class="{absoluteClass}">
+  <footer
+    :class="{absoluteClass}"
+    class="footer footer-border menu-light"
+  >
     <div class="container footer-wrapper">
       <router-link
         class="nav-link nav-link--light"

@@ -16,7 +16,7 @@ export default {
 </script>
 <style>
   .c2c-dot {
-	display: flex;
+	  display: flex;
     justify-content: center;
     align-items: center;
   }

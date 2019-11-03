@@ -2,11 +2,11 @@
   <div class="container">
     <Products
       :key="key"
-      type="products"
       :figures="figures"
-      :perPage="10"
-      :activePage="activePage"
+      :per-page="10"
+      :active-page="activePage"
       :visible="visible"
+      type="products"
       @setResults="setResults"
       @buy="buy"
     />
@@ -14,7 +14,6 @@
 </template>
 <script>
 import Products from './products/Products';
-import Vue from 'vue';
 export default {
   name: 'Main',
   components: { Products },
@@ -40,29 +39,17 @@ export default {
   }, 
   methods: {
     addProduct(figure) {
-      const { name } = figure;
       this.$store.commit('addProduct', figure);
     },
     setResults(visible) {
-      this.visible = visible;
+this.visible = visible
     },
     deleteProduct(figure) {
       this.$store.commit('deleteProduct', figure);
     },
-    buy({ figure, index, currentPage }) {
-      const { name } = figure;
-      const { basket } = this.$store.state;
-      const exists = basket.filter(item => item.name == name);
+    buy({ figure }) {
       this.addProduct(figure);
-     // this.activePage = currentPage;
       this.key++; //to Update number of selected products
-      /*
-       if (exists.length) {
-        this.deleteProduct(figure);
-      } else {
-        //this.addProduct(figure); 
-      }
-      */
     },
   },
 };

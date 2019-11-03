@@ -2,14 +2,17 @@
   <div
     class="list-group-item"
     @click="expand(figure.name)"
-    >
+  >
     <div class="product__content">
       {{ figure.name }}
     </div>
     <div class="buttons">
       <div class="product__price"> 
         {{ figure.price | currency }}
-        <span class="selected" v-if="figure.count">В корзине: {{ figure.count }}</span> 
+        <span
+          v-if="figure.count"
+          class="selected"
+        >В корзине: {{ figure.count }}</span> 
       </div>
       <slot name="buttons">
         <Button
@@ -21,8 +24,8 @@
         <Button
           v-else
           :text="'Удалить'"
-          class="btn btn-danger pull-right products-btn__delete"
           :figure="figure"
+          class="btn btn-danger pull-right products-btn__delete"
           @buy="buy(figure)"
         />
       </slot>
@@ -44,12 +47,12 @@ export default {
   components: {
     Button,
   },
+  props: ['figure', 'type'],
   data: function(){
     return {
 
     }
   },
-  props: ['figure', 'type'],
   serverPrefetch () {
     return this.preFetch()
   },

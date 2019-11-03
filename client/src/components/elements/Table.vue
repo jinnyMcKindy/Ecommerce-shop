@@ -22,8 +22,8 @@
           <td
             v-for="(row, index) in rows"
             :key="index"
-            class="table__td"
             :class="{'table__id': index===0}"
+            class="table__td"
           >
             <span
               v-if="!Array.isArray(row)"
@@ -32,13 +32,13 @@
             <span v-else>
               <p>
                 <button
+                  :disabled="!row.length"
+                  :data-target="`#collapse${index}${productIndex}`"
+                  :aria-controls="`#collapse${index}${productIndex}`"
                   class="btn btn-primary btn-details"
                   type="button"
-                  :disabled="!row.length"
                   data-toggle="collapse"
-                  :data-target="`#collapse${index}${productIndex}`"
                   aria-expanded="false"
-                  :aria-controls="`#collapse${index}${productIndex}`"
                 >
                   Показать
                 </button>
@@ -63,11 +63,11 @@
           </td>
           <Input
             :value="table.optionsStatus[table.selectedStatus[productIndex]]"
-            type="select"
             :disabled="table.selectedStatus[productIndex] === 1"
             :options="table.optionsStatus"
+            type="select"
             @changeInput="(args) => change(args, rows[0])"
-          />
+          >
           <td>
             <button
               :disabled="table.selectedStatus[productIndex] === 1"

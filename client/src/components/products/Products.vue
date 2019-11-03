@@ -4,19 +4,19 @@
       v-for="(figure, index) in visible"
       :key="index"
       :figure="figure"
-      :type='type'
+      :type="type"
       @buy="(figure) => $emit('buy', {figure, index, currentPage})"
     />
     <!--Issue with basket in pagination-->
     <Pagination
       :right-icon="rightIcon"
-      :type='type'
-      :propResults="figures"
-      @setPage="(page) => currentPage = page"
-      :activePage="activePage"
+      :type="type"
+      :prop-results="figures"
+      :active-page="activePage"
       :left-icon="leftIcon"
       :max-amount-of-pages="maxAmountOfPages"
       :per-page="perPage"
+      @setPage="(page) => currentPage = page"
       @setResults="(visible) => $emit('setResults', visible)"
     >
       <div slot="orders" />
@@ -46,17 +46,6 @@ export default {
   updated(){
     let footer = window.innerHeight > this.$el.clientHeight;
     this.$store.commit('setFooter', footer)
-  },
-  methods: {
-    expand(name) {
-      /*
-        if( this.activeNames.includes(name) ) {
-            let index = this.activeNames.indexOf(name);
-            this.activeNames.splice(index, 1); } else {
-            this.activeNames.push(name);
-        }
-      */
-    },
   },
 };
 </script>

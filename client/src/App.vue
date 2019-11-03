@@ -14,7 +14,6 @@
 
 <script>
 
-import Vue from 'vue';
 import Menu from '@/components/Menu';
 import Footer from '@/components/Footer';
 import init from '@/components/helpers/filters.js';

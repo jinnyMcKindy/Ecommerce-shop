@@ -3,8 +3,14 @@
     <div class="c2c-pagination">
       <dot-component
         :max="leftMax"
-        value="left"
         :icon="leftIcon"
+        value="toStart"
+        @click-dots="clickDots"
+      />
+      <dot-component
+        :max="leftMax"
+        :icon="leftIcon"
+        value="left"
         @click-dots="clickDots"
       />
       <page-component
@@ -17,8 +23,14 @@
       />
       <dot-component
         :max="rightMax"
-        value="right"
         :icon="rightIcon"
+        value="right"
+        @click-dots="clickDots"
+      />
+      <dot-component
+        :max="rightMax"
+        :icon="rightIcon"
+        value="toEnd"
         @click-dots="clickDots"
       />
     </div>
@@ -66,6 +78,15 @@ export default {
       'getPagination'
     ])
   },
+  watch: {
+    results: function(val){
+      console.log('watch', this.active, this.activePage, this.results.length)
+      if(val.length){
+        this.size = val.length;
+        this.setPages(val.length);
+      }
+    }
+  },
   beforeDestroy: function(){
     this.$store.commit('setPagination', { 
       type: this.type, 
@@ -80,7 +101,6 @@ export default {
     })
   },
   mounted: function(){
-    
     let pagSettings = this.getPagination[this.type]
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
@@ -93,15 +113,6 @@ export default {
         this.size = this.results.length;
         this.setPages(this.results.length);
       }
-  },
-  watch: {
-    results: function(val){
-      console.log('watch', this.active, this.activePage, this.results.length)
-      if(val.length){
-        this.size = val.length;
-        this.setPages(val.length);
-      }
-    }
   },
   methods: {
     /* for server-side */
@@ -144,6 +155,16 @@ export default {
       this.dirty = false;
       this.leftMax = true;
       this.rightMax = true;
+      if(dotName === 'toEnd'){
+        this.rightMax = false;
+        this.navigate(this.pages)
+        return;
+      }
+      if(dotName === 'toStart'){
+        this.leftMax = false;
+        this.navigate(1)
+        return;
+      }
       let obj;
       dotName === 'right' ? obj = this.rightDir() : obj = this.leftDir();
       [this.first, this.visiblePages] = obj;
