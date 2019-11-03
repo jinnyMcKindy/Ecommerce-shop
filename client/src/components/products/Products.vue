@@ -43,6 +43,10 @@ export default {
       currentPage: this.activePage
     };
   },
+  updated(){
+    let footer = window.innerHeight > this.$el.clientHeight;
+    this.$store.commit('setFooter', footer)
+  },
   methods: {
     expand(name) {
       /*
