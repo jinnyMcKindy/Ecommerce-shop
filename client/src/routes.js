@@ -10,12 +10,12 @@ import Admin from '@/components/admin/Admin';
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/basket', component: Basket, name: 'basket' },
-  { path: '/', name: 'home', component: Main },
-  { path: '/politics', component: Politics, name: 'politics' },
-  { path: '/checkout', component: Checkout, name: 'checkout' },
-  { path: '/sent', component: Sent, name: 'sent' },
-  { path: '/admin', component: Admin, name: 'admin' },
+  { path: '/Ecommerce-shop/basket', component: Basket, name: 'basket' },
+  { path: '/Ecommerce-shop/', name: 'home', component: Main },
+  { path: '/Ecommerce-shop/politics', component: Politics, name: 'politics' },
+  { path: '/Ecommerce-shop/checkout', component: Checkout, name: 'checkout' },
+  { path: '/Ecommerce-shop/sent', component: Sent, name: 'sent' },
+  { path: '/Ecommerce-shop/admin', component: Admin, name: 'admin' },
   { path: "*", redirect: { name: 'home' }}
 ];
 const createRouter = function() {

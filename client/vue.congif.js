@@ -1,6 +1,7 @@
 // vue.config.js
 module.exports = {
-  assetsDir: process.env.NODE_ENV === 'production' ? '/Ecommerce-shop/' : '',
+  publicPath: '/Ecommerce-shop/',
+  assetsDir: '/Ecommerce-shop/',
   devServer: {
     port: 8080,
     overlay: {

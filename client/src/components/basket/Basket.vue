@@ -17,7 +17,10 @@
       />
       <div v-if="figures.length" class="basket__price">
         Сумма заказа: <span>{{ totalPrice | currency }}</span>
-        <router-link class="btn btn-info pull-right" to="/checkout">
+        <router-link
+          class="btn btn-info pull-right"
+          to="/Ecommerce-shop/checkout"
+        >
           Оформить заказ
         </router-link>
       </div>
