@@ -1,6 +1,6 @@
 <template>
   <div v-if="max" class="c2c-dot" @click="$emit('click-dots', value)">
-    <img :src="{ icon }" alt="arrow" />
+    <img :src="icon" alt="arrow" />
   </div>
 </template>
 <script>
