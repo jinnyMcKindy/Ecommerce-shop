@@ -25,11 +25,6 @@
 import Pagination from "@/components/pagination/Pagination";
 import Results from "@/components/pagination/Results";
 
-function setHeight() {
-  let footer = window.innerHeight > this.$el.clientHeight;
-  this.$store.commit("setFooter", footer);
-}
-
 export default {
   name: "Products",
   components: {
@@ -59,19 +54,6 @@ export default {
       maxAmountOfPages: 10,
       currentPage: this.activePage
     };
-  },
-  created() {
-    this.$nextTick(() => {
-      setHeight.bind(this)();
-    });
-  },
-  mounted() {
-    this.$nextTick(() => {
-      setHeight.bind(this)();
-    });
-  },
-  updated() {
-    setHeight.bind(this)();
   }
 };
 </script>

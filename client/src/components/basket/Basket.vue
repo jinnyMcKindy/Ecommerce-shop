@@ -5,9 +5,10 @@
         Пусто
       </div>
       <Products
+        v-else
         :key="key"
         :figures="figures"
-        :per-page="3"
+        :per-page="perPage"
         :active-page="activePage"
         :visible="visible"
         type="basket"
@@ -33,7 +34,8 @@ export default {
       showModal: false,
       key: 0,
       activePage: 1,
-      visible: this.figures
+      visible: this.figures,
+      perPage: 3
     };
   },
   computed: {
@@ -45,17 +47,24 @@ export default {
     }
   },
   mounted() {
-    this.visible = this.figures;
+    this.visible = this.figures.slice(0, this.perPage);
+    console.log(this.visible, this.figures, this.perPage);
   },
   methods: {
     setResults(visible) {
       this.visible = visible;
+      // this.key++;
     },
     removeItem({ figure, currentPage }) {
       this.$store.commit("deleteProduct", figure); //make update for products
       this.activePage = currentPage;
       this.key++; //to Update number of selected products
+      console.log(figure, this.visible, this.activePage);
       this.$nextTick(() => {
+        if (this.activePage === 1 && !figure.count) {
+          this.visible = this.visible.filter(v => v._id !== figure._id);
+          return;
+        }
         if (figure.count === 0 && this.visible.length === 0) {
           this.activePage--;
           this.key++;
