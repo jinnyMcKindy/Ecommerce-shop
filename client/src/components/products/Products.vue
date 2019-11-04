@@ -60,8 +60,15 @@ export default {
       currentPage: this.activePage
     };
   },
+  created() {
+    this.$nextTick(() => {
+      setHeight.bind(this)();
+    });
+  },
   mounted() {
-    setHeight.bind(this)();
+    this.$nextTick(() => {
+      setHeight.bind(this)();
+    });
   },
   updated() {
     setHeight.bind(this)();

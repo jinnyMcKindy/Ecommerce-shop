@@ -1,5 +1,6 @@
 <template>
-  <div class="list-group-item" @click="expand(figure.name)">
+  <div class="list-group-item">
+    <!--@click="expand(figure.name)"-->
     <div class="product__content">
       {{ figure.name }}
     </div>

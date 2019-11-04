@@ -4,14 +4,14 @@
       <DotComponent
         :max="leftMax"
         class="paginationItem"
-        :icon="`<img src=&quot;double-left.svg&quot; alt=&quot;arrow&quot;>`"
+        :icon="'double-left.svg'"
         value="toStart"
         @click-dots="clickDots"
       />
       <DotComponent
         :max="leftMax"
         class="paginationItem"
-        :icon="`<img src=&quot;back.svg&quot; alt=&quot;arrow&quot;>`"
+        :icon="'back.svg'"
         value="left"
         @click-dots="clickDots"
       />
@@ -26,7 +26,7 @@
       />
       <DotComponent
         :max="rightMax"
-        :icon="`<img src=&quot;next.svg&quot; alt=&quot;arrow&quot;>`"
+        :icon="'next.svg'"
         value="right"
         class="paginationItem"
         @click-dots="clickDots"
@@ -34,7 +34,7 @@
       <DotComponent
         :max="rightMax"
         class="paginationItem"
-        :icon="`<img src=&quot;double-right.svg&quot; alt=&quot;arrow&quot;>`"
+        :icon="'double-right.svg'"
         value="toEnd"
         @click-dots="clickDots"
       />

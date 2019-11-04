@@ -1,11 +1,6 @@
 <template>
-  <div
-    v-if="max"
-    class="c2c-dot"
-    @click="$emit('click-dots', value)"
-    v-html="icon"
-  >
-    <div class="dot-inner" />
+  <div v-if="max" class="c2c-dot" @click="$emit('click-dots', value)">
+    <img :src="{ icon }" alt="arrow" />
   </div>
 </template>
 <script>
@@ -14,7 +9,7 @@ export default {
   props: {
     max: { type: Boolean, default: true },
     value: { type: String, default: "right" },
-    icon: { type: String, default: '<i class="fa fa-arrow-right"></i>' }
+    icon: { type: String, default: "back.svg" }
   }
 };
 </script>
