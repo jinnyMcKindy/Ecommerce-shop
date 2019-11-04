@@ -110,7 +110,7 @@ export default {
     });
   },
   mounted: function() {
-    console.log("mounted", this.activePage);
+    //console.log("mounted", this.activePage);
     let pagSettings = this.getPagination[this.type];
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
