@@ -82,4 +82,7 @@ li {
 .active {
   cursor: pointer;
 }
+.product-wrapper {
+  min-height: 80vh;
+}
 </style>
