@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu class="menu-light" />
-    <div class="container">
+    <div class="container main-container">
       <div class="row">
         <div class="col col-md-12 main">
           <router-view />
@@ -43,5 +43,8 @@ export default {
 .main {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.main-container {
+  height: calc(100vh - 150px);
 }
 </style>
