@@ -4,14 +4,14 @@
       <DotComponent
         :max="leftMax"
         class="paginationItem"
-        icon="double-left.svg"
+        :icon="setPath('double-left.svg')"
         value="toStart"
         @click-dots="clickDots"
       />
       <DotComponent
         :max="leftMax"
         class="paginationItem"
-        icon="back.svg"
+        :icon="setPath('back.svg')"
         value="left"
         @click-dots="clickDots"
       />
@@ -26,7 +26,7 @@
       />
       <DotComponent
         :max="rightMax"
-        icon="next.svg"
+        :icon="setPath('next.svg')"
         value="right"
         class="paginationItem"
         @click-dots="clickDots"
@@ -34,7 +34,7 @@
       <DotComponent
         :max="rightMax"
         class="paginationItem"
-        icon="double-right.svg"
+        :icon="setPath('double-right.svg')"
         value="toEnd"
         @click-dots="clickDots"
       />
@@ -125,7 +125,9 @@ export default {
     }
   },
   methods: {
-    /* for server-side */
+    setPath: function(path) {
+      return `/Ecommerce-shop/${path}`;
+    },
     pageClass: function(page) {
       return ["page-" + page, this.active == page ? "active" : ""];
     },
