@@ -26,3 +26,5 @@ yarn-error.log*
 *.sw*
 .editorconfig
 **/package-lock.json
+client/package-lock.json
+server/package-lock.json
