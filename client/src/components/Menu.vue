@@ -2,15 +2,15 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="nav mr-auto">
       <li class="nav-item menu-light__li">
-        <router-link class="nav-link nav-link--light" to="/Ecommerce-shop/">
+        <router-link class="nav-link nav-link--light" :to="{ name: 'home' }">
           Главная
         </router-link>
       </li>
     </ul>
-    <router-link class="nav-link nav-link--light" to="/Ecommerce-shop/admin">
+    <router-link class="nav-link nav-link--light" :to="{ name: 'admin' }">
       Админка
     </router-link>
-    <router-link class="nav-link nav-link--light" to="/Ecommerce-shop/basket">
+    <router-link class="nav-link nav-link--light" :to="{ name: 'basket' }">
       В корзине: {{ totalItems }} Сумма:
       <span>{{ totalPrice | currency }}</span>
     </router-link>

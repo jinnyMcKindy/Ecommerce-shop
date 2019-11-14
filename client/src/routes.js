@@ -8,14 +8,14 @@ import Sent from '@/components/order/Sent';
 import Admin from '@/components/admin/Admin';
 
 Vue.use(VueRouter);
-
+let prefix = 'Ecommerce-shop'
 const routes = [
-  { path: '/Ecommerce-shop/basket', component: Basket, name: 'basket' },
-  { path: '/Ecommerce-shop/', name: 'home', component: Main },
-  { path: '/Ecommerce-shop/politics', component: Politics, name: 'politics' },
-  { path: '/Ecommerce-shop/checkout', component: Checkout, name: 'checkout' },
-  { path: '/Ecommerce-shop/sent', component: Sent, name: 'sent' },
-  { path: '/Ecommerce-shop/admin', component: Admin, name: 'admin' },
+  { path: `${prefix}/basket`, component: Basket, name: 'basket' },
+  { path: `${prefix}/`, name: 'home', component: Main },
+  { path: `${prefix}/politics`, component: Politics, name: 'politics' },
+  { path: `${prefix}/checkout`, component: Checkout, name: 'checkout' },
+  { path: `${prefix}/sent`, component: Sent, name: 'sent' },
+  { path: `${prefix}/admin`, component: Admin, name: 'admin' },
   { path: "*", redirect: { name: 'home' }}
 ];
 const createRouter = function() {
