@@ -17,14 +17,15 @@ const url = 'mongodb://mongo:27017/';
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const clientUrl = 'http://localhost:8081';
 const corsOptions = {
-  origin: 'http://localhost:8080',
+  origin: clientUrl,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.use(cors());
 app.all('/*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Origin', clientUrl);
   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   next();
 });

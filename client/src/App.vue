@@ -45,6 +45,6 @@ export default {
   margin-bottom: 20px;
 }
 .main-container {
-  height: calc(100vh - 150px);
+  min-height: calc(100vh - 150px);
 }
 </style>

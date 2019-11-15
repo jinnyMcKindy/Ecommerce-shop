@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     setPath: function(path) {
-      return `/Ecommerce-shop/${path}`;
+      return `${path}`;
     },
     pageClass: function(page) {
       return ["page-" + page, this.active == page ? "active" : ""];

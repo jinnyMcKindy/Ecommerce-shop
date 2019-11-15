@@ -10,6 +10,7 @@ RUN npm install -g http-server
 
 COPY . .
 
-EXPOSE 8080
-CMD ["npm", "test:dev"]
+RUN npm run build
 
+EXPOSE 8081
+CMD ["npm", "test:dev"]
