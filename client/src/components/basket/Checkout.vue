@@ -1,8 +1,17 @@
 <template>
-  <Details v-if="figures.length" class="details checkout" @close="toHome">
+  <Details v-if="basket.length" class="details checkout" @close="toHome">
     <div slot="figures" class="details__figures">
-      <Products :figures="figures">
-        <div slot-scope="buttons" />
+      <Products 
+        :key="key"
+        :figures="basket"
+        :per-page="10"
+        :active-page="activePage"
+        :visible="visible"
+        :pagination="false"
+        type="checkout"
+        @setResults="setResults"
+      >
+        <div scope="buttons" />
       </Products>
     </div>
     <div slot="price" class="details__price">
@@ -14,6 +23,7 @@
 <script>
 import Details from "@/components/order/details/Details";
 import Products from "@/components/products/Products";
+import { mapState } from 'vuex';
 
 export default {
   name: "Checkout",
@@ -23,21 +33,32 @@ export default {
   },
   data() {
     return {
-      figures: [],
-      price: 0
+      price: 0,
+      key: 0,
+      activePage: 1
     };
   },
+    computed: {
+    ...mapState([
+      'basket']),
+      visible: function() {
+        return this.basket
+      }
+    },
   mounted() {
-    this.figures = this.$store.getters.getBasket;
+    console.log(this.basket)
     this.price = this.$store.getters.getTotalPrice;
-    if (!this.figures.length) this.$router.push({ name: "home" });
+    if (!this.basket.length) this.$router.push({ name: "home" });
     // console.log(this.$store.getters.getBasket)
   },
   methods: {
     toHome() {
       this.$store.commit("deleteAll");
       this.$router.push({ name: "sent" });
-    }
+    },
+     setResults(visible) {
+      this.visible = visible;
+    },
   }
 };
 </script>

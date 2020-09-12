@@ -9,15 +9,17 @@ services:
   server:
     build: server/
     command: node ./server.js
+    depends_on:
+      - mongo
     ports:
       - "3000:3000"
     links:
       - mongo
   client:
     build: client/
-    command: http-server ./dist
+    command: http-server dist -p 8081
     network_mode: host
     ports:
-      - "8089:8089"
+      - "8081:8081"
     depends_on:
       - server

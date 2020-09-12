@@ -1,4 +1,5 @@
 const mongo = require('mongodb').MongoClient;
+
 const url = 'mongodb://mongo:27017/';
 const ObjectID = require('mongodb').ObjectID;
 
@@ -30,7 +31,7 @@ const DataBase = {
 				  }
 			    const db = client.db('ishop');
 			    const collection = db.collection('products');
-			  	//collection.deleteMany({ })
+					//collection.deleteMany({ })
 			    collection.insertMany(contents, (err, result) => {
 				    //client.close();
 				  	if(err) reject(err)
@@ -47,7 +48,7 @@ const DataBase = {
 				    return;
 			    }
 			    const db = client.db('ishop');
-			    const collection = db.collection('orders');
+					const collection = db.collection('orders');
 			    //collection.deleteMany({ })
 			    collection.insertOne(order, (err, result) => {
 				  client.close()
@@ -65,7 +66,7 @@ const DataBase = {
 				    return;
 			    }
 			    const db = client.db('ishop');
-			    const collection = db.collection('orders');
+					const collection = db.collection('orders');
 			    collection.find().toArray((err, items) => {
 			  	  client.close();
 			  	  if(err) reject(err)
@@ -82,7 +83,8 @@ const DataBase = {
 				    return;
 			    }
 			    const db = client.db('ishop');
-			    const collection = db.collection('users');
+					const collection = db.collection('users');
+					console.log(collection)
 			    collection.find().toArray((err, items) => {
 			  	  //client.close();
 			  	  if(err) reject(err)
@@ -99,7 +101,8 @@ const DataBase = {
 				    return;
 			    }
 			    const db = client.db('ishop');
-			    const collection = db.collection('users');
+					const collection = db.collection('users');
+					console.log(collection)
 		      	collection.insertOne(user, (err, result) => {
 				//  client.close()
 				  if(err) reject(err)

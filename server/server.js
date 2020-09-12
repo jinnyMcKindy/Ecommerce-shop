@@ -4,6 +4,7 @@ const cors = require('cors');
 const http = require('http');
 const mongo = require('mongodb').MongoClient;
 
+
 const app = express();
 const md5 = require('md5');
 const bodyParser = require('body-parser');
@@ -13,6 +14,7 @@ const products = require('./models/products');
 
 const db = dbo.DataBase;
 const url = 'mongodb://mongo:27017/';
+const Order = require('./models/entities/Order')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -70,6 +72,10 @@ function startServerApi(client) {
   });
   app.post('/deleteOrder', (req, res) => {
     db.deleteOrder(req.body.id)
+      .then(data => res.json(data), err => res.json('error', err));
+  });
+  app.get('/getOrders', (req, res) => {
+    db.getOrders()
       .then(data => res.json(data), err => res.json('error', err));
   });
   app.listen(port);

@@ -10,6 +10,7 @@
     <!--Issue with basket in pagination-->
     <Pagination
       :type="type"
+      v-if="pagination"
       :prop-results="figures"
       :active-page="activePage"
       :max-amount-of-pages="maxAmountOfPages"
@@ -43,6 +44,9 @@ export default {
       default: function() {
         return [];
       }
+    },
+    pagination: {
+      type: Boolean, default: true, required: false
     },
     type: { type: String, default: "basket", required: false },
     activePage: { type: Number, default: 1 },
@@ -82,7 +86,5 @@ li {
 .active {
   cursor: pointer;
 }
-.product-wrapper {
-  min-height: 80vh;
-}
+
 </style>

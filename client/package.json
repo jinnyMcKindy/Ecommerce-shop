@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:dev": "http-server dist -p 8081 -c 1 --push-state"
@@ -58,11 +58,6 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,vue}": [
       "vue-cli-service lint",
