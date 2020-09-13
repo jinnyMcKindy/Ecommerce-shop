@@ -10,9 +10,18 @@ services:
     build: server/
     command: node ./server.js
     depends_on:
-      - mongo
+      - mongo-setup
     ports:
       - "3000:3000"
+    links:
+      - mongo
+  mongo-setup:
+    build: mongo-setup/
+    command: node ./initDB.js
+    depends_on:
+      - mongo
+    ports:
+      - "8089:8089"
     links:
       - mongo
   client:

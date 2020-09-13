@@ -4,7 +4,7 @@ FROM node:lts-alpine
 RUN npm install -g http-server
 
 # делаем каталог 'app' текущим рабочим каталогом
-WORKDIR /app
+WORKDIR /client
 
 # копируем оба 'package.json' и 'package-lock.json' (если есть)
 COPY package*.json ./
@@ -19,4 +19,4 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8081
-CMD [ "http-server", "dist" ]
+CMD [ "npm", "test:dev" ]

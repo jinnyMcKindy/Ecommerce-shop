@@ -1,5 +1,4 @@
 const mongo = require('mongodb').MongoClient;
-
 const url = 'mongodb://mongo:27017/';
 const ObjectID = require('mongodb').ObjectID;
 
