@@ -3,7 +3,6 @@ const fs = require('fs');
 const HTMLParser = require('node-html-parser');
 
 const fileName = './items.txt';
-const db = require('./database');
 
 const url_phones = 'https://ru.aliexpress.com/category/202001195/mobile-phones.html?site=rus&isrefine=y';
 const url_laptop = 'https://ru.aliexpress.com/af/category/202000104.html?site=rus&d=n&catName=laptops&CatId=202000104&origin=n&isViewCP=y&jump=afs';

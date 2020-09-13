@@ -1,6 +1,8 @@
 
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const WebSocket = require('ws');
 
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
@@ -42,27 +44,54 @@ mongoose.connect(`${server}/${database}`)
       UserModel.find()
         .then(data => res.json(data), err => res.json(err));
     });
-    /*
+    
     app.post('/saveOrder', (req, res) => {
-      db.saveOrder(req.body.order)
+      let model = new OrderModel(req.body.order)
+      model.save()
         .then(data => res.json(data), err => res.json(err));
     });
+    /*
     app.post('/setStatus', (req, res) => {
       // console.log(req.body)
       db.setStatus(req.body.statusObj)
         .then(data => res.json(data), err => res.json('error', err));
     });
+    */
     app.post('/deleteOrder', (req, res) => {
-      db.deleteOrder(req.body.id)
+      OrderModel.findOneAndRemove({ '_id': req.body.id })
         .then(data => res.json(data), err => res.json('error', err));
     });
     app.get('/getOrders', (req, res) => {
-      db.getOrders()
+      OrderModel.find()
         .then(data => res.json(data), err => res.json('error', err));
     });
-    */
     app.listen(port);
+    startWebSocketServer()
 })
 .catch(err => {
   console.error('Database connection error', err)
 })
+function startWebSocketServer() {
+  const app = express();
+  const connections = new Set(); // Storage of connections
+  const lastModification = 0; // Greater modified
+  const server = http.createServer(app);
+
+  const socket = new WebSocket.Server({ server });
+
+  server.listen('8999', () => {
+    console.log(`WebSocket started on port ${server.address().port} :)`);
+  });
+
+  socket.on('connection', (req) => {
+    const connection = req;
+    connections.add(connection);
+    OrderModel
+      .find()
+      .then(data => req.send(JSON.stringify(data)), err => res.json(err));
+  });
+  socket.on('close', (req) => {
+    client.close();
+    connections.delete(connection);
+  });
+}

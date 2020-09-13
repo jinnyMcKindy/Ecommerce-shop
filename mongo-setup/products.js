@@ -14,11 +14,11 @@ function parseProduct(res) {
     const price = v.querySelector('.value') ? Number.parseFloat(v.querySelector('.value').innerHTML.replace(/(руб.)*\s*/gi, "").replace(",",".")).toFixed(2) : 0;
     const imageSrc = v.querySelector('.picCore') ? v.querySelector('.picCore').attributes['image-src'] : '';
     const productLink = v.querySelector('.product') ? v.querySelector('.product').attributes.href : '';
-    const { title } = v.querySelector('.product') ? v.querySelector('.product').attributes : '';
+    const title = v.querySelector('.product') ? v.querySelector('.product').attributes.title : ''
     return {
       price, name: title, imageSrc, productLink,
     };
-  });
+  }).filter((v) => v.price !== 0 )
   return tt;
 }
 const saveContent = new Promise((resolve, reject) => {

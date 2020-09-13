@@ -39,6 +39,7 @@ docker-compose up
 - server (mongoose  + expressJS runs on port :3000)
 - mongo (mongd server runs on port :27017)
 - mongo-setup (to fill MongoDB with data (products and admin), runs on port :8089)
+- WebSocket to dispatch orders (port :8999)
 
 ## Lint errors
 
@@ -50,7 +51,17 @@ To lint errors in `/client` folder:
 
 [api](https://rapidapi.com/?utm_campaign=Quora&utm_medium=link_Marketplace&utm_source=Quora)
 
-### Issue
+To parse items from Aliexpress run:
+```
+cd mongo-setup
+node ./parse
 
-Make `http-server` (SSR) work with Vue Router.
+```
+This command will parse Aliexpress and automatically save parsed items to `items.txt`
+
+### Admin panel
+
+You can login in /admin router with password:
+login: admin
+pass: 12345
 
