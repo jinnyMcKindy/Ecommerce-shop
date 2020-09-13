@@ -16,7 +16,7 @@ const database = 'ishop';
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const clientUrl = 'http://localhost:8081';
+const clientUrl = 'http://localhost:8090';
 const corsOptions = {
   origin: clientUrl,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204

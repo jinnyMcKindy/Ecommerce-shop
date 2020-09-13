@@ -18,5 +18,5 @@ COPY . .
 # собираем приложение для production с минификацией
 RUN npm run build
 
-EXPOSE 8081
+EXPOSE 8090
 CMD [ "npm", "test:dev" ]

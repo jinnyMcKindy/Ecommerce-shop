@@ -26,9 +26,8 @@ services:
       - mongo
   client:
     build: client/
-    command: http-server dist -p 8081
-    network_mode: host
+    command: npm run test:dev
     ports:
-      - "8081:8081"
+      - "8090:8090"
     depends_on:
       - server
