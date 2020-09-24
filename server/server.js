@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const ProductModel = require('./models/entities/Products');
 const UserModel = require('./models/entities/Users');
 const OrderModel = require('./models/entities/Orders');
+const StatusModel = require('./models/entities/Status');
 
 const app = express();
 const server = 'mongodb://mongo:27017'
@@ -36,10 +37,12 @@ mongoose.connect(`${server}/${database}`)
 .then(() => {
   console.log('Database connection successful')
     const port = 3000;
+    
     app.get('/getProducts', cors(corsOptions), (req, res) => {
       ProductModel.find()
       .then(data => res.json(data), err => res.json(err));
     }); 
+
     app.get('/getUsers', cors(corsOptions), (req, res) => {
       UserModel.find()
         .then(data => res.json(data), err => res.json(err));
@@ -50,21 +53,23 @@ mongoose.connect(`${server}/${database}`)
       model.save()
         .then(data => res.json(data), err => res.json(err));
     });
-    /*
+    
     app.post('/setStatus', (req, res) => {
-      // console.log(req.body)
-      db.setStatus(req.body.statusObj)
-        .then(data => res.json(data), err => res.json('error', err));
+      let model = new StatusModel(req.body.order)
+      model.save()
+        .then(data => res.json(data), err => res.json(err));
     });
-    */
+    
     app.post('/deleteOrder', (req, res) => {
       OrderModel.findOneAndRemove({ '_id': req.body.id })
         .then(data => res.json(data), err => res.json('error', err));
     });
+
     app.get('/getOrders', (req, res) => {
       OrderModel.find()
         .then(data => res.json(data), err => res.json('error', err));
     });
+
     app.listen(port);
     startWebSocketServer()
 })

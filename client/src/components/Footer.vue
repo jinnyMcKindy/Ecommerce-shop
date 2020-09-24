@@ -25,6 +25,7 @@
   </footer>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "Footer",
   data: function() {
@@ -32,11 +33,9 @@ export default {
       footerClass: false
     };
   },
-  computed: {
-    absoluteClass() {
-      return this.$store.getters.getFooter;
-    }
-  }
+  computed: mapState({
+    absoluteClass: state => state.footer,
+  }),
 };
 </script>
 <style type="less">

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import PageComponent from "./PageComponent";
 import DotComponent from "./DotComponent";
 
@@ -84,7 +84,7 @@ export default {
     results: function() {
       return this.propResults;
     },
-    ...mapGetters(["getPagination"])
+    ...mapState(["pagination"])
   },
   watch: {
     results: function(val) {
@@ -111,7 +111,7 @@ export default {
   },
   mounted: function() {
     //console.log("mounted", this.activePage);
-    let pagSettings = this.getPagination[this.type];
+    let pagSettings = this.pagination[this.type];
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
     this.first = pagSettings.first;

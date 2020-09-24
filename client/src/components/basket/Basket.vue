@@ -48,7 +48,6 @@ export default {
   },
   mounted() {
     this.visible = this.figures.slice(0, this.perPage);
-    //console.log(this.visible, this.figures, this.perPage);
   },
   methods: {
     setResults(visible) {

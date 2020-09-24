@@ -16,7 +16,7 @@
             <input
               v-model="obj.name"
               required
-              type="text"
+              type="name"
               class="form-control"
               placeholder="Иванов Иван Иванович"
             />
@@ -54,7 +54,7 @@
             <input
               v-model="obj.country"
               required
-              type="text"
+              type="country"
               class="form-control"
               placeholder="Россия"
               value="Россия"
@@ -101,22 +101,26 @@
   </transition>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "Details",
   data() {
     return {
       obj: {
-        phone: "",
-        address: "",
-        index: "",
-        city: "",
-        country: "",
-        email: "",
-        name: "",
-        products: this.$store.getters.getBasket.map(value => value._id)
+        phone: "+79269973518",
+        address: "Street Prilichnaya 10",
+        index: "56379",
+        city: "Moscow",
+        country: "Russia",
+        email: "stepik@mail.com",
+        name: "Juliata"
       },
       error: {}
     };
+  },
+  computed: {
+    ...mapState(['totalPrice', 'basket']),
+    products: function() { return this.basket.map(value => value._id)}
   },
   methods: {
     confirmOrder(event) {
@@ -132,10 +136,9 @@ export default {
         this.obj.name &&
         this.obj.email.indexOf("@") > -1
       ) {
-        this.obj.totalPrice = this.$store.getters.getTotalPrice;
+        this.obj.totalPrice = this.getTotalPrice;
         this.$store.dispatch("saveOrder", this.obj).then(
           data => {
-            console.log(data);
             this.$emit("close");
           },
           err => {

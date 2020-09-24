@@ -47,6 +47,7 @@
 import axios from "axios";
 import { cookie } from "@/components/helpers/cookies.js";
 import Table from "@/components/elements/Table";
+import { mapState } from 'vuex';
 
 export default {
   name: "Admin",
@@ -68,25 +69,28 @@ export default {
           "5. Отправлен",
           "6. Получен"
         ],
-        columns: ["ID", "Сумма", "Продукты", "Адрес", "Статус"]
+        columns: ["ID", "Сумма", "Продукты", "Адрес", "Статус"],
       }
     };
   },
+  computed: mapState({
+    host: apiHost => state.apiHost,
+  }),
   mounted() {
     const auth = cookie.getCookie("authorised");
     if (auth) {
       this.logged = true;
     }
-    // this.setOrders();
+    this.setOrders();
   },
   methods: {
     setOrders() {
       const ws = new WebSocket("ws://localhost:8999", "echo-protocol");
       ws.onopen = () => {
-        // console.log('socket connection opened properly');
+         console.log('socket connection opened properly');
       };
       ws.onmessage = evt => {
-        // console.log("Message received = " + evt.data);
+         console.log("Message received = " + evt.data);
         const orders = JSON.parse(evt.data);
         this.table.selectedStatus = [];
         this.table.rows = [];
@@ -94,7 +98,7 @@ export default {
         this.table = { ...this.table, ...details };
       };
       ws.onclose = () => {
-        // console.log("Connection closed...");
+         console.log("Connection closed...");
       };
     },
     deleteOrder(id) {
@@ -157,7 +161,7 @@ export default {
       }
     },
     setStatus(obj) {
-      const url = `${this.$store.getters.getHost}/setStatus`;
+      const url = `${this.apiHost}/setStatus`;
       const status = Number.isInteger(obj.input)
         ? obj.input
         : this.table.optionsStatus.indexOf(obj.input);

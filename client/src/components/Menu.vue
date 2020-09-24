@@ -8,7 +8,7 @@
       </li>
     </ul>
     <router-link class="nav-link nav-link--light" :to="{ name: 'admin' }">
-      Админка
+      Log in
     </router-link>
     <router-link class="nav-link nav-link--light" :to="{ name: 'basket' }">
       В корзине: {{ totalItems }} Сумма:
@@ -17,15 +17,11 @@
   </nav>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "Menu",
   computed: {
-    totalItems() {
-      return this.$store.state.totalItems;
-    },
-    totalPrice() {
-      return this.$store.state.totalPrice;
-    }
+    ...mapState(['totalPrice', 'totalItems']),
   }
 };
 </script>

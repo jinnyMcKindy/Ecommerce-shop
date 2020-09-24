@@ -2,7 +2,7 @@
   <div class="container">
     <Products
       :key="key"
-      :figures="figures"
+      :figures="products"
       :per-page="10"
       :active-page="activePage"
       :visible="visible"
@@ -14,26 +14,23 @@
 </template>
 <script>
 import Products from "./products/Products";
+import { mapState } from 'vuex';
 export default {
   name: "Main",
   components: { Products },
   data() {
     return {
       key: 0,
-      visible: this.figures,
+      visible: this.products,
       activePage: 1
     };
   },
-  computed: {
-    figures() {
-      return this.$store.state.products;
-    }
-  },
+  computed: mapState(['products']),
   serverPrefetch() {
     return this.$store.dispatch("actionProducts");
   },
   mounted() {
-    if (!this.figures.length) {
+    if (!this.products.length) {
       this.$store.dispatch("actionProducts");
     }
   },

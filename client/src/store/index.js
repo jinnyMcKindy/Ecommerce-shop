@@ -37,31 +37,8 @@ function createStore () {
             first: 1,
             dirty: true,
             visiblePages: 0
-          }}
+        }}
     }),
-   getters: {
-    getHost(state) {
-      return state.apiHost;
-    },
-    getOrders(state) {
-      return state.orders;
-    },
-    getProducts(state) {
-      return state.products;
-    },
-    getBasket(state) {
-      return state.basket;
-    },
-    getTotalPrice(state) {
-      return state.totalPrice;
-    },
-    getFooter(state){
-      return state.footer
-    },
-    getPagination(state){
-      return state.pagination;
-    }
-  },
   mutations: {
     deleteAll(state) {
       state.basket = [];
@@ -137,10 +114,20 @@ function createStore () {
         });
     },
     saveOrder({ state }, order) {
+      function reset(state) {
+        state.basket = [];
+        state.products = state.products.map((product) => {
+          product.count = 0;
+          return product;
+        })
+        state.totalPrice = 0;
+        state.totalItems = 0;
+      }
       return new Promise((resolve, reject) => {
         const url = `${state.apiHost}/saveOrder`;
         axios.post(url, { order }).then((response) => {
           resolve(response);
+          reset(state);
         }).catch(err => reject(err));
       });
     },

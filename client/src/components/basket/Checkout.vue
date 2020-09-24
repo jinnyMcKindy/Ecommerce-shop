@@ -38,18 +38,15 @@ export default {
       activePage: 1
     };
   },
-    computed: {
-    ...mapState([
-      'basket']),
-      visible: function() {
-        return this.basket
-      }
-    },
+  computed: {
+  ...mapState(['basket', 'totalPrice']),
+    visible: function() {
+      return this.basket
+    }
+  },
   mounted() {
-    console.log(this.basket)
     this.price = this.$store.getters.getTotalPrice;
     if (!this.basket.length) this.$router.push({ name: "home" });
-    // console.log(this.$store.getters.getBasket)
   },
   methods: {
     toHome() {
