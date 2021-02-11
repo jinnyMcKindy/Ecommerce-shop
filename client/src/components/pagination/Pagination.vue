@@ -110,8 +110,7 @@ export default {
     });
   },
   mounted: function() {
-    //console.log("mounted", this.activePage);
-    const pagSettings = this.pagination[this.type];
+    let pagSettings = this.pagination[this.type];
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
     this.first = pagSettings.first;
@@ -132,7 +131,6 @@ export default {
       return ["page-" + page, this.active == page ? "active" : ""];
     },
     setPages(len) {
-      //console.log(len, this.activePage, this.active)
       if (len === this.perPage) {
         this.pages--;
         this.navigate(this.active);
@@ -180,42 +178,35 @@ export default {
         this.navigate(1);
         return;
       }
-      const obj;
-      dotName === "right" ? (obj = this.rightDir()) : (obj = this.leftDir());
+      const obj = dotName === "right" ?  this.rightDir() : this.leftDir();
       [this.first, this.visiblePages] = obj;
       this.navigate(obj[0]);
     },
     rightDir() {
-      const first;
-      const last;
-      let obj;
-      last = this.visiblePages + this.maxAmountOfPages;
-      first = this.visiblePages + 1;
+      const last = this.visiblePages + this.maxAmountOfPages;
+      const first = this.visiblePages + 1;
       if (last >= this.pages) {
         last = this.pages;
         this.rightMax = false;
       }
-      obj = [first, last];
+      const obj = [first, last];
       return obj;
     },
     leftDir() {
-      const first;
-      const last;
-      let obj;
-      last = this.first - 1;
-      first = last - this.maxAmountOfPages;
+      const last = this.first - 1;
+      const first = last - this.maxAmountOfPages;
       if (first === 1) this.leftMax = false;
       if (first <= 0) {
         first = 1;
         this.leftMax = false;
       }
-      obj = [first, last];
+      const obj = [first, last];
       return obj;
     },
     range(min, max) {
       const array = [];
-      const j = 0;
-      for (const i = min; i <= max; i++) {
+      let j = 0;
+      for (let i = min; i <= max; i++) {
         array[j] = i;
         j++;
       }
