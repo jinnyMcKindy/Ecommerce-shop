@@ -35,7 +35,7 @@ docker-compose up
 
 ## Docker containers 
 
-- client (Fronnted app on VueJS runs on port :8090)
+- client (Fronted app on VueJS runs on port :8090)
 - server (mongoose  + expressJS runs on port :3000)
 - mongo (mongd server runs on port :27017)
 - mongo-setup (to fill MongoDB with data (products and admin), runs on port :8089)
