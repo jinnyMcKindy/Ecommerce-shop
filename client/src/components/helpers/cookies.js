@@ -8,7 +8,7 @@ const cookie = {
   setCookie(name, value, options) {
 	  options = options || {};
 
-	  let { expires } = options;
+	  const { expires } = options;
 
 	  if (typeof expires === 'number' && expires) {
 	    const d = new Date();
@@ -21,7 +21,7 @@ const cookie = {
 
 	  value = encodeURIComponent(value);
 
-	  let updatedCookie = `${name}=${value}`;
+	  const updatedCookie = `${name}=${value}`;
 
 	  for (const propName in options) {
 	    updatedCookie += `; ${propName}`;

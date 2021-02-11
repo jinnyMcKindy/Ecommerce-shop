@@ -19,9 +19,7 @@ const saveFile = new Promise((resolve) => {
 
 function writeFile(body) {
   const root = HTMLParser.parse(body);
-  //const lazyLoad = root.querySelector('#list-items').innerHTML;
   const len = root.querySelectorAll('#list-items li').length;
-  console.log(len);
   const tt = parseProduct(lazyLoad);
   fs.writeFile(fileName, `${tt}`, (err) => {
 	    if (err) {
@@ -36,7 +34,7 @@ function parseProduct(res) {
   const li = root.querySelectorAll('li');
   const tt = li.map((v) => {
     const price = v.querySelector('.value').innerHTML;
-    const imageSrc = v.querySelector('.picCore').attributes['image-src'];
+    const imageSrc = 'https:' + v.querySelector('.picCore').attributes['image-src'];
     const productLink = v.querySelector('.product').attributes.href;
     const { title } = v.querySelector('.product').attributes;
     return {

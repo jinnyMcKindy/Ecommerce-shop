@@ -40,6 +40,7 @@ docker-compose up
 - mongo (mongd server runs on port :27017)
 - mongo-setup (to fill MongoDB with data (products and admin), runs on port :8089)
 - WebSocket to dispatch orders (port :8999)
+- Mobile --port 9988
 
 ## Lint errors
 

@@ -8,7 +8,7 @@ import Sent from '@/components/order/Sent';
 import Admin from '@/components/admin/Admin';
 
 Vue.use(VueRouter);
-let prefix = ''
+const prefix = ''
 const routes = [
   { path: `${prefix}/basket`, component: Basket, name: 'basket' },
   { path: `${prefix}/`, name: 'home', component: Main },

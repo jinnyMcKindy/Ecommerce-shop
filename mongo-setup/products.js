@@ -25,7 +25,7 @@ const saveContent = new Promise((resolve, reject) => {
   fs.readFile(fileName, 'utf8', (err, contents) => {
     if (err) reject(err);
     if (contents) {
-      let tt = parseProduct(contents)
+      const tt = parseProduct(contents)
       ProductModel.insertMany(tt)
          .then(res => {
            resolve(res)

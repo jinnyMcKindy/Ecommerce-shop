@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/**
+ * @param  {type:String} phone
+ * @param  {type:String} address
+ * @param  {type:Number} index
+ * @param  {type:String} city
+ * @param  {type:String} country
+ * @param  {type:String} email
+ * @param  {type:String} name
+ * @param  {type:Array} products
+ * @param  {type:Number} totalPrice
+ * @param  {type:Date} timestamps
+ */
 const orderSchema = new Schema({
   phone: {
     type: String,

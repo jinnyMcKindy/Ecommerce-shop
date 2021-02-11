@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/**
+ * @param  {type:String} login
+ * @param  {type:String} password
+ * @param  {type:Date} timestamps
+ */
 const userSchema = new Schema({
   login: {
     type: String,

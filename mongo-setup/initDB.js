@@ -12,7 +12,7 @@ mongoose.connect(`${server}/${database}`).then(() => {
   }, err => console.log(err))
 
   /*** Create admin***/
-  let user = new UserModel({login: "admin", password: md5("12345") })
+  const user = new UserModel({login: "admin", password: md5("12345") })
   user.save()
   .then(doc => {
     console.log(doc)

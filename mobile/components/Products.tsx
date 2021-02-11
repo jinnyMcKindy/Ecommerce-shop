@@ -1,57 +1,73 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
   ScrollView,
   View,
   Text,
   FlatList,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../redux/actions'
+import { Item } from '../entities/Iposts'
 
-interface Iitems {
-  id: Number, 
-  price: String,
-  title: String,
-  imageSrc: String,
-  productLink: String
+type State = {
+  posts: { posts: Array<Item>},
+  page: number
 }
 
-const Products = () => {
-  const [items, setItems] = useState<Iitems[]>([
-    {
-      id: 1, 
-      price: '123', 
-      title: 'Iphone 3', 
-      imageSrc: 'https://i.pinimg.com/564x/5d/f8/ec/5df8ecaf2192fdd973b764ffad618ddf.jpg',
-      productLink: 'https://br.pinterest.com/pin/861594972454381826/'
-    },
-    {
-      id: 2, 
-      price: '1000 руб', 
-      title: 'Iphone 5S', 
-      imageSrc: 'https://i.pinimg.com/564x/5d/f8/ec/5df8ecaf2192fdd973b764ffad618ddf.jpg',
-      productLink: 'https://br.pinterest.com/pin/861594972454381826/'
-    }
-  ])
+interface ProductsProps {
+  fetchPosts: (page: number) => void,
+  posts: { posts: Array<Item> },
+  page: number
+}
+
+const Products = ({ fetchPosts, posts, page }: ProductsProps) => {
+
+  useEffect(() => {
+    fetchPosts(page)
+  }, []);
+
+  useEffect(() => {
+    console.log(posts.posts)
+  }, [posts]);
+
+  const renderRow = ({ item }: { item: Item } ) => {
+    return (<View>
+      <Text>{item.name}</Text>
+      <Text>{item.price}</Text>
+      <Text>{page}</Text>
+    </View>)
+  }
+
+  const loadMore = () => {
+    fetchPosts(page)
+  }
+
   return (
     <SafeAreaView>
     <ScrollView
       contentInsetAdjustmentBehavior="automatic">
          <View>
-            <FlatList data={items} renderItem={({ item }) => (
-              <View>
-                <Text>{item.title}</Text>
-                <Text>{item.price}</Text>
-              </View>
-            )}/>
+            <FlatList 
+              keyExtractor={item => item._id.toString()} 
+              data={posts.posts} 
+              renderItem={renderRow} 
+              onEndReached={loadMore}
+              />
           </View>
     </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const mapStateToProps = (state: State) => {
+  return {
+    posts: state.posts,
+    page: state.page
+  };
+}
+const mapDispatchToProps = {
+  fetchPosts
+}
 
-});
-
-export default Products;
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

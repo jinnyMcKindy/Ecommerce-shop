@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/**
+ * @param  {type:String} id
+ * @param  {type:Number} input
+ * @param  {type:Date} timestamps
+ */
 const statusSchema = new Schema({
   id: {
     type: String,

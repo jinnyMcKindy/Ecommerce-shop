@@ -90,7 +90,7 @@ export default {
          console.log('socket connection opened properly');
       };
       ws.onmessage = evt => {
-         console.log("Message received = " + evt.data);
+        console.log("Message received = " + evt.data);
         const orders = JSON.parse(evt.data);
         this.table.selectedStatus = [];
         this.table.rows = [];
@@ -98,7 +98,7 @@ export default {
         this.table = { ...this.table, ...details };
       };
       ws.onclose = () => {
-         console.log("Connection closed...");
+        console.log("Connection closed...");
       };
     },
     deleteOrder(id) {

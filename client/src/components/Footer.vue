@@ -25,9 +25,17 @@
   </footer>
 </template>
 <script>
+/**
+ * write a component's description
+ */
+
 import { mapState } from 'vuex';
 export default {
   name: "Footer",
+  /**
+   * @description Defines if show or hide footer
+   * @returns footerClass {boolean}
+   */
   data: function() {
     return {
       footerClass: false

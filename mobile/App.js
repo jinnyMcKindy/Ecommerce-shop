@@ -1,44 +1,47 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
  * @format
  */
 
 import React from 'react';
+
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
-  Text,
   StatusBar,
 } from 'react-native';
 
+import thunk from 'redux-thunk';
+
+import { rootReducer } from './redux/reducers/rootReducer';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+
 import {
-  Header,
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import Products  from './components/Products'
-declare const global: {HermesInternal: null | {}};
+
+import Products  from './components/Products';
+
+import { SagaWatcher } from './redux/sagas';
+
+const saga = createSagaMiddleware();
+const store = createStore(rootReducer, compose(applyMiddleware(thunk, saga)));
+
+saga.run(SagaWatcher);
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <View style={styles.body}>
-            <Products/>
+          <Products store={store} /> 
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
   );
 };
 

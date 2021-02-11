@@ -12,12 +12,32 @@ function floatOperation(num, num2, operator){
 
 function createStore () {
   return  new Vuex.Store({
+    /**
+     * @param  {type: Array []} basket
+     * @param  {type: Number 0} totalItems
+     * @param  {type: String Float '0.00'} totalPrice
+     * @param  {type: Array  []} products
+     * @param  {type: String  'http:orders:[]} apiHost
+     * @param  {type: Boolean false} footer
+     * @param  {type: Number 0} visiblePages
+     * @param  {type: Boolean false} rightMax
+     * @param  {type: Boolean false} leftMax
+     * @param  {type: Number 1} first
+     * @param  {type: Number 1} active
+     * @param  {type: Boolean true} dirty
+     * @param  {type: Number pages:0} basket
+     * @param  {type: Boolean false} rightMax
+     * @param  {type: Boolean false} leftMax
+     * @param  {type: Number 1} first
+     * @param  {type: Boolean true} dirty
+     * @param  {type: Number 0} visiblePages
+     */
     state: () => ({
         basket: [],
         totalItems: 0,
         totalPrice: '0.00',
         products: [],
-        apiHost: 'http://localhost:3000',
+        apiHost: process.env.VUE_APP_API_HOST || 'http://localhost:3000',
         orders: [], 
         footer: false,
         pagination: {
@@ -59,7 +79,7 @@ function createStore () {
     },
     addProduct(state, figure) {
       /* need to increase numbers of ordered item in case it exists in basket */
-      let productExists = state.basket.find((val) => val._id === figure._id)
+      const productExists = state.basket.find((val) => val._id === figure._id)
       if(productExists) productExists.count++;
       else { 
         figure.count = 1;
@@ -70,7 +90,7 @@ function createStore () {
     },
     deleteProduct(state, figure) {
       let ind = 0;
-      let productExists = state.basket.find((val, index) => {
+      const productExists = state.basket.find((val, index) => {
         ind = index;
         return val._id === figure._id;
       })

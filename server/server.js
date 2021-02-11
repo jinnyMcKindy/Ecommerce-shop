@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const clientUrl = 'http://localhost:8090';
+
 const corsOptions = {
   origin: clientUrl,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -49,13 +50,13 @@ mongoose.connect(`${server}/${database}`)
     });
     
     app.post('/saveOrder', (req, res) => {
-      let model = new OrderModel(req.body.order)
+      const model = new OrderModel(req.body.order)
       model.save()
         .then(data => res.json(data), err => res.json(err));
     });
     
     app.post('/setStatus', (req, res) => {
-      let model = new StatusModel(req.body.order)
+      const model = new StatusModel(req.body.order)
       model.save()
         .then(data => res.json(data), err => res.json(err));
     });

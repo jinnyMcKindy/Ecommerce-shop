@@ -6,8 +6,8 @@ import App from './App.vue';
 import createRouter from '@/routes';
 import createStore from '@/store/index'
 
-let router = createRouter();
-let store = createStore();
+const router = createRouter();
+const store = createStore();
 
 Vue.use(VueTheMask);
 Vue.use(VueAxios, axios);

@@ -64,13 +64,6 @@ export default {
     buy(figure) {
       this.$emit("buy", figure);
     }
-    /* expand(name) {
-        if( this.activeNames.includes(name) ) {
-            let index = this.activeNames.indexOf(name);
-            this.activeNames.splice(index, 1); } else {
-            this.activeNames.push(name);
-        }
-    } */
   }
 };
 </script>

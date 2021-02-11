@@ -111,7 +111,7 @@ export default {
   },
   mounted: function() {
     //console.log("mounted", this.activePage);
-    let pagSettings = this.pagination[this.type];
+    const pagSettings = this.pagination[this.type];
     this.pages = pagSettings.pages;
     this.visiblePages = pagSettings.visiblePages;
     this.first = pagSettings.first;
@@ -180,14 +180,14 @@ export default {
         this.navigate(1);
         return;
       }
-      let obj;
+      const obj;
       dotName === "right" ? (obj = this.rightDir()) : (obj = this.leftDir());
       [this.first, this.visiblePages] = obj;
       this.navigate(obj[0]);
     },
     rightDir() {
-      let first;
-      let last;
+      const first;
+      const last;
       let obj;
       last = this.visiblePages + this.maxAmountOfPages;
       first = this.visiblePages + 1;
@@ -199,8 +199,8 @@ export default {
       return obj;
     },
     leftDir() {
-      let first;
-      let last;
+      const first;
+      const last;
       let obj;
       last = this.first - 1;
       first = last - this.maxAmountOfPages;
@@ -214,8 +214,8 @@ export default {
     },
     range(min, max) {
       const array = [];
-      let j = 0;
-      for (let i = min; i <= max; i++) {
+      const j = 0;
+      for (const i = min; i <= max; i++) {
         array[j] = i;
         j++;
       }
