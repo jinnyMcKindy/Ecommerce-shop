@@ -79,16 +79,12 @@ mongoose.connect(`${server}/${database}`)
 })
 function startWebSocketServer() {
   const app = express();
-  const connections = new Set(); // Storage of connections
-  const lastModification = 0; // Greater modified
+  const connections = new Set();
   const server = http.createServer(app);
-
   const socket = new WebSocket.Server({ server });
-
   server.listen('8999', () => {
     console.log(`WebSocket started on port ${server.address().port} :)`);
   });
-
   socket.on('connection', (req) => {
     const connection = req;
     connections.add(connection);
