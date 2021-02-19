@@ -47,7 +47,7 @@
 import axios from "axios";
 import { cookie } from "@/components/helpers/cookies.js";
 import Table from "@/components/elements/Table";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "Admin",
@@ -69,12 +69,12 @@ export default {
           "5. Отправлен",
           "6. Получен"
         ],
-        columns: ["ID", "Сумма", "Продукты", "Адрес", "Статус"],
+        columns: ["ID", "Сумма", "Продукты", "Адрес", "Статус"]
       }
     };
   },
   computed: mapState({
-    host: apiHost => state.apiHost,
+    host: state => state.apiHost
   }),
   mounted() {
     const auth = cookie.getCookie("authorised");
@@ -87,7 +87,7 @@ export default {
     setOrders() {
       const ws = new WebSocket("ws://localhost:8999", "echo-protocol");
       ws.onopen = () => {
-         console.log('socket connection opened properly');
+        console.log("socket connection opened properly");
       };
       ws.onmessage = evt => {
         console.log("Message received = " + evt.data);

@@ -29,7 +29,7 @@
  * write a component's description
  */
 
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   name: "Footer",
   /**
@@ -42,8 +42,8 @@ export default {
     };
   },
   computed: mapState({
-    absoluteClass: state => state.footer,
-  }),
+    absoluteClass: state => state.footer
+  })
 };
 </script>
 <style type="less">

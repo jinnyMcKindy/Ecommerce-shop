@@ -14,7 +14,7 @@
 </template>
 <script>
 import Products from "./products/Products";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   name: "Main",
   components: { Products },
@@ -25,7 +25,7 @@ export default {
       activePage: 1
     };
   },
-  computed: mapState(['products']),
+  computed: mapState(["products"]),
   serverPrefetch() {
     return this.$store.dispatch("actionProducts");
   },

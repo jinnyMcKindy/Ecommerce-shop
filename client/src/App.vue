@@ -16,7 +16,7 @@
 import Menu from "@/components/Menu";
 import Footer from "@/components/Footer";
 import init from "@/components/helpers/filters.js";
-  console.log(process.env)
+console.log(process.env);
 init();
 export default {
   name: "App",
@@ -44,5 +44,4 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 </style>

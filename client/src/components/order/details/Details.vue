@@ -101,7 +101,7 @@
   </transition>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   name: "Details",
   data() {
@@ -119,8 +119,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(['totalPrice', 'basket']),
-    products: function() { return this.basket.map(value => value._id)}
+    ...mapState(["totalPrice", "basket"]),
+    products: function() {
+      return this.basket.map(value => value._id);
+    }
   },
   methods: {
     confirmOrder(event) {
@@ -138,7 +140,7 @@ export default {
       ) {
         this.obj.totalPrice = this.getTotalPrice;
         this.$store.dispatch("saveOrder", this.obj).then(
-          data => {
+          () => {
             this.$emit("close");
           },
           err => {

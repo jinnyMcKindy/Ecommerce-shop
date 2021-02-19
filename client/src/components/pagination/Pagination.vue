@@ -178,12 +178,12 @@ export default {
         this.navigate(1);
         return;
       }
-      const obj = dotName === "right" ?  this.rightDir() : this.leftDir();
+      const obj = dotName === "right" ? this.rightDir() : this.leftDir();
       [this.first, this.visiblePages] = obj;
       this.navigate(obj[0]);
     },
     rightDir() {
-      const last = this.visiblePages + this.maxAmountOfPages;
+      let last = this.visiblePages + this.maxAmountOfPages;
       const first = this.visiblePages + 1;
       if (last >= this.pages) {
         last = this.pages;
@@ -194,7 +194,7 @@ export default {
     },
     leftDir() {
       const last = this.first - 1;
-      const first = last - this.maxAmountOfPages;
+      let first = last - this.maxAmountOfPages;
       if (first === 1) this.leftMax = false;
       if (first <= 0) {
         first = 1;
