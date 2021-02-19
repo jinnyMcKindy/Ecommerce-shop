@@ -44,7 +44,5 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.main-container {
-  min-height: calc(100vh - 150px);
-}
+
 </style>
