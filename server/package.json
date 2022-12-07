@@ -24,7 +24,7 @@
     "eslint": "^5.16.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "lint-staged": "^8.1.5"
+    "lint-staged": "^13.1.0"
   },
   "eslintConfig": {
     "root": true,
