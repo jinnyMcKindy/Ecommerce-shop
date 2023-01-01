@@ -23,7 +23,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "less": "^3.9.0",
-    "less-loader": "^5.0.0",
+    "less-loader": "^11.1.0",
     "lint-staged": "^8.1.5"
   },
   "eslintConfig": {
